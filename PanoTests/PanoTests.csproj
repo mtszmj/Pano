@@ -60,6 +60,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Factories\HotSpotFactoryTests.cs" />
+    <Compile Include="Factories\ScenesFactoryTests.cs" />
+    <Compile Include="Factories\TourFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

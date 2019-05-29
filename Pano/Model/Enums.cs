@@ -7,5 +7,6 @@
 
 public enum HotSpotType
 {
-    Scene
+    Scene,
+    Info
 }

@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Pano.Model
 {
-    internal interface IPoint
-    {
-        int? Pitch { get; set; }
-        int? Yaw { get; set; }
+    public class Equirectangular : Scene
+    { 
+        public string Panorama { get; set; }
     }
 }

@@ -47,5 +47,36 @@ namespace Pano.Factories.Tests
 
             Assert.IsTrue(true);
         }
+
+        [TestMethod()]
+        public void CreateSceneHotSpot()
+        {
+            var factory = new HotSpotFactory();
+
+            var contractResolver = new DefaultContractResolver
+            {
+                NamingStrategy = new CamelCaseNamingStrategy()
+            };
+
+            var jsonSerializerSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                ContractResolver = contractResolver,
+                Converters = new List<JsonConverter> { new StringEnumConverter { NamingStrategy = new CamelCaseNamingStrategy() } },
+
+            };
+
+            var list = new List<HotSpot>
+            {
+                factory.CreateSceneHotSpot(90, 90, "test", "testScena"),
+                factory.CreateSceneHotSpot(90, 90, "test2", "testScena")
+            };
+
+            string json = JsonConvert.SerializeObject(list, Formatting.Indented, jsonSerializerSettings);
+            Debug.Write(json);
+
+
+            Assert.IsTrue(true);
+        }
     }
 }

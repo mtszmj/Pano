@@ -12,7 +12,7 @@ namespace Pano.Model
     /// This specifies an array of hot spots that can be links to other scenes, information, or external links.
     /// Each array element has the following properties. 
     /// </summary>
-    public class HotSpot : IPoint
+    public abstract class HotSpot
     {
         /// <summary>
         /// Specifies the pitch portion of the hot spot’s location, in degrees.
@@ -28,42 +28,12 @@ namespace Pano.Model
         /// Specifies the type of the hot spot. Can be scene for scene links or info for information 
         /// hot spots. A tour configuration file is required for scene hot spots.
         /// </summary>
-        public HotSpotType Type { get; set; }
+        public abstract HotSpotType Type { get; }
 
         /// <summary>
         /// This specifies the text that is displayed when the user hovers over the hot spot.
         /// </summary>
         public string Text { get; set; }
-
-        /// <summary>
-        /// If specified for an info hot spot, the hot spot links to the specified URL. Not applicable for 
-        /// scene hot spots.
-        /// </summary>
-        public string URL { get; set; }
-
-        /// <summary>
-        /// Specifies the ID of the scene to link to for scene hot spots. Not applicable for info hot spots.
-        /// </summary>
-        public string SceneId { get; set; }
-
-        /// <summary>
-        /// Specifies the pitch of the target scene, in degrees.Can also be set to same, which uses the 
-        /// current pitch of the current scene as the initial pitch of the target scene.
-        /// </summary>
-        public int? TargetPitch { get; set; }
-
-        /// <summary>
-        /// Specifies the yaw of the target scene, in degrees.Can also be set to same or sameAzimuth. 
-        /// These settings use the current yaw of the current scene as the initial yaw of the target scene; 
-        /// same uses the current yaw directly, while sameAzimuth takes into account the northOffset values 
-        /// of both scenes to maintain the same direction with regard to north.
-        /// </summary>
-        public int? TargetYaw { get; set; }
-
-        /// <summary>
-        /// Specifies the HFOV of the target scene, in degrees.
-        /// </summary>
-        public int? TargetHfov { get; set; }
 
         /// <summary>
         /// Specifies hot spot ID, for use with API’s removeHotSpot function.

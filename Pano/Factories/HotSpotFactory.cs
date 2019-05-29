@@ -11,7 +11,18 @@ namespace Pano.Factories
     {
         public HotSpot CreateDefaultHotSpot()
         {
-            return new HotSpot();
+            return new SceneHotSpot();
+        }
+
+        public HotSpot CreateSceneHotSpot(int pitch, int yaw, string text, string sceneId)
+        {
+            return new SceneHotSpot
+            {
+                Pitch = pitch,
+                Yaw = yaw,
+                Text = text,
+                SceneId = sceneId
+            };
         }
     }
 }
