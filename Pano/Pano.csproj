@@ -69,6 +69,11 @@
     <Compile Include="Factories\HotSpotFactory.cs" />
     <Compile Include="Factories\ScenesFactory.cs" />
     <Compile Include="Factories\TourFactory.cs" />
+    <Compile Include="IO\ISerializer.cs" />
+    <Compile Include="IO\IRepository.cs" />
+    <Compile Include="IO\JsonSerializer.cs" />
+    <Compile Include="IO\FileRepository.cs" />
+    <Compile Include="IO\MemoryRepository.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
