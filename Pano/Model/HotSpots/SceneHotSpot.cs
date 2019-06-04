@@ -8,6 +8,11 @@ namespace Pano.Model
 {
     public class SceneHotSpot : HotSpot
     {
+        public SceneHotSpot(string sceneId)
+        {
+            this.SceneId = sceneId;
+        }
+
         public override HotSpotType Type => HotSpotType.Scene;
 
         /// <summary>

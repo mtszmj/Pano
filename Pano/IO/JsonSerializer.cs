@@ -13,7 +13,7 @@ namespace Pano.IO
     {
         private readonly JsonSerializerSettings _Settings;
 
-        public JsonSerializer(JsonSerializerSettings settings = null)
+        public JsonSerializer(IEnumerable<JsonConverter> converters = null, JsonSerializerSettings settings = null)
         {
             _Settings = settings ?? new JsonSerializerSettings
             {
@@ -21,11 +21,16 @@ namespace Pano.IO
                 ContractResolver = new DefaultContractResolver { NamingStrategy = new CamelCaseNamingStrategy() },
                 Converters = new List<JsonConverter> { new StringEnumConverter { NamingStrategy = new CamelCaseNamingStrategy() } },
             };
+
+            foreach(var converter in converters)
+            {
+                _Settings.Converters.Add(converter);
+            }
         }
 
         public T Deserialize<T>(string str)
         {
-            return JsonConvert.DeserializeObject<T>(str);
+            return JsonConvert.DeserializeObject<T>(str, _Settings);
         }
 
         public string Serialize<T>(T obj)

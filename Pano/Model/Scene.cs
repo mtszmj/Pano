@@ -60,15 +60,15 @@ namespace Pano.Model
         public void AddHotSpot(Scene scene, int pitch = 0, int yaw = 0, int pitchBack = 0, int yawBack = 0)
         {
             //TODO check if connection exists
-            var spot = new SceneHotSpot();
-            spot.SceneId = scene.Id;
+            var spot = new SceneHotSpot(scene.Id);
+            //spot.SceneId = scene.Id;
             spot.Text = scene.Title;
             spot.Pitch = pitch;
             spot.Yaw = yaw;
             this.HotSpots.Add(spot);
 
-            spot = new SceneHotSpot();
-            spot.SceneId = this.Id;
+            spot = new SceneHotSpot(this.Id);
+            //spot.SceneId = this.Id;
             spot.Text = this.Title;
             spot.Pitch = pitchBack;
             spot.Yaw = yawBack;
