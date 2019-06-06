@@ -20,7 +20,7 @@ namespace Pano.IO
         public T Load<T>()
         {
             _Stream.Position = 0;
-            StreamReader reader = new StreamReader(_Stream);
+            StreamReader reader = new StreamReader(_Stream, Encoding.Default);
             var text = reader.ReadToEnd();
             return _Serializer.Deserialize<T>(text);
         }
@@ -29,7 +29,7 @@ namespace Pano.IO
         {
             var serialized = _Serializer.Serialize(obj);
             _Stream.Flush();
-            _Stream.Write(Encoding.ASCII.GetBytes(serialized), 0, serialized.Length);
+            _Stream.Write(Encoding.Default.GetBytes(serialized), 0, serialized.Length);
         }
     }
 }

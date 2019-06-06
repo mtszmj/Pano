@@ -63,10 +63,15 @@
     <Compile Include="Factories\ScenesFactoryTests.cs" />
     <Compile Include="Factories\TourFactoryTests.cs" />
     <Compile Include="IO\JsonSerializerTests.cs" />
+    <Compile Include="Model\HotSpots\HotSpotEqualityComparerTests.cs" />
+    <Compile Include="Model\HotSpots\InfoHotSpotTests.cs" />
+    <Compile Include="Model\HotSpots\SceneHotSpotTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pano\Pano.csproj">
@@ -74,6 +79,7 @@
       <Name>Pano</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

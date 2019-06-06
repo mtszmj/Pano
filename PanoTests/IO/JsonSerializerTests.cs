@@ -16,12 +16,12 @@ namespace Pano.IO.Tests
         [TestMethod()]
         public void HotSpotSerializeTest()
         {
-            HotSpot spot = new SceneHotSpot("zyx");
+            HotSpot spot = new SceneHotSpot("zyx", "idid");
             spot.Text = "Hot Spot Title";
             spot.Pitch = 90;
             spot.Yaw = 10;
 
-            var serializer = new JsonSerializer(new[] { new HotSpotJsonConverter() });
+            var serializer = new JsonSerializer(new JsonConverter[] { new HotSpotJsonConverter(), new SceneJsonConverter() });
             var json = serializer.Serialize(spot);
 
             HotSpot spotDes = //JsonConvert.DeserializeObject<HotSpot>(json, new HotSpotJsonConverter());

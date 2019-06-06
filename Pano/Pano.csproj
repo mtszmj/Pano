@@ -75,20 +75,24 @@
     <Compile Include="IO\JsonSerializer.cs" />
     <Compile Include="IO\FileRepository.cs" />
     <Compile Include="IO\MemoryRepository.cs" />
+    <Compile Include="IO\SceneJsonConverter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\DefaultScene.cs" />
+    <Compile Include="Model\Scenes\Cubemap.cs" />
+    <Compile Include="Model\HotSpots\DefaultScene.cs" />
     <Compile Include="Model\Enums.cs" />
-    <Compile Include="Model\Equirectangular.cs" />
+    <Compile Include="Model\Scenes\Equirectangular.cs" />
     <Compile Include="Model\HotSpots\HotSpot.cs" />
+    <Compile Include="Model\HotSpots\HotSpotEqualityComparer.cs" />
     <Compile Include="Model\HotSpots\InfoHotSpot.cs" />
-    <Compile Include="Model\IPoint.cs" />
-    <Compile Include="Model\Scene.cs" />
+    <Compile Include="Model\Scenes\Multires.cs" />
+    <Compile Include="Model\Scenes\Scene.cs" />
     <Compile Include="Model\HotSpots\SceneHotSpot.cs" />
+    <Compile Include="Model\Scenes\ScenesEqualityComparer.cs" />
     <Compile Include="Model\Tour.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -116,5 +120,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

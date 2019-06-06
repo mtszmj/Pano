@@ -8,19 +8,28 @@ namespace Pano.Model
 {
     public class Tour
     {
+        #region Fields
         private DefaultScene _DefaultScene;
+        #endregion
+
+        #region Properties
+        /// <summary>
+        /// The default property contains options that are used for each scene, but options specified 
+        /// for individual scenes override these options. The default property is required to have 
+        /// a firstScene property that contains the scene ID for the first scene to be displayed.
+        /// </summary>
         public DefaultScene Default
         {
             get
             {
                 if (_DefaultScene == null)
                 {
-                    _DefaultScene = new DefaultScene { Scene = FirstScene };
+                    _DefaultScene = new DefaultScene { FirstSceneRef = FirstScene };
                     return _DefaultScene;
                 }
-                else if(_DefaultScene.Scene == null || !Scenes.ContainsValue(_DefaultScene.Scene))
+                else if(_DefaultScene.FirstSceneRef == null || !Scenes.ContainsValue(_DefaultScene.FirstSceneRef))
                 {
-                    _DefaultScene.Scene = FirstScene;
+                    _DefaultScene.FirstSceneRef = FirstScene;
                     return _DefaultScene;
                 }
                 else
@@ -30,9 +39,15 @@ namespace Pano.Model
             }
         }
 
+        /// <summary>
+        /// The scenes property contains a dictionary of scenes, specified by scene IDs. The values 
+        /// assigned to these IDs are specific to each scene.
+        /// </summary>
+        public Dictionary<string, Scene> Scenes { get; } = new Dictionary<string, Scene>();
+
         private Scene FirstScene => Scenes?.FirstOrDefault().Value;
 
-        public Dictionary<string, Scene> Scenes { get; } = new Dictionary<string, Scene>();
+        #endregion
 
         #region Methods
         public void AddScene(Scene scene)
@@ -42,9 +57,9 @@ namespace Pano.Model
 
             Scenes.Add(scene.Id, scene);
 
-            if(Default.Scene == null)
+            if(Default.FirstSceneRef == null)
             {
-                Default.Scene = scene;
+                Default.FirstSceneRef = scene;
             }
         }
 
@@ -53,7 +68,7 @@ namespace Pano.Model
             Scenes.Remove(scene.Id);
             if(Default == scene)
             {
-                Default.Scene = null;
+                Default.FirstSceneRef = null;
             }
         }
         #endregion

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,9 @@ namespace Pano.Model
 {
     public class SceneHotSpot : HotSpot
     {
-        public SceneHotSpot(string sceneId)
+        public SceneHotSpot(string id, string sceneId) : base(id)
         {
-            this.SceneId = sceneId;
+            SceneId = sceneId;
         }
 
         public override HotSpotType Type => HotSpotType.Scene;
@@ -38,5 +39,78 @@ namespace Pano.Model
         /// Specifies the HFOV of the target scene, in degrees.
         /// </summary>
         public int? TargetHfov { get; set; }
+
+        public override bool Equals(HotSpot obj)
+        {
+            if (!base.Equals(obj))
+                return false;
+
+            if (!(obj is SceneHotSpot scene))
+                return false;
+
+            return SceneId == scene.SceneId
+                && TargetPitch == scene.TargetPitch
+                && TargetYaw == scene.TargetYaw
+                && TargetHfov == scene.TargetHfov;
+        }
+
+        #region Equals
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            if (GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            return Equals((SceneHotSpot)obj);
+        }
+        public bool Equals(SceneHotSpot obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            //if (GetHashCode() != obj.GetHashCode())
+            //{
+            //    return false;
+            //}
+
+            if (!base.Equals(obj))
+            {
+                return false;
+            }
+
+            return SceneId == obj.SceneId
+                && TargetPitch == obj.TargetPitch
+                && TargetYaw == obj.TargetYaw
+                && TargetHfov == obj.TargetHfov;
+        }
+
+        public static bool operator ==(SceneHotSpot left, SceneHotSpot right)
+        {
+            if (left is null)
+            {
+                return (right is null);
+            }
+
+            return (left.Equals(right));
+        }
+
+        public static bool operator !=(SceneHotSpot left, SceneHotSpot right)
+        {
+            return !(left == right);
+        }
+        #endregion
     }
 }

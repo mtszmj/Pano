@@ -12,10 +12,15 @@ namespace Pano.Model
         public DefaultScene()
         {
             Hfov = 100;
+            AutoLoad = true;
+            AutoRotate = -1;
+            AutoRotateInactivityDelay = 10000;
         }
 
         [JsonIgnore]
-        public Scene Scene { get; set; }
-        public string FirstScene => Scene.Id;
+        public Scene FirstSceneRef { get; set; }
+        public string FirstScene => FirstSceneRef?.Id;
+        public override PanoramaType Type => FirstSceneRef?.Type ?? PanoramaType.Equirectangular;
+
     }
 }

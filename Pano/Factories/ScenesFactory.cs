@@ -12,7 +12,7 @@ namespace Pano.Factories
         public Scene CreateDefaultScene()
         {
             var spotsFactory = new HotSpotFactory();
-            var scene = new Scene() { Title = "xyz" };
+            var scene = new Equirectangular() { Title = "xyz" };
             scene.HotSpots.Add(spotsFactory.CreateSceneHotSpot(90, 90, "Spot1", "Scene1"));
             scene.HotSpots.Add(spotsFactory.CreateSceneHotSpot(-90, -90, "Spot2", "Scene2"));
 

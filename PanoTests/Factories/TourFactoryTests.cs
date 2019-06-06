@@ -4,39 +4,16 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using Pano.IO;
 using Pano.Model;
+using Pano.Model.Scenes;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Pano.Factories.Tests
 {
     [TestClass()]
     public class TourFactoryTests
     {
-        [TestMethod()]
-        public void CreateDefaultTourTest()
-        {
-            var factory = new TourFactory();
-            var tour = factory.CreateDefaultTour();
-
-            var contractResolver = new DefaultContractResolver
-            {
-                NamingStrategy = new CamelCaseNamingStrategy()
-            };
-
-            var jsonSerializerSettings = new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore,
-                ContractResolver = contractResolver,
-                Converters = new List<JsonConverter> { new StringEnumConverter { NamingStrategy = new CamelCaseNamingStrategy() } },
-
-            };
-
-            string json = JsonConvert.SerializeObject(tour, Formatting.Indented, jsonSerializerSettings);
-            Debug.Write(json);
-
-
-            Assert.IsTrue(true);
-        }
 
         [TestMethod()]
         public void CreateDefaultProjectTest()
@@ -117,16 +94,16 @@ namespace Pano.Factories.Tests
             };
 
 
-            salon.AddHotSpot(przedpokoj, -5, 55, -10, -52);
-            komorka.AddHotSpot(przedpokoj, -25, 90, -17, 142);
-            lazienka.AddHotSpot(przedpokoj2, -8, 170, -15, 175);
-            gabinet.AddHotSpot(przedpokoj, -10, -108, -14, -105);
-            sypialnia.AddHotSpot(przedpokoj2, -8, 25, -8, 125);
-            pokoj.AddHotSpot(przedpokoj2, -15, 175, -10, 35);
+            salon.AddSceneHotSpot(przedpokoj, -5, 55, -10, -52);
+            komorka.AddSceneHotSpot(przedpokoj, -25, 90, -17, 142);
+            lazienka.AddSceneHotSpot(przedpokoj2, -8, 170, -15, 175);
+            gabinet.AddSceneHotSpot(przedpokoj, -10, -108, -14, -105);
+            sypialnia.AddSceneHotSpot(przedpokoj2, -8, 25, -8, 125);
+            pokoj.AddSceneHotSpot(przedpokoj2, -15, 175, -10, 35);
 
-            przedpokoj.AddHotSpot(przedpokoj2, -13, 52, -20, -35);
+            przedpokoj.AddSceneHotSpot(przedpokoj2, -13, 52, -20, -35);
 
-            wc.AddHotSpot(przedpokoj, -20, -175, -16, -150);
+            wc.AddSceneHotSpot(przedpokoj, -20, -175, -16, -150);
 
             tour.AddScene(salon);
             tour.AddScene(komorka);
@@ -164,12 +141,72 @@ namespace Pano.Factories.Tests
         public void CreateDefaultProjectTest2()
         {
             var tour = CreateDefaultProject();
-            ISerializer serializer = new Pano.IO.JsonSerializer();
+            ISerializer serializer = new Pano.IO.JsonSerializer(new JsonConverter[] { new HotSpotJsonConverter(), new SceneJsonConverter() });
             IRepository repository = new MemoryRepository(serializer);
 
             repository.Save(tour);
 
             var tour2 = repository.Load<Tour>();
+
+            //other.Strings.OrderBy(kvp => kvp.Key)
+            //                .SequenceEqual(Strings.OrderBy(kvp => kvp.Key))
+
+            foreach(var kvp in tour.Scenes)
+            {
+                tour2.Scenes.TryGetValue(kvp.Key, out var value);
+                Assert.IsTrue(kvp.Value.Equals(value));
+            }
+
+            Assert.AreNotEqual(0, tour2.Scenes.Count);
+                
+                //.SequenceEquals(tour2.Scenes.OrderBy(kvp => kvp.Key), new ScenesEqualityComparer()));
+        }
+
+        [TestMethod()]
+        public void CreateDefaultProjectTest3()
+        {
+            var tour = new Tour();
+
+            var salon = new Equirectangular()
+            {
+                Title = "Zażółć gęślą jaźń",
+                Pitch = 0,
+                Yaw = 0,
+                Panorama = "spacer_p-kuchnia.jpg",
+            };
+
+            var komorka = new Equirectangular()
+            {
+                Title = "Komórka",
+                Pitch = 0,
+                Yaw = 0,
+                Panorama = "komorka-p.jpg",
+            };
+
+            salon.AddSceneHotSpot(komorka, -5, 55, -10, -52);
+            tour.AddScene(salon);
+            tour.AddScene(komorka);
+
+
+            ISerializer serializer = new Pano.IO.JsonSerializer(new JsonConverter[] { new HotSpotJsonConverter(), new SceneJsonConverter() });
+            IRepository repository = new MemoryRepository(serializer);
+
+            repository.Save(tour);
+
+            var tour2 = repository.Load<Tour>();
+
+            //other.Strings.OrderBy(kvp => kvp.Key)
+            //                .SequenceEqual(Strings.OrderBy(kvp => kvp.Key))
+
+            foreach (var kvp in tour.Scenes)
+            {
+                tour2.Scenes.TryGetValue(kvp.Key, out var value);
+                Assert.IsTrue(kvp.Value.Equals(value));
+            }
+
+            Assert.AreNotEqual(0, tour2.Scenes.Count);
+
+            //.SequenceEquals(tour2.Scenes.OrderBy(kvp => kvp.Key), new ScenesEqualityComparer()));
         }
 
 
@@ -251,16 +288,16 @@ namespace Pano.Factories.Tests
             };
 
 
-            salon.AddHotSpot(przedpokoj, -5, 55, -10, -52);
-            komorka.AddHotSpot(przedpokoj, -25, 90, -17, 142);
-            lazienka.AddHotSpot(przedpokoj2, -8, 170, -15, 175);
-            gabinet.AddHotSpot(przedpokoj, -10, -108, -14, -105);
-            sypialnia.AddHotSpot(przedpokoj2, -8, 25, -8, 125);
-            pokoj.AddHotSpot(przedpokoj2, -15, 175, -10, 35);
+            salon.AddSceneHotSpot(przedpokoj, -5, 55, -10, -52);
+            komorka.AddSceneHotSpot(przedpokoj, -25, 90, -17, 142);
+            lazienka.AddSceneHotSpot(przedpokoj2, -8, 170, -15, 175);
+            gabinet.AddSceneHotSpot(przedpokoj, -10, -108, -14, -105);
+            sypialnia.AddSceneHotSpot(przedpokoj2, -8, 25, -8, 125);
+            pokoj.AddSceneHotSpot(przedpokoj2, -15, 175, -10, 35);
 
-            przedpokoj.AddHotSpot(przedpokoj2, -13, 52, -20, -35);
+            przedpokoj.AddSceneHotSpot(przedpokoj2, -13, 52, -20, -35);
 
-            wc.AddHotSpot(przedpokoj, -20, -175, -16, -150);
+            wc.AddSceneHotSpot(przedpokoj, -20, -175, -16, -150);
 
             tour.AddScene(salon);
             tour.AddScene(komorka);
