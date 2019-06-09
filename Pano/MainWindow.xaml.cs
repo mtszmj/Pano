@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pano.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -24,83 +25,95 @@ namespace Pano
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = ViewModel = new MainWindowViewModel();
         }
 
-        private DragDropEffects EffectOk { get; } = DragDropEffects.Copy;
-        private DragDropEffects EffectNok { get; } = DragDropEffects.None;
-        private bool IsRequiredFileIncludedInDragDrop { get; set; }
+        MainWindowViewModel ViewModel;
 
+        //private DragDropEffects EffectOk { get; } = DragDropEffects.Copy;
+        //private DragDropEffects EffectNok { get; } = DragDropEffects.None;
+        //private bool IsRequiredFileIncludedInDragDrop { get; set; }
 
-
+        //public Visibility IsDragging => IsRequiredFileIncludedInDragDrop ? Visibility.Visible : Visibility.Collapsed; 
+               
         private void Grid_DragEnter(object sender, DragEventArgs e)
         {
-            MainGrid.Background = Brushes.Aquamarine;
+            ViewModel.DragEnter(e);
 
-            if(e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                var drop = (string[])e.Data.GetData(DataFormats.FileDrop);
-
-                var directories = drop.Where(x => Directory.Exists(x));
-                var filesFromDirectories = directories.SelectMany(x => Directory.GetFiles(x, "*.jpg", SearchOption.AllDirectories));
-
-                var files = drop.Where(x => x.ToLower().EndsWith(".jpg")).Concat(filesFromDirectories);
+            //MainGrid.Background = Brushes.Aquamarine;
 
 
 
-                if(files.Any())
-                {
-                    e.Handled = true;
-                    e.Effects = EffectOk;
-                    IsRequiredFileIncludedInDragDrop = true;
+            //if(e.Data.GetDataPresent(DataFormats.FileDrop))
+            //{
+            //    var drop = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-                    foreach (var file in files)
-                    {
-                        Console.Out.WriteLine(file);
-                    }
-                }
-                else
-                {
-                    e.Handled = true;
-                    e.Effects = EffectNok;
-                    IsRequiredFileIncludedInDragDrop = false;
-                }
-            }
+            //    var directories = drop.Where(x => Directory.Exists(x));
+            //    var filesFromDirectories = directories.SelectMany(x => Directory.GetFiles(x, "*.jpg", SearchOption.AllDirectories));
+
+            //    var files = drop.Where(x => x.ToLower().EndsWith(".jpg")).Concat(filesFromDirectories);
+
+
+
+            //    if(files.Any())
+            //    {
+            //        e.Handled = true;
+            //        e.Effects = EffectOk;
+            //        IsRequiredFileIncludedInDragDrop = true;
+
+            //        foreach (var file in files)
+            //        {
+            //            Console.Out.WriteLine(file);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        e.Handled = true;
+            //        e.Effects = EffectNok;
+            //        IsRequiredFileIncludedInDragDrop = false;
+            //    }
+            //}
         }
 
         private void Grid_Drop(object sender, DragEventArgs e)
         {
-            e.Handled = true;
-            if (IsRequiredFileIncludedInDragDrop)
-            {
-                e.Effects = EffectOk;
-            }
-            else
-            {
-                e.Effects = EffectNok;
-            }
+            ViewModel.DragDrop(e);
+
+            //e.Handled = true;
+            //if (IsRequiredFileIncludedInDragDrop)
+            //{
+            //    e.Effects = EffectOk;
+            //}
+            //else
+            //{
+            //    e.Effects = EffectNok;
+            //}
             
-            this.MainGrid.Background = Brushes.Red;
+            //this.MainGrid.Background = Brushes.Red;
         }
 
         private void Grid_DragLeave(object sender, DragEventArgs e)
         {
-            IsRequiredFileIncludedInDragDrop = false;
+            ViewModel.DragLeave(e);
+            //IsRequiredFileIncludedInDragDrop = false;
 
-            this.MainGrid.Background = Brushes.Gray;
+            //this.MainGrid.Background = Brushes.Gray;
         }
 
         private void MainGrid_DragOver(object sender, DragEventArgs e)
         {
-            e.Handled = true;
+            ViewModel.DragOver(e);
+            //e.Handled = true;
 
-            if (IsRequiredFileIncludedInDragDrop)
-            {
-                e.Effects = EffectOk;
-            }
-            else
-            {
-                e.Effects = EffectNok;
-            }
+            //if (IsRequiredFileIncludedInDragDrop)
+            //{
+            //    e.Effects = EffectOk;
+            //}
+            //else
+            //{
+            //    e.Effects = EffectNok;
+            //}
         }
     }
 }

@@ -15,5 +15,19 @@
         DragLeave="Grid_DragLeave"
         Background="Transparent"
         >
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="1" FontSize="40">TEST TO JEST</Label>
+
+        <Border BorderBrush="Black" BorderThickness="1" Background="#80000000" Visibility="{Binding IsDragging}" Grid.RowSpan="3">
+            <Grid>
+                <TextBlock Margin="0" TextWrapping="Wrap" Text="Drop Files Here" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Bold" Foreground="#7EFFFFFF"/>
+            </Grid>
+        </Border>
+
     </Grid>
 </Window>
