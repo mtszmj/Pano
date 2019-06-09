@@ -5,8 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pano"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="MainWindow" Height="450" Width="800"
+        AllowDrop="True">
+    <Grid Name="MainGrid"
+        AllowDrop="True"
+        DragEnter="Grid_DragEnter"
+        DragOver="MainGrid_DragOver"
+        Drop="Grid_Drop"
+        DragLeave="Grid_DragLeave"
+        Background="Transparent"
+        >
     </Grid>
 </Window>
