@@ -13,8 +13,8 @@ namespace Pano.Model
         {
             Hfov = 100;
             AutoLoad = true;
-            AutoRotate = -1;
-            AutoRotateInactivityDelay = 10000;
+            AutoRotate = -0.5f;
+            HotSpotDebug = true;
         }
 
         [JsonIgnore]

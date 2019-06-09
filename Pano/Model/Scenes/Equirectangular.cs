@@ -22,21 +22,21 @@ namespace Pano.Model
         /// This is used if the equirectangular image does not cover a full 360 degrees 
         /// in the horizontal.
         /// </summary>
-        public int Haov { get; set; }
+        public int? Haov { get; set; }
 
         /// <summary>
         /// Sets the panorama’s vertical angle of view, in degrees. Defaults to 180. 
         /// This is used if the equirectangular image does not cover a full 180 degrees 
         /// in the vertical.
         /// </summary>
-        public int Vaov { get; set; }
+        public int? Vaov { get; set; }
 
         /// <summary>
         /// Sets the vertical offset of the center of the equirectangular image from 
         /// the horizon, in degrees. Defaults to 0. This is used if vaov is less than 
         /// 180 and the equirectangular image is not cropped symmetrically.
         /// </summary>
-        public int VOffset { get; set; }
+        public int? VOffset { get; set; }
 
         /// <summary>
         /// If set to true, any embedded Photo Sphere XMP data will be ignored; else, 

@@ -14,7 +14,7 @@ namespace Pano.Model
             get
             {
                 if (Title == null)
-                    return _Guid.ToString();
+                    return _Guid.Value.ToString();
 
                 return System.Text.RegularExpressions.Regex.Replace(Title, @"[^0-9a-zA-Z]+", "");
             }
@@ -62,7 +62,7 @@ namespace Pano.Model
         /// The value specifies the rotation speed in degrees per second. Positive is 
         /// counter-clockwise, and negative is clockwise.
         /// </summary>
-        public int? AutoRotate { get; set; }
+        public float? AutoRotate { get; set; }
 
         /// <summary>
         /// Sets the delay, in milliseconds, to start automatically rotating the panorama 

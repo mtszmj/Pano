@@ -4,10 +4,8 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using Pano.IO;
 using Pano.Model;
-using Pano.Model.Scenes;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 
 namespace Pano.Factories.Tests
 {
@@ -148,18 +146,13 @@ namespace Pano.Factories.Tests
 
             var tour2 = repository.Load<Tour>();
 
-            //other.Strings.OrderBy(kvp => kvp.Key)
-            //                .SequenceEqual(Strings.OrderBy(kvp => kvp.Key))
-
-            foreach(var kvp in tour.Scenes)
+            foreach (var kvp in tour.Scenes)
             {
                 tour2.Scenes.TryGetValue(kvp.Key, out var value);
                 Assert.IsTrue(kvp.Value.Equals(value));
             }
 
             Assert.AreNotEqual(0, tour2.Scenes.Count);
-                
-                //.SequenceEquals(tour2.Scenes.OrderBy(kvp => kvp.Key), new ScenesEqualityComparer()));
         }
 
         [TestMethod()]
@@ -195,9 +188,27 @@ namespace Pano.Factories.Tests
 
             var tour2 = repository.Load<Tour>();
 
-            //other.Strings.OrderBy(kvp => kvp.Key)
-            //                .SequenceEqual(Strings.OrderBy(kvp => kvp.Key))
+            foreach (var kvp in tour.Scenes)
+            {
+                tour2.Scenes.TryGetValue(kvp.Key, out var value);
+                Assert.IsTrue(kvp.Value.Equals(value));
+            }
 
+            Assert.AreNotEqual(0, tour2.Scenes.Count);
+        }
+
+        [TestMethod()]
+        public void CreateProject2Test()
+        {
+            var tour = CreateProject2();
+
+            ISerializer serializer = new Pano.IO.JsonSerializer(new JsonConverter[] { new HotSpotJsonConverter(), new SceneJsonConverter() });
+            IRepository repository = new MemoryRepository(serializer);
+
+            repository.Save(tour);
+
+            var tour2 = repository.Load<Tour>();
+            
             foreach (var kvp in tour.Scenes)
             {
                 tour2.Scenes.TryGetValue(kvp.Key, out var value);
@@ -206,9 +217,11 @@ namespace Pano.Factories.Tests
 
             Assert.AreNotEqual(0, tour2.Scenes.Count);
 
-            //.SequenceEquals(tour2.Scenes.OrderBy(kvp => kvp.Key), new ScenesEqualityComparer()));
-        }
 
+
+            string json = serializer.Serialize(tour);
+            Debug.Write(json);
+        }
 
         private Tour CreateDefaultProject()
         {
@@ -311,6 +324,27 @@ namespace Pano.Factories.Tests
             tour.Default.HotSpotDebug = false;
             tour.Default.AutoLoad = true;
             tour.Default.AutoRotate = 1;
+
+            return tour;
+        }
+
+        private Tour CreateProject2()
+        {
+            var scenes = new Dictionary<string, Scene>
+            {
+                ["salon"] = new Equirectangular { Title = "Salon", Panorama = "p2.jpg" },
+                ["kuchnia"] = new Equirectangular { Title = "Kuchnia", Panorama = "p1.jpg" },
+                ["lazienka"] = new Equirectangular { Title = "Łazienka", Panorama = "p3.jpg" }
+            };
+
+            scenes["kuchnia"].AddSceneHotSpot(scenes["salon"], -17, -138, -14, -48);
+            scenes["kuchnia"].AddSceneHotSpot(scenes["lazienka"], -17, 148, -15, 93);
+
+            var tour = new Tour();
+            foreach (var kv in scenes)
+            {
+                tour.AddScene(kv.Value);
+            }
 
             return tour;
         }

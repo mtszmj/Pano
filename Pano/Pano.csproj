@@ -83,7 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Scenes\Cubemap.cs" />
-    <Compile Include="Model\HotSpots\DefaultScene.cs" />
+    <Compile Include="Model\Scenes\DefaultScene.cs" />
     <Compile Include="Model\Enums.cs" />
     <Compile Include="Model\Scenes\Equirectangular.cs" />
     <Compile Include="Model\HotSpots\HotSpot.cs" />
