@@ -4,25 +4,24 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Pano.ViewModels
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
+        //TODO - converter
         public Visibility IsDragging => IsRequiredFileIncludedInDragDrop ? Visibility.Visible : Visibility.Collapsed;
 
-        private DragDropEffects EffectOk { get; } = DragDropEffects.Copy;
-        private DragDropEffects EffectNok { get; } = DragDropEffects.None;
+        private readonly string[] AllowedExtensions = new[] { ".jpg", ".png" };
 
         private bool _IsRequiredFileIncludedInDragDrop;
-        private bool IsRequiredFileIncludedInDragDrop {
+        public bool IsRequiredFileIncludedInDragDrop
+        {
             get => _IsRequiredFileIncludedInDragDrop;
             set
             {
-                _IsRequiredFileIncludedInDragDrop = value;
+                SetField(ref _IsRequiredFileIncludedInDragDrop, value);
                 OnPropertyChanged(nameof(IsDragging));
             }
         }
@@ -31,68 +30,57 @@ namespace Pano.ViewModels
 
         public void DragEnter(DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            var paths = (string[])e.Data.GetData(DataFormats.FileDrop);
+            
+            if (paths != null)
             {
-                var drop = (string[])e.Data.GetData(DataFormats.FileDrop);
+                var directories = paths.Where(x => Directory.Exists(x));
+                
+                var filesFromDirectories = directories
+                    .SelectMany(x => Directory.EnumerateFiles(x, "*.*", SearchOption.AllDirectories))
+                    .Where(x => AllowedExtensions.Any(ext => x.ToLower().EndsWith(ext)));
+                var files = paths
+                    .Where(x => AllowedExtensions.Any(ext => x.ToLower().EndsWith(ext)))
+                    .Concat(filesFromDirectories);
 
-                var directories = drop.Where(x => Directory.Exists(x));
-                var filesFromDirectories = directories.SelectMany(x => Directory.GetFiles(x, "*.jpg", SearchOption.AllDirectories));
+                IsRequiredFileIncludedInDragDrop = files.Any();
+            }
+        }
 
-                var files = drop.Where(x => x.ToLower().EndsWith(".jpg")).Concat(filesFromDirectories);
+        public void DragOver()
+        {
+        }
+
+        public void DragDrop(DragEventArgs e)
+        {
+            var paths = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+            if (paths != null)
+            {
+                var directories = paths.Where(x => Directory.Exists(x));
+                var filesFromDirectories = directories
+                    .SelectMany(x => Directory.EnumerateFiles(x, "*.*", SearchOption.AllDirectories))
+                    .Where(x => AllowedExtensions.Any(ext => x.ToLower().EndsWith(ext)));
+                var files = paths
+                    .Where(x => AllowedExtensions.Any(ext => x.ToLower().EndsWith(ext)))
+                    .Concat(filesFromDirectories);
 
                 if (files.Any())
                 {
-                    e.Handled = true;
-                    e.Effects = EffectOk;
-                    IsRequiredFileIncludedInDragDrop = true;
-
                     foreach (var file in files)
                     {
                         Console.Out.WriteLine(file);
                     }
                 }
-                else
-                {
-                    e.Handled = true;
-                    e.Effects = EffectNok;
-                    IsRequiredFileIncludedInDragDrop = false;
-                }
             }
-        }
 
-        public void DragOver(DragEventArgs e)
-        {
-            e.Handled = true;
-
-            if (IsRequiredFileIncludedInDragDrop)
-            {
-                e.Effects = EffectOk;
-            }
-            else
-            {
-                e.Effects = EffectNok;
-            }
-        }
-
-        public void DragDrop(DragEventArgs e)
-        {
-            e.Handled = true;
-            if (IsRequiredFileIncludedInDragDrop)
-            {
-                e.Effects = EffectOk;
-            }
-            else
-            {
-                e.Effects = EffectNok;
-            }
             IsRequiredFileIncludedInDragDrop = false;
         }
 
-        public void DragLeave(DragEventArgs e)
+        public void DragLeave()
         {
             IsRequiredFileIncludedInDragDrop = false;
         }
-
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {

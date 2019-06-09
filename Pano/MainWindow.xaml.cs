@@ -22,6 +22,11 @@ namespace Pano
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const DragDropEffects EffectOk = DragDropEffects.Copy;
+        private const DragDropEffects EffectNok = DragDropEffects.None;
+
+        private MainWindowViewModel ViewModel;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -29,91 +34,32 @@ namespace Pano
             DataContext = ViewModel = new MainWindowViewModel();
         }
 
-        MainWindowViewModel ViewModel;
+        private DragDropEffects CurrentEffect() => ViewModel.IsRequiredFileIncludedInDragDrop ? EffectOk : EffectNok;
 
-        //private DragDropEffects EffectOk { get; } = DragDropEffects.Copy;
-        //private DragDropEffects EffectNok { get; } = DragDropEffects.None;
-        //private bool IsRequiredFileIncludedInDragDrop { get; set; }
-
-        //public Visibility IsDragging => IsRequiredFileIncludedInDragDrop ? Visibility.Visible : Visibility.Collapsed; 
-               
         private void Grid_DragEnter(object sender, DragEventArgs e)
         {
             ViewModel.DragEnter(e);
 
-            //MainGrid.Background = Brushes.Aquamarine;
-
-
-
-            //if(e.Data.GetDataPresent(DataFormats.FileDrop))
-            //{
-            //    var drop = (string[])e.Data.GetData(DataFormats.FileDrop);
-
-            //    var directories = drop.Where(x => Directory.Exists(x));
-            //    var filesFromDirectories = directories.SelectMany(x => Directory.GetFiles(x, "*.jpg", SearchOption.AllDirectories));
-
-            //    var files = drop.Where(x => x.ToLower().EndsWith(".jpg")).Concat(filesFromDirectories);
-
-
-
-            //    if(files.Any())
-            //    {
-            //        e.Handled = true;
-            //        e.Effects = EffectOk;
-            //        IsRequiredFileIncludedInDragDrop = true;
-
-            //        foreach (var file in files)
-            //        {
-            //            Console.Out.WriteLine(file);
-            //        }
-            //    }
-            //    else
-            //    {
-            //        e.Handled = true;
-            //        e.Effects = EffectNok;
-            //        IsRequiredFileIncludedInDragDrop = false;
-            //    }
-            //}
+            e.Handled = true;
+            e.Effects = CurrentEffect();
         }
 
         private void Grid_Drop(object sender, DragEventArgs e)
         {
             ViewModel.DragDrop(e);
-
-            //e.Handled = true;
-            //if (IsRequiredFileIncludedInDragDrop)
-            //{
-            //    e.Effects = EffectOk;
-            //}
-            //else
-            //{
-            //    e.Effects = EffectNok;
-            //}
-            
-            //this.MainGrid.Background = Brushes.Red;
         }
 
         private void Grid_DragLeave(object sender, DragEventArgs e)
         {
-            ViewModel.DragLeave(e);
-            //IsRequiredFileIncludedInDragDrop = false;
-
-            //this.MainGrid.Background = Brushes.Gray;
+            ViewModel.DragLeave();
         }
 
         private void MainGrid_DragOver(object sender, DragEventArgs e)
         {
-            ViewModel.DragOver(e);
-            //e.Handled = true;
+            ViewModel.DragOver();
 
-            //if (IsRequiredFileIncludedInDragDrop)
-            //{
-            //    e.Effects = EffectOk;
-            //}
-            //else
-            //{
-            //    e.Effects = EffectNok;
-            //}
+            e.Handled = true;
+            e.Effects = CurrentEffect();
         }
     }
 }
