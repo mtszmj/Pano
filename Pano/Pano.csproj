@@ -60,6 +60,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\HotSpots\IHotSpot.cs" />
+    <Compile Include="Model\Scenes\IScene.cs" />
     <Compile Include="ViewModels\HotSpots\SceneHotSpotViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />

@@ -39,21 +39,7 @@ namespace Pano.Model
         /// Specifies the HFOV of the target scene, in degrees.
         /// </summary>
         public int? TargetHfov { get; set; }
-
-        public override bool Equals(HotSpot obj)
-        {
-            if (!base.Equals(obj))
-                return false;
-
-            if (!(obj is SceneHotSpot scene))
-                return false;
-
-            return SceneId == scene.SceneId
-                && TargetPitch == scene.TargetPitch
-                && TargetYaw == scene.TargetYaw
-                && TargetHfov == scene.TargetHfov;
-        }
-
+        
         #region Equals
         public override bool Equals(object obj)
         {
@@ -69,6 +55,21 @@ namespace Pano.Model
 
             return Equals((SceneHotSpot)obj);
         }
+
+        public override bool Equals(IHotSpot obj)
+        {
+            if (!base.Equals(obj))
+                return false;
+
+            if (!(obj is SceneHotSpot scene))
+                return false;
+
+            return SceneId == scene.SceneId
+                && TargetPitch == scene.TargetPitch
+                && TargetYaw == scene.TargetYaw
+                && TargetHfov == scene.TargetHfov;
+        }
+
         public bool Equals(SceneHotSpot obj)
         {
             if (obj == null)

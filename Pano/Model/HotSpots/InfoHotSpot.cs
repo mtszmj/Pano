@@ -18,7 +18,7 @@ namespace Pano.Model
         /// </summary>
         public string URL { get; set; }
 
-        public override bool Equals(HotSpot obj)
+        public override bool Equals(IHotSpot obj)
         {
             if (!base.Equals(obj))
                 return false;

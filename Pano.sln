@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pano", "Pano\Pano.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PanoTests", "PanoTests\PanoTests.csproj", "{73CAF162-D701-469C-8A17-F0225F30A07A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pano.UnitTests", "Pano.UnitTests\Pano.UnitTests.csproj", "{49177630-1C1E-450D-8791-AFB761687352}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{73CAF162-D701-469C-8A17-F0225F30A07A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73CAF162-D701-469C-8A17-F0225F30A07A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73CAF162-D701-469C-8A17-F0225F30A07A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49177630-1C1E-450D-8791-AFB761687352}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49177630-1C1E-450D-8791-AFB761687352}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49177630-1C1E-450D-8791-AFB761687352}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49177630-1C1E-450D-8791-AFB761687352}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

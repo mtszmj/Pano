@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pano.Model
 {
-    public abstract class Scene : IEquatable<Scene>
+    public abstract class Scene : IScene
     {
         private Lazy<string> _Guid { get; } = new Lazy<string>(() => Guid.NewGuid().ToString());
 
@@ -90,7 +90,7 @@ namespace Pano.Model
         /// if the device supports it. If false, device orientation control needs to be activated 
         /// by pressing a button. Defaults to false.
         /// </summary>
-        public string OrientationOnByDefault { get; set; }
+        public bool? OrientationOnByDefault { get; set; }
 
         /// <summary>
         /// If set to false, the zoom controls will not be displayed. Defaults to true.
@@ -213,12 +213,12 @@ namespace Pano.Model
         /// <summary>
         /// Specifies pitch of image horizon, in degrees (for correcting non-leveled panoramas).
         /// </summary>
-        public string HorizonPitch { get; set; }
+        public int? HorizonPitch { get; set; }
 
         /// <summary>
         /// Specifies roll of image horizon, in degrees (for correcting non-leveled panoramas).
         /// </summary>
-        public string HorizonRoll { get; set; }
+        public int? HorizonRoll { get; set; }
 
         //This specifies a timing function to be used for animating movements such as when 
         //the lookAt method is called. The default timing function is easeInOutQuad. If a 
@@ -244,7 +244,7 @@ namespace Pano.Model
         /// This specifies an array of hot spots that can be links to other scenes, 
         /// information, or external links. Each array element has the following properties.
         /// </summary>
-        public List<HotSpot> HotSpots { get; } = new List<HotSpot>();
+        public List<IHotSpot> HotSpots { get; } = new List<IHotSpot>();
 
         /// <summary>
         /// When true, the mouse pointer’s pitch and yaw are logged to the console when 
@@ -270,23 +270,31 @@ namespace Pano.Model
         #endregion
 
         #region Methods
-        public void AddSceneHotSpot(Scene scene, int pitch = 0, int yaw = 0, int pitchBack = 0, int yawBack = 0)
+        public void AddSceneHotSpot(IScene scene, int pitch = 0, int yaw = 0, int pitchBack = 0, int yawBack = 0)
         {
-            //TODO check if connection exists
             var spot = new SceneHotSpot(Id, scene.Id);
             spot.Text = scene.Title;
             spot.Pitch = pitch;
             spot.Yaw = yaw;
-            this.HotSpots.Add(spot);
+            AddHotSpot(spot);
 
             spot = new SceneHotSpot(Id, this.Id);
             spot.Text = this.Title;
             spot.Pitch = pitchBack;
             spot.Yaw = yawBack;
-            scene.HotSpots.Add(spot);
+            scene.AddHotSpot(spot);
         }
 
-        public virtual bool Equals(Scene other)
+        public bool AddHotSpot(IHotSpot spot)
+        {
+            if (spot == null || HotSpots.Contains(spot))
+                return false;
+
+            HotSpots.Add(spot);
+            return true;
+        }
+
+        public virtual bool Equals(IScene other)
         {
             if (other == null)
                 return false;
@@ -337,7 +345,20 @@ namespace Pano.Model
                 && other.HotSpots.OrderBy(x => x.Id).SequenceEqual(HotSpots.OrderBy(x => x.Id), HotSpot.GetDefaultEqualityComparer())
                 ;       
         }
+        public static bool operator ==(Scene left, Scene right)
+        {
+            if (left is null)
+            {
+                return (right is null);
+            }
 
+            return (left.Equals(right));
+        }
+
+        public static bool operator !=(Scene left, Scene right)
+        {
+            return !(left == right);
+        }
         #endregion
     }
 }

@@ -50,7 +50,7 @@ namespace Pano.Model
         /// </summary>
         public float[] BackgroundColor { get; set; } = { 0, 0, 0 };
 
-        public override bool Equals(Scene other)
+        public override bool Equals(IScene other)
         {
             if (!base.Equals(other))
                 return false;

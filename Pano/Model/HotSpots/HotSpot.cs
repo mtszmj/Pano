@@ -8,7 +8,7 @@ namespace Pano.Model
     /// This specifies an array of hot spots that can be links to other scenes, information, or external links.
     /// Each array element has the following properties. 
     /// </summary>
-    public abstract class HotSpot : IEquatable<HotSpot>
+    public abstract class HotSpot : IHotSpot
     {
         private readonly string _Id;
 
@@ -58,7 +58,7 @@ namespace Pano.Model
         //hot spot’s click event. The event object and the contents of clickHandlerArgs are passed 
         //to the function as arguments.
 
-        public static IEqualityComparer<HotSpot> GetDefaultEqualityComparer() => new HotSpotEqualityComparer();
+        public static IEqualityComparer<IHotSpot> GetDefaultEqualityComparer() => new HotSpotEqualityComparer();
 
         #region Equals
 
@@ -73,9 +73,9 @@ namespace Pano.Model
             {
                 return false;
             }
-            return Equals((HotSpot)obj);
+            return Equals((IHotSpot)obj);
         }
-        public virtual bool Equals(HotSpot obj)
+        public virtual bool Equals(IHotSpot obj)
         {
             if (obj == null)
             {
@@ -85,6 +85,11 @@ namespace Pano.Model
             if (ReferenceEquals(this, obj))
             {
                 return true;
+            }
+
+            if (this.GetType() != obj.GetType())
+            {
+                return false;
             }
 
             //if (GetHashCode() != obj.GetHashCode())
