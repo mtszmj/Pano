@@ -272,16 +272,25 @@ namespace Pano.Model
         #region Methods
         public void AddSceneHotSpot(IScene scene, int pitch = 0, int yaw = 0, int pitchBack = 0, int yawBack = 0)
         {
-            var spot = new SceneHotSpot(Id, scene.Id);
-            spot.Text = scene.Title;
-            spot.Pitch = pitch;
-            spot.Yaw = yaw;
+            if(scene == null)
+            {
+                throw new ArgumentNullException(nameof(scene));
+            }
+
+            var spot = new SceneHotSpot(Id, scene.Id)
+            {
+                Text = scene.Title,
+                Pitch = pitch,
+                Yaw = yaw
+            };
             AddHotSpot(spot);
 
-            spot = new SceneHotSpot(Id, this.Id);
-            spot.Text = this.Title;
-            spot.Pitch = pitchBack;
-            spot.Yaw = yawBack;
+            spot = new SceneHotSpot(Id, this.Id)
+            {
+                Text = this.Title,
+                Pitch = pitchBack,
+                Yaw = yawBack
+            };
             scene.AddHotSpot(spot);
         }
 
