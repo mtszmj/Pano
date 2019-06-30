@@ -11,8 +11,10 @@ namespace Pano.IO
 {
     public class JsonSerializer : ISerializer
     {
+        private const Formatting FORMATTING = Formatting.Indented;
         private readonly JsonSerializerSettings _Settings;
 
+        //TODO zmienic na builder / factory
         public JsonSerializer(IEnumerable<JsonConverter> converters = null, JsonSerializerSettings settings = null)
         {
             _Settings = settings ?? new JsonSerializerSettings
@@ -22,7 +24,7 @@ namespace Pano.IO
                 Converters = new List<JsonConverter> { new StringEnumConverter { NamingStrategy = new CamelCaseNamingStrategy() } },
             };
 
-            foreach(var converter in converters)
+            foreach(var converter in converters ?? Enumerable.Empty<JsonConverter>())
             {
                 _Settings.Converters.Add(converter);
             }
@@ -35,7 +37,7 @@ namespace Pano.IO
 
         public string Serialize<T>(T obj)
         {
-            return JsonConvert.SerializeObject(obj, Formatting.Indented, _Settings);
+            return JsonConvert.SerializeObject(obj, FORMATTING, _Settings);
         }
     }
 }

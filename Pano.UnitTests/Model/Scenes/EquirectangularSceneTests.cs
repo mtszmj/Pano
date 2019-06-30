@@ -1338,7 +1338,7 @@ namespace Pano.UnitTests.Model.Scenes
         }
 
         [Test]
-        public void AddSceneHotSpot_Null_ThrowsException()
+        public void AddSceneHotSpot_SceneIsNull_ThrowsException()
         {
             var scene = new Equirectangular();
 
