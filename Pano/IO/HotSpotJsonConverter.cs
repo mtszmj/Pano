@@ -11,9 +11,11 @@ namespace Pano.IO
 {
     public class HotSpotJsonConverter : JsonConverter
     {
+        public HotSpotJsonConverter(IJObjectParser parser) { }
+
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(HotSpot);
+            return typeof(IHotSpot).IsAssignableFrom(objectType);
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, Newtonsoft.Json.JsonSerializer serializer)

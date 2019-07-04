@@ -62,6 +62,7 @@
     <Compile Include="Factories\HotSpotFactoryTests.cs" />
     <Compile Include="Factories\ScenesFactoryTests.cs" />
     <Compile Include="Factories\TourFactoryTests.cs" />
+    <Compile Include="IO\HotSpotJsonConverterTests.cs" />
     <Compile Include="IO\JsonSerializerTests.cs" />
     <Compile Include="Model\HotSpots\HotSpotEqualityComparerTests.cs" />
     <Compile Include="Model\HotSpots\InfoHotSpotTests.cs" />

@@ -60,6 +60,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="IO\IJObjectParser.cs" />
+    <Compile Include="IO\JObjectParser.cs" />
     <Compile Include="Model\HotSpots\IHotSpot.cs" />
     <Compile Include="Model\Scenes\IScene.cs" />
     <Compile Include="ViewModels\HotSpots\SceneHotSpotViewModel.cs" />
