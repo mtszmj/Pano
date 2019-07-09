@@ -10,6 +10,7 @@ namespace Pano.IO
 {
     public interface IJObjectParser
     {
-        TEnum TryParseEnum<TEnum>(JsonReader reader, string property) where TEnum: struct, IComparable, IFormattable, IConvertible;
+        TEnum TryParseEnum<TEnum>(JsonReader reader, string property) where TEnum : struct, IComparable, IFormattable, IConvertible;
+        T ToObject<T>(JsonReader reader, Newtonsoft.Json.JsonSerializer serializer) where T : class;
     }
 }

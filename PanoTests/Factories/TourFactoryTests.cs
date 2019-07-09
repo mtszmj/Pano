@@ -139,7 +139,7 @@ namespace Pano.Factories.Tests
         public void CreateDefaultProjectTest2()
         {
             var tour = CreateDefaultProject();
-            ISerializer serializer = new Pano.IO.JsonSerializer(new JsonConverter[] { new HotSpotJsonConverter(new JObjectParser()), new SceneJsonConverter() });
+            ISerializer serializer = new Pano.IO.JsonSerializer(new JsonConverter[] { new HotSpotJsonConverter(new JObjectParser()), new SceneJsonConverter(new JObjectParser()) });
             IRepository repository = new MemoryRepository(serializer);
 
             repository.Save(tour);
@@ -181,7 +181,7 @@ namespace Pano.Factories.Tests
             tour.AddScene(komorka);
 
 
-            ISerializer serializer = new Pano.IO.JsonSerializer(new JsonConverter[] { new HotSpotJsonConverter(new JObjectParser()), new SceneJsonConverter() });
+            ISerializer serializer = new Pano.IO.JsonSerializer(new JsonConverter[] { new HotSpotJsonConverter(new JObjectParser()), new SceneJsonConverter(new JObjectParser()) });
             IRepository repository = new MemoryRepository(serializer);
 
             repository.Save(tour);
@@ -202,7 +202,7 @@ namespace Pano.Factories.Tests
         {
             var tour = CreateProject2();
 
-            ISerializer serializer = new Pano.IO.JsonSerializer(new JsonConverter[] { new HotSpotJsonConverter(new JObjectParser()), new SceneJsonConverter() });
+            ISerializer serializer = new Pano.IO.JsonSerializer(new JsonConverter[] { new HotSpotJsonConverter(new JObjectParser()), new SceneJsonConverter(new JObjectParser()) });
             IRepository repository = new MemoryRepository(serializer);
 
             repository.Save(tour);

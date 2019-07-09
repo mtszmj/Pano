@@ -11,7 +11,12 @@ namespace Pano.IO
 {
     public class HotSpotJsonConverter : JsonConverter
     {
-        public HotSpotJsonConverter(IJObjectParser parser) { }
+        private const string TypePropertyName = "type";
+        private readonly IJObjectParser parser;
+
+        public HotSpotJsonConverter(IJObjectParser parser) {
+            this.parser = parser;
+        }
 
         public override bool CanConvert(Type objectType)
         {
@@ -20,16 +25,20 @@ namespace Pano.IO
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, Newtonsoft.Json.JsonSerializer serializer)
         {
-            JObject jo = JObject.Load(reader);
+            //JObject jo = JObject.Load(reader);
 
-            var value = jo["type"].Value<string>().Normalize();
-            var hotSpotType = Enum.TryParse<HotSpotType>(value, out var result);
+            //var value = jo["type"].Value<string>().Normalize();
+            //var hotSpotType = Enum.TryParse<HotSpotType>(value, out var result);
+
+            var result = parser.TryParseEnum<HotSpotType>(reader, TypePropertyName);
 
             if (result == HotSpotType.Info)
-                return jo.ToObject<InfoHotSpot>(serializer);
+                //return jo.ToObject<InfoHotSpot>(serializer);
+                return parser.ToObject<InfoHotSpot>(reader, serializer);
 
             if (result == HotSpotType.Scene)
-                return jo.ToObject<SceneHotSpot>(serializer);
+                //return jo.ToObject<SceneHotSpot>(serializer);
+                return parser.ToObject<SceneHotSpot>(reader, serializer);
 
             throw new ArgumentException("Incorrect conversion");
         }

@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="IO\HotSpotJsonConverterTests.cs" />
     <Compile Include="IO\JsonSerializerTests.cs" />
+    <Compile Include="IO\SceneJsonConverterTests.cs" />
     <Compile Include="Model\HotSpots\HotSpotEqualityComparerTests.cs" />
     <Compile Include="Model\HotSpots\InfoHotSpotTests.cs" />
     <Compile Include="Model\HotSpots\SceneHotSpotTests.cs" />

@@ -11,26 +11,36 @@ namespace Pano.IO
 {
     public class SceneJsonConverter : JsonConverter
     {
+        private const string TypePropertyName = "type";
+        private readonly IJObjectParser parser;
+
+        public SceneJsonConverter(IJObjectParser parser)
+        {
+            this.parser = parser;
+        }
+
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(Scene);
+            return typeof(IScene).IsAssignableFrom(objectType);
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, Newtonsoft.Json.JsonSerializer serializer)
         {
-            JObject jo = JObject.Load(reader);
+            //JObject jo = JObject.Load(reader);
 
-            var value = jo["type"].Value<string>().Normalize();
-            var hotSpotType = Enum.TryParse<PanoramaType>(value, out var result);
+            //var value = jo["type"].Value<string>().Normalize();
+            //var hotSpotType = Enum.TryParse<PanoramaType>(value, out var result);
+
+            var result = parser.TryParseEnum<PanoramaType>(reader, TypePropertyName);
 
             if (result == PanoramaType.Equirectangular)
-                return jo.ToObject<Equirectangular>(serializer);
+                return parser.ToObject<Equirectangular>(reader, serializer);
 
             if (result == PanoramaType.Multires)
-                return jo.ToObject<Multires>(serializer);
+                return parser.ToObject<Multires>(reader, serializer);
 
             if (result == PanoramaType.Cubemap)
-                return jo.ToObject<Cubemap>(serializer);
+                return parser.ToObject<Cubemap>(reader, serializer);
 
             throw new ArgumentException("Incorrect conversion");
         }

@@ -21,7 +21,7 @@ namespace Pano.IO.Tests
             spot.Pitch = 90;
             spot.Yaw = 10;
 
-            var serializer = new JsonSerializer(new JsonConverter[] { new HotSpotJsonConverter(new JObjectParser()), new SceneJsonConverter() });
+            var serializer = new JsonSerializer(new JsonConverter[] { new HotSpotJsonConverter(new JObjectParser()), new SceneJsonConverter(new JObjectParser()) });
             var json = serializer.Serialize(spot);
 
             HotSpot spotDes = //JsonConvert.DeserializeObject<HotSpot>(json, new HotSpotJsonConverter());

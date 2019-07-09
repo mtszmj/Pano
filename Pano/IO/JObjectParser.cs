@@ -10,13 +10,19 @@ namespace Pano.IO
 {
     public class JObjectParser : IJObjectParser
     {
-        public T TryParseEnum<T>(JsonReader reader, string property) where T : struct, IComparable, IFormattable, IConvertible
+        public TEnum TryParseEnum<TEnum>(JsonReader reader, string property) where TEnum : struct, IComparable, IFormattable, IConvertible
         {
             JObject jo = JObject.Load(reader);
-            var value = jo["type"].Value<string>().Normalize();
-            var hotSpotType = Enum.TryParse<T>(value, out var result);
+            var value = jo[property].Value<string>().Normalize();
+            var hotSpotType = Enum.TryParse<TEnum>(value, out var result);
 
             return result;
+        }
+
+        public T ToObject<T>(JsonReader reader, Newtonsoft.Json.JsonSerializer serializer) where T : class
+        {
+            JObject jo = JObject.Load(reader);
+            return jo.ToObject<T>(serializer);
         }
     }
 }

@@ -15,10 +15,54 @@ namespace Pano.UnitTests.IO
     [TestFixture]
     public class HotSpotJsonConverterTests
     {
-        [Test]
-        public void ReadJson_InfoHotSpot_ReturnCorrectObject()
+        [TestCase("test_id")]
+        public void ReadJson_InfoHotSpot_ReturnCorrectObject(string id)
         {
-            throw new NotImplementedException();
+            var mock = new Mock<IJObjectParser>();
+            mock.Setup(x => x.TryParseEnum<HotSpotType>(It.IsAny<JsonReader>(), It.IsAny<string>()))
+                .Returns(HotSpotType.Info);
+            mock.Setup(x => x.ToObject<InfoHotSpot>(It.IsAny<JsonReader>(), It.IsAny<Newtonsoft.Json.JsonSerializer>()))
+                .Returns(new InfoHotSpot(id));
+
+            var converter = new HotSpotJsonConverter(mock.Object);
+            var obj = converter.ReadJson(null, null, null, null);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(obj.GetType() == typeof(InfoHotSpot), Is.True);
+                Assert.That(obj is null, Is.False);
+            });
+        }
+
+        [TestCase("test_id", "test_scene_id")]
+        public void ReadJson_SceneHotSpot_ReturnCorrectObject(string id, string sceneId)
+        {
+            var mock = new Mock<IJObjectParser>();
+            mock.Setup(x => x.TryParseEnum<HotSpotType>(It.IsAny<JsonReader>(), It.IsAny<string>()))
+                .Returns(HotSpotType.Scene);
+            mock.Setup(x => x.ToObject<SceneHotSpot>(It.IsAny<JsonReader>(), It.IsAny<Newtonsoft.Json.JsonSerializer>()))
+                .Returns(new SceneHotSpot(id, sceneId));
+
+            var converter = new HotSpotJsonConverter(mock.Object);
+            var obj = converter.ReadJson(null, null, null, null);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(obj.GetType() == typeof(SceneHotSpot));
+                Assert.That(obj is null, Is.False);
+            });
+        }
+
+        [Test]
+        public void ReadJson_UnknownHotSpot_ReturnException()
+        {
+            var mock = new Mock<IJObjectParser>();
+            mock.Setup(x => x.TryParseEnum<HotSpotType>(It.IsAny<JsonReader>(), It.IsAny<string>()))
+                .Returns(null);
+
+            var converter = new HotSpotJsonConverter(mock.Object);
+
+            Assert.Throws<ArgumentException>(() => converter.ReadJson(null, null, null, null));
         }
 
         [Test]
