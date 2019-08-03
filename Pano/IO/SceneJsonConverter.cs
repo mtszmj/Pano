@@ -12,6 +12,7 @@ namespace Pano.IO
     public class SceneJsonConverter : JsonConverter
     {
         private const string TypePropertyName = "type";
+        private const string FirstScenePropertyName = "firstScene";
         private readonly IJObjectParser parser;
 
         public SceneJsonConverter(IJObjectParser parser)
@@ -26,29 +27,31 @@ namespace Pano.IO
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, Newtonsoft.Json.JsonSerializer serializer)
         {
-            //JObject jo = JObject.Load(reader);
+            var jobject = parser.Load(reader);
+            var result = parser.TryParseEnum<PanoramaType>(jobject, TypePropertyName);
 
-            //var value = jo["type"].Value<string>().Normalize();
-            //var hotSpotType = Enum.TryParse<PanoramaType>(value, out var result);
-
-            var result = parser.TryParseEnum<PanoramaType>(reader, TypePropertyName);
+            if (IsOfDefaultSceneType(jobject))
+                return parser.CreateAndPopulateObject<DefaultScene>(reader, serializer);
 
             if (result == PanoramaType.Equirectangular)
-                return parser.ToObject<Equirectangular>(reader, serializer);
+                return parser.CreateAndPopulateObject<Equirectangular>(reader, serializer);
 
             if (result == PanoramaType.Multires)
-                return parser.ToObject<Multires>(reader, serializer);
+                return parser.CreateAndPopulateObject<Multires>(reader, serializer);
 
             if (result == PanoramaType.Cubemap)
-                return parser.ToObject<Cubemap>(reader, serializer);
+                return parser.CreateAndPopulateObject<Cubemap>(reader, serializer);
 
             throw new ArgumentException("Incorrect conversion");
         }
 
-        public override bool CanWrite
+        private bool IsOfDefaultSceneType(JObject jo)
         {
-            get { return false; }
+            var firstScene = parser.TryParse<string>(jo, FirstScenePropertyName);
+            return !(firstScene is null);
         }
+
+        public override bool CanWrite => false;
 
         public override void WriteJson(JsonWriter writer, object value, Newtonsoft.Json.JsonSerializer serializer)
         {

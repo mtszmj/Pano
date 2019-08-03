@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,19 +11,53 @@ namespace Pano.IO
 {
     public class JObjectParser : IJObjectParser
     {
-        public TEnum TryParseEnum<TEnum>(JsonReader reader, string property) where TEnum : struct, IComparable, IFormattable, IConvertible
+        private JObject jo;
+
+        public JObject Load(JsonReader reader)
         {
-            JObject jo = JObject.Load(reader);
+            return jo = JObject.Load(reader);
+        }
+
+        public TEnum TryParseEnum<TEnum>(JObject jo, string property)
+            where TEnum : struct, IComparable, IFormattable, IConvertible
+        {
+//            JObject jo = JObject.Load(reader);
             var value = jo[property].Value<string>().Normalize();
-            var hotSpotType = Enum.TryParse<TEnum>(value, out var result);
+            Enum.TryParse<TEnum>(value, true, out var result);
 
             return result;
         }
 
-        public T ToObject<T>(JsonReader reader, Newtonsoft.Json.JsonSerializer serializer) where T : class
+        public T CreateAndPopulateObject<T>(JsonReader reader, Newtonsoft.Json.JsonSerializer serializer) where T : class, new()
         {
-            JObject jo = JObject.Load(reader);
-            return jo.ToObject<T>(serializer);
+            var obj = new T();
+            serializer.Populate(jo.CreateReader(), obj);
+            return obj;
+
+            //            JObject joo = JObject.Load(reader);
+//            return jo.CreateAndPopulateObject<T>(serializer);
+//            return serializer.Deserialize<T>(reader);
+
+        }
+
+        public T TryParse<T>(JObject jo, string property)
+        {
+//            JObject jo = JObject.Load(reader);
+            var value = jo[property]?.Value<string>()?.Normalize();
+            if (value is null)
+            {
+                return default;
+            }
+
+            try
+            {
+                var converter = TypeDescriptor.GetConverter(typeof(T));
+                return (T) converter.ConvertFromString(value);
+            }
+            catch (NotSupportedException)
+            {
+                return default;
+            }
         }
     }
 }

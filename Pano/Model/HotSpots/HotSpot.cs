@@ -10,11 +10,11 @@ namespace Pano.Model
     /// </summary>
     public abstract class HotSpot : IHotSpot
     {
-        private readonly string _Id;
+        protected HotSpot() { }
 
-        public HotSpot(string id)
+        protected HotSpot(string id)
         {
-            _Id = id;
+            Id = id;
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Pano.Model
         /// <summary>
         /// Specifies hot spot ID, for use with API’s removeHotSpot function.
         /// </summary>
-        public string Id { get => _Id; }
+        public string Id { get; set; }
 
         /// <summary>
         /// If specified, string is used as the CSS class for the hot spot instead of the default CSS classes.

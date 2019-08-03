@@ -9,6 +9,8 @@ namespace Pano.Model
 {
     public class SceneHotSpot : HotSpot
     {
+        public SceneHotSpot() : base() { }
+
         public SceneHotSpot(string id, string sceneId) : base(id)
         {
             SceneId = sceneId;

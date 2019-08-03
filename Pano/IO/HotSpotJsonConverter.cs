@@ -25,28 +25,19 @@ namespace Pano.IO
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, Newtonsoft.Json.JsonSerializer serializer)
         {
-            //JObject jo = JObject.Load(reader);
-
-            //var value = jo["type"].Value<string>().Normalize();
-            //var hotSpotType = Enum.TryParse<HotSpotType>(value, out var result);
-
-            var result = parser.TryParseEnum<HotSpotType>(reader, TypePropertyName);
+            var jobject = parser.Load(reader);
+            var result = parser.TryParseEnum<HotSpotType>(jobject, TypePropertyName);
 
             if (result == HotSpotType.Info)
-                //return jo.ToObject<InfoHotSpot>(serializer);
-                return parser.ToObject<InfoHotSpot>(reader, serializer);
+                return parser.CreateAndPopulateObject<InfoHotSpot>(reader, serializer);
 
             if (result == HotSpotType.Scene)
-                //return jo.ToObject<SceneHotSpot>(serializer);
-                return parser.ToObject<SceneHotSpot>(reader, serializer);
+                return parser.CreateAndPopulateObject<SceneHotSpot>(reader, serializer);
 
             throw new ArgumentException("Incorrect conversion");
         }
 
-        public override bool CanWrite
-        {
-            get { return false; }
-        }
+        public override bool CanWrite => false;
 
         public override void WriteJson(JsonWriter writer, object value, Newtonsoft.Json.JsonSerializer serializer)
         {

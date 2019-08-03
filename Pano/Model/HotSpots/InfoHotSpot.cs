@@ -8,6 +8,8 @@ namespace Pano.Model
 {
     public class InfoHotSpot : HotSpot
     {
+        public InfoHotSpot() : base() { }
+
         public InfoHotSpot(string id) : base(id) { }
 
         public override HotSpotType Type => HotSpotType.Info;

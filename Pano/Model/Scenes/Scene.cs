@@ -26,7 +26,7 @@ namespace Pano.Model
         /// This specifies the panorama type. Can be equirectangular, cubemap, or multires. 
         /// Defaults to equirectangular.
         /// </summary>
-        public abstract PanoramaType Type { get; }
+        public virtual PanoramaType Type { get; protected set; }
 
         /// <summary>
         /// If set, the value is displayed as the panorama’s title. If no title is desired, 

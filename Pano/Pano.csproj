@@ -64,6 +64,10 @@
     <Compile Include="IO\JObjectParser.cs" />
     <Compile Include="Model\HotSpots\IHotSpot.cs" />
     <Compile Include="Model\Scenes\IScene.cs" />
+    <Compile Include="Temporary\TempCube.cs" />
+    <Compile Include="Temporary\TempEqui.cs" />
+    <Compile Include="Temporary\TempJsonConverter.cs" />
+    <Compile Include="Temporary\TempScene.cs" />
     <Compile Include="ViewModels\HotSpots\SceneHotSpotViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace Pano.UnitTests.IO
 {
@@ -18,9 +19,9 @@ namespace Pano.UnitTests.IO
         public void ReadJson_CubemapPanorama_ReturnCorrectObject(string id)
         {
             var mock = new Mock<IJObjectParser>();
-            mock.Setup(x => x.TryParseEnum<PanoramaType>(It.IsAny<JsonReader>(), It.IsAny<string>()))
+            mock.Setup(x => x.TryParseEnum<PanoramaType>(It.IsAny<JObject>(), It.IsAny<string>()))
                 .Returns(PanoramaType.Cubemap);
-            mock.Setup(x => x.ToObject<Cubemap>(It.IsAny<JsonReader>(), It.IsAny<Newtonsoft.Json.JsonSerializer>()))
+            mock.Setup(x => x.CreateAndPopulateObject<Cubemap>(It.IsAny<JsonReader>(), It.IsAny<Newtonsoft.Json.JsonSerializer>()))
                 .Returns(new Cubemap());
 
             var converter = new SceneJsonConverter(mock.Object);
@@ -28,8 +29,8 @@ namespace Pano.UnitTests.IO
 
             Assert.Multiple(() =>
             {
-                Assert.That(obj.GetType() == typeof(Cubemap), Is.True);
                 Assert.That(obj is null, Is.False);
+                Assert.That(obj.GetType() == typeof(Cubemap), Is.True);
             });
         }
 
@@ -37,9 +38,9 @@ namespace Pano.UnitTests.IO
         public void ReadJson_EquirectangularPanorama_ReturnCorrectObject(string id, string sceneId)
         {
             var mock = new Mock<IJObjectParser>();
-            mock.Setup(x => x.TryParseEnum<PanoramaType>(It.IsAny<JsonReader>(), It.IsAny<string>()))
+            mock.Setup(x => x.TryParseEnum<PanoramaType>(It.IsAny<JObject>(), It.IsAny<string>()))
                 .Returns(PanoramaType.Equirectangular);
-            mock.Setup(x => x.ToObject<Equirectangular>(It.IsAny<JsonReader>(), It.IsAny<Newtonsoft.Json.JsonSerializer>()))
+            mock.Setup(x => x.CreateAndPopulateObject<Equirectangular>(It.IsAny<JsonReader>(), It.IsAny<Newtonsoft.Json.JsonSerializer>()))
                 .Returns(new Equirectangular());
 
             var converter = new SceneJsonConverter(mock.Object);
@@ -47,8 +48,8 @@ namespace Pano.UnitTests.IO
 
             Assert.Multiple(() =>
             {
-                Assert.That(obj.GetType() == typeof(Equirectangular), Is.True);
                 Assert.That(obj is null, Is.False);
+                Assert.That(obj.GetType() == typeof(Equirectangular), Is.True);
             });
         }
 
@@ -56,9 +57,9 @@ namespace Pano.UnitTests.IO
         public void ReadJson_MultiresPanorama_ReturnCorrectObject(string id, string sceneId)
         {
             var mock = new Mock<IJObjectParser>();
-            mock.Setup(x => x.TryParseEnum<PanoramaType>(It.IsAny<JsonReader>(), It.IsAny<string>()))
+            mock.Setup(x => x.TryParseEnum<PanoramaType>(It.IsAny<JObject>(), It.IsAny<string>()))
                 .Returns(PanoramaType.Multires);
-            mock.Setup(x => x.ToObject<Multires>(It.IsAny<JsonReader>(), It.IsAny<Newtonsoft.Json.JsonSerializer>()))
+            mock.Setup(x => x.CreateAndPopulateObject<Multires>(It.IsAny<JsonReader>(), It.IsAny<Newtonsoft.Json.JsonSerializer>()))
                 .Returns(new Multires());
 
             var converter = new SceneJsonConverter(mock.Object);
@@ -66,8 +67,29 @@ namespace Pano.UnitTests.IO
 
             Assert.Multiple(() =>
             {
-                Assert.That(obj.GetType() == typeof(Multires), Is.True);
                 Assert.That(obj is null, Is.False);
+                Assert.That(obj.GetType() == typeof(Multires), Is.True);
+            });
+        }
+
+        [Test]
+        public void ReadJson_DefaultScene_ReturnCorrectObject()
+        {
+            var mock = new Mock<IJObjectParser>();
+            mock.Setup(x => x.TryParseEnum<PanoramaType>(It.IsAny<JObject>(), It.IsAny<string>()))
+                .Returns(PanoramaType.Unknown);
+            mock.Setup(x => x.TryParse<string>(It.IsAny<JObject>(), It.IsAny<string>()))
+                .Returns("");
+            mock.Setup(x => x.CreateAndPopulateObject<DefaultScene>(It.IsAny<JsonReader>(), It.IsAny<Newtonsoft.Json.JsonSerializer>()))
+                .Returns(new DefaultScene());
+
+            var converter = new SceneJsonConverter(mock.Object);
+            var obj = converter.ReadJson(null, null, null, null);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(obj is null, Is.False);
+                Assert.That(obj.GetType() == typeof(DefaultScene), Is.True);
             });
         }
 
@@ -75,7 +97,7 @@ namespace Pano.UnitTests.IO
         public void ReadJson_UnknownHotSpot_ReturnException()
         {
             var mock = new Mock<IJObjectParser>();
-            mock.Setup(x => x.TryParseEnum<PanoramaType>(It.IsAny<JsonReader>(), It.IsAny<string>()))
+            mock.Setup(x => x.TryParseEnum<PanoramaType>(It.IsAny<JObject>(), It.IsAny<string>()))
                 .Returns(null);
 
             var converter = new SceneJsonConverter(mock.Object);

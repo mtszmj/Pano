@@ -20,11 +20,12 @@ namespace Pano.IO
             _Settings = settings ?? new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore,
-                ContractResolver = new DefaultContractResolver { NamingStrategy = new CamelCaseNamingStrategy() },
-                Converters = new List<JsonConverter> { new StringEnumConverter { NamingStrategy = new CamelCaseNamingStrategy() } },
+                ContractResolver = new DefaultContractResolver {NamingStrategy = new CamelCaseNamingStrategy()},
+                Converters = new List<JsonConverter>
+                    {new StringEnumConverter {NamingStrategy = new CamelCaseNamingStrategy()}},
             };
 
-            foreach(var converter in converters ?? Enumerable.Empty<JsonConverter>())
+            foreach (var converter in converters ?? Enumerable.Empty<JsonConverter>())
             {
                 _Settings.Converters.Add(converter);
             }
@@ -38,6 +39,26 @@ namespace Pano.IO
         public string Serialize<T>(T obj)
         {
             return JsonConvert.SerializeObject(obj, FORMATTING, _Settings);
+        }
+
+        public static class Factory
+        {
+            public static JsonSerializer DefaultInstance()
+            {
+                var settings = new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore,
+                    ContractResolver = new DefaultContractResolver { NamingStrategy = new CamelCaseNamingStrategy() },
+                    Converters = new List<JsonConverter>
+                    {
+                        new StringEnumConverter {NamingStrategy = new CamelCaseNamingStrategy()},
+                        new HotSpotJsonConverter(new JObjectParser()),
+                        new SceneJsonConverter(new JObjectParser())
+                    },
+                };
+
+                return new JsonSerializer(null, settings);
+            }
         }
     }
 }

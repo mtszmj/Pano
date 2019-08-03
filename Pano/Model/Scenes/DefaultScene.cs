@@ -9,6 +9,9 @@ namespace Pano.Model
 {
     public class DefaultScene : Scene
     {
+        [JsonIgnore] private string _firstScene = "";
+        [JsonIgnore] private PanoramaType _type = PanoramaType.Unknown;
+
         public DefaultScene()
         {
             Hfov = 100;
@@ -17,10 +20,33 @@ namespace Pano.Model
             HotSpotDebug = true;
         }
 
-        [JsonIgnore]
-        public Scene FirstSceneRef { get; set; }
-        public string FirstScene => FirstSceneRef?.Id;
-        public override PanoramaType Type => FirstSceneRef?.Type ?? PanoramaType.Equirectangular;
+        [JsonIgnore] public Scene FirstSceneRef { get; set; }
 
+        public string FirstScene
+        {
+            get => FirstSceneRef?.Id ?? _firstScene;
+            set
+            {
+                if (FirstSceneRef == null)
+                    _firstScene = value;
+            }
+        }
+
+        public override PanoramaType Type
+        {
+            get => FirstSceneRef?.Type ?? _type;
+            protected set => _type = value;
+        }
+
+        public override bool Equals(IScene other)
+        {
+            if (!base.Equals(other))
+                return false;
+
+            if (!(other is DefaultScene scene))
+                return false;
+
+            return FirstScene?.Equals(scene.FirstScene) ?? false;
+        }
     }
 }
