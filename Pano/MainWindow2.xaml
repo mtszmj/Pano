@@ -12,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -25,9 +26,10 @@
               Height="30">
             <MenuItem Header="_Developer Mode" IsCheckable="True" IsChecked="{Binding IsInDeveloperModeStatic, Mode=TwoWay}"/>
         </Menu>
-        <view:ProjectsListView Grid.Row="1"/>
+        <view:ProjectsListView Grid.Row="1" Grid.Column="0"/>
         <view:ProjectDetailsView Grid.Row="1" Grid.Column="1"/>
         
-
+        <Frame x:Name="GlobalMainFrame" x:FieldModifier="public"  NavigationUIVisibility="Hidden" Navigating="GlobalMainFrame_OnNavigating"
+               Grid.Row="2" Grid.ColumnSpan="2"></Frame>
     </Grid>
 </Window>

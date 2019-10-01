@@ -14,35 +14,36 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
-using Pano.Service;
 using Pano.ViewModel;
 
-namespace Pano
+namespace Pano.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow2.xaml
+    /// Interaction logic for Page3.xaml
     /// </summary>
-    public partial class MainWindow2 : Window
+    public partial class Page3 : Page
     {
-        public MainWindow2()
+        public Page3()
         {
             InitializeComponent();
+        }
 
-            var frame = GlobalMainFrame;
+        private void Page1Button_Click(object sender, RoutedEventArgs e)
+        {
             var nav = SimpleIoc.Default.GetInstance<INavigationService>();
-            var navinit = nav as IInitializeService<Frame>;
-            navinit?.InitializeService(frame);
             nav.NavigateTo(ViewModelLocator.Page1Key);
         }
 
-        //Disable keyboard shortcuts
-        private void GlobalMainFrame_OnNavigating(object sender, NavigatingCancelEventArgs e)
+        private void Page2Button_Click(object sender, RoutedEventArgs e)
         {
-            if (e.NavigationMode == NavigationMode.Back
-                || e.NavigationMode == NavigationMode.Forward)
-            {
-                e.Cancel = true;
-            }
+            var nav = SimpleIoc.Default.GetInstance<INavigationService>();
+            nav.NavigateTo(ViewModelLocator.Page2Key);
+        }
+
+        private void Page3Button_Click(object sender, RoutedEventArgs e)
+        {
+            var nav = SimpleIoc.Default.GetInstance<INavigationService>();
+            nav.NavigateTo(ViewModelLocator.Page3Key);
         }
     }
 }

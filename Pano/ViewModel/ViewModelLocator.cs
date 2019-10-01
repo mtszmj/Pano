@@ -14,12 +14,14 @@
 
 using System.Net.Mime;
 using System.Windows;
+using System.Windows.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using Pano.Model;
 using Pano.Service;
 using Pano.Service.Design;
+using Pano.View;
 
 namespace Pano.ViewModel
 {
@@ -29,6 +31,10 @@ namespace Pano.ViewModel
     /// </summary>
     public class ViewModelLocator
     {
+        public const string Page1Key = "Page1Key";
+        public const string Page2Key = "Page2Key";
+        public const string Page3Key = "Page3Key";
+
         /// <summary>
         /// Initializes a new instance of the ViewModelLocator class.
         /// </summary>
@@ -51,6 +57,15 @@ namespace Pano.ViewModel
                 // Create run time view services and models
                 SimpleIoc.Default.Register<IProjectsService, DesignProjectsService>();
                 SimpleIoc.Default.Register<IDialogService, DialogService>();
+
+
+                NavigationService nav = new NavigationService();
+                nav.Configure(ViewModelLocator.Page1Key, typeof(Page1));
+                nav.Configure(ViewModelLocator.Page2Key, typeof(Page2));
+                nav.Configure(ViewModelLocator.Page3Key, typeof(Page3));
+
+
+                SimpleIoc.Default.Register<INavigationService>(() => nav);
             }
 
             SimpleIoc.Default.Register<MainViewModel>();
@@ -61,11 +76,22 @@ namespace Pano.ViewModel
 
             SimpleIoc.Default.Register<ProjectDetailsViewModel>();
             SimpleIoc.Default.GetInstance<ProjectDetailsViewModel>();
+
+            SimpleIoc.Default.Register<Page1ViewModel>(() => new Page1ViewModel(Page1Key), Page1Key);
+            SimpleIoc.Default.Register<Page1ViewModel>(() => new Page1ViewModel(Page2Key), Page2Key);
+            SimpleIoc.Default.Register<Page1ViewModel>(() => new Page1ViewModel(Page3Key), Page3Key);
+
+
+
         }
 
         public MainViewModel Main => SimpleIoc.Default.GetInstance<MainViewModel>();
         public ProjectsListViewModel ProjectsList => SimpleIoc.Default.GetInstance<ProjectsListViewModel>();
         public ProjectDetailsViewModel ProjectDetails => SimpleIoc.Default.GetInstance<ProjectDetailsViewModel>();
+        public Page1ViewModel Page1 => SimpleIoc.Default.GetInstance<Page1ViewModel>(Page1Key);
+        public Page1ViewModel Page2 => SimpleIoc.Default.GetInstance<Page1ViewModel>(Page2Key);
+        public Page1ViewModel Page3 => SimpleIoc.Default.GetInstance<Page1ViewModel>(Page3Key);
+
 
         public static ViewModelLocator Locator => System.Windows.Application.Current.Resources["Locator"] as ViewModelLocator;
 

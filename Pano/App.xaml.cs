@@ -5,6 +5,11 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using GalaSoft.MvvmLight.Ioc;
+using GalaSoft.MvvmLight.Views;
+using Pano.Service;
+using Pano.View;
+using Pano.ViewModel;
 
 namespace Pano
 {
