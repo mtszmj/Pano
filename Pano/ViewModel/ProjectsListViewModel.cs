@@ -11,7 +11,7 @@ using Pano.Service;
 
 namespace Pano.ViewModel
 {
-    public class ProjectsListViewModel : ViewModelBase
+    public class ProjectsListViewModel : ViewModelBaseDecorator
     {
         private IProjectsService _projectsService;
         public ProjectsListViewModel(IProjectsService projectService)
@@ -59,7 +59,5 @@ namespace Pano.ViewModel
 
             RaisePropertyChanged(nameof(Projects));
         }
-
-        public string VmName => nameof(ProjectsListViewModel);
     }
 }

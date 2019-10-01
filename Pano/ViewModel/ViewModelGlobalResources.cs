@@ -8,26 +8,12 @@ using GalaSoft.MvvmLight;
 
 namespace Pano.ViewModel
 {
+
+    /// <summary>
+    /// For Global Static Resources such as IsInDeveloperMode in ViewModelBaseDecorator that are not common for all ViewModels
+    /// TODO to delete if not needed
+    /// </summary>
     public class ViewModelGlobalResources : ViewModelBase
     {
-        private bool _isInDeveloperMode = true;
-
-        public bool IsInDeveloperMode
-        {
-            get => _isInDeveloperMode;
-            set
-            {
-                if (_isInDeveloperMode == value)
-                    return;
-
-                _isInDeveloperMode = value;
-                RaisePropertyChanged(nameof(IsInDeveloperMode));
-                RaisePropertyChanged(nameof(IsInDeveloperModeVisibility));
-            }
-        }
-
-        public Visibility IsInDeveloperModeVisibility =>
-            IsInDeveloperMode ? Visibility.Visible : Visibility.Collapsed;
-
     }
 }

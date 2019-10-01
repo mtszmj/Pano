@@ -23,7 +23,7 @@
               HorizontalAlignment="Stretch" 
               VerticalAlignment="Top"
               Height="30">
-            <MenuItem Header="_Developer Mode" IsCheckable="True" IsChecked="{Binding IsInDeveloperMode, Source={StaticResource VmResources}, Mode=TwoWay}"/>
+            <MenuItem Header="_Developer Mode" IsCheckable="True" IsChecked="{Binding IsInDeveloperModeStatic, Mode=TwoWay}"/>
         </Menu>
         <view:ProjectsListView Grid.Row="1"/>
         <view:ProjectDetailsView Grid.Row="1" Grid.Column="1"/>

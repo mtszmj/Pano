@@ -5,10 +5,11 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using Pano.ViewModel;
 
 namespace Pano.ViewModels
 {
-    public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
+    public class MainWindowViewModel : ViewModelBaseDecorator, INotifyPropertyChanged
     {
         //TODO - converter
         public Visibility IsDragging => IsRequiredFileIncludedInDragDrop ? Visibility.Visible : Visibility.Collapsed;
@@ -21,8 +22,8 @@ namespace Pano.ViewModels
             get => _IsRequiredFileIncludedInDragDrop;
             set
             {
-                SetField(ref _IsRequiredFileIncludedInDragDrop, value);
-                OnPropertyChanged(nameof(IsDragging));
+                Set(ref _IsRequiredFileIncludedInDragDrop, value);
+                RaisePropertyChanged(nameof(IsDragging));
             }
         }
 

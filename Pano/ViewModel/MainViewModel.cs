@@ -19,7 +19,7 @@ namespace Pano.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : ViewModelBaseDecorator
     {
         private IProjectsService _projectsService;
 

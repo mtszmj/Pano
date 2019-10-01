@@ -11,7 +11,7 @@ using Pano.Service;
 
 namespace Pano.ViewModel
 {
-    public class ProjectViewModel : ViewModelBase
+    public class ProjectViewModel : ViewModelBaseDecorator
     {
         public ProjectViewModel(Project model)
         {

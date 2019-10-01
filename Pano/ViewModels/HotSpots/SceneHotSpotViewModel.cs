@@ -5,10 +5,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Pano.ViewModel;
 
 namespace Pano.ViewModels.HotSpots
 {
-    public class SceneHotSpotViewModel : ViewModelBase
+    public class SceneHotSpotViewModel : ViewModelBaseDecorator
     {
         SceneHotSpot Model { get; set; }
 
