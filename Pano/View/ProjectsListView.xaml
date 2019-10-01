@@ -15,9 +15,9 @@
         </Grid.RowDefinitions>
         <Label 
             Grid.Row="0"
-            Margin="5"
             Content="{Binding VmName}"
-            Visibility="{Binding IsInDeveloperModeVisibility}"/>
+            Visibility="{Binding IsInDeveloperModeVisibility}"
+            Style="{StaticResource DeveloperStyle}"/>
         <Button
             Grid.Row="2"
             Margin="5"

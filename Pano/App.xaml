@@ -4,6 +4,13 @@
     <ResourceDictionary>
       <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:Pano.ViewModel" />
       <vm:ViewModelGlobalResources x:Key="VmResources" d:IsDataSource="True" xmlns:vm="clr-namespace:Pano.ViewModel" />
+
+
+      <Style x:Key="DeveloperStyle">
+          <Setter Property="Control.BorderThickness" Value="1px"/>
+          <Setter Property="Control.BorderBrush" Value="LightSlateGray"/>
+          <Setter Property="Control.Background" Value="#FFEDAFAF"/>
+      </Style>
     </ResourceDictionary>
   </Application.Resources>
 </Application>

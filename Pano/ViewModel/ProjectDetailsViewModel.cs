@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Views;
 using Pano.Service;
 
 namespace Pano.ViewModel
@@ -28,10 +29,11 @@ namespace Pano.ViewModel
 
                 _selectedProject = value;
                 RaisePropertyChanged();
+                SaveSelectedProjectCommand.RaiseCanExecuteChanged();
             }
         }
-
-        public RelayCommand SaveSelectedProjectCommand { get; private set; }
+        
+        public RelayCommand SaveSelectedProjectCommand { get; }
 
         public ProjectDetailsViewModel(IProjectsService projectsService)
         {

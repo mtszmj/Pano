@@ -10,13 +10,15 @@ namespace Pano.Service.Design
 {
     public class DesignProjectsService : IProjectsService
     {
-        public void GetProjects(Action<IList<Project>, Exception> callback)
+        List<Project> _list;
+
+        public DesignProjectsService()
         {
             var weekAgo = DateTime.Today - TimeSpan.FromDays(7);
             var yesterday = DateTime.Now - TimeSpan.FromDays(1);
             var today = DateTime.Today + TimeSpan.FromHours(8);
 
-            var list = new[]
+            _list = new[]
             {
                 new Project()
                 {
@@ -43,7 +45,11 @@ namespace Pano.Service.Design
                 },
             }.ToList();
 
-            callback?.Invoke(list, null);
+        }
+
+        public void GetProjects(Action<IList<Project>, Exception> callback)
+        {
+            callback?.Invoke(_list, null);
         }
 
         public void Save(Project project)

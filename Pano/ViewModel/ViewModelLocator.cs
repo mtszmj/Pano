@@ -16,6 +16,7 @@ using System.Net.Mime;
 using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
+using GalaSoft.MvvmLight.Views;
 using Pano.Model;
 using Pano.Service;
 using Pano.Service.Design;
@@ -39,11 +40,17 @@ namespace Pano.ViewModel
             {
                 // Create design time view services and models
                 SimpleIoc.Default.Register<IProjectsService, DesignProjectsService>();
+                if (SimpleIoc.Default.IsRegistered<IDialogService>())
+                {
+                    SimpleIoc.Default.Unregister<IDialogService>();
+                }
+                SimpleIoc.Default.Register<IDialogService, DesignDialogService>();
             }
             else
             {
                 // Create run time view services and models
                 SimpleIoc.Default.Register<IProjectsService, DesignProjectsService>();
+                SimpleIoc.Default.Register<IDialogService, DialogService>();
             }
 
             SimpleIoc.Default.Register<MainViewModel>();

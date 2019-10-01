@@ -83,8 +83,11 @@
     <Compile Include="Model\HotSpots\IHotSpot.cs" />
     <Compile Include="Model\Project.cs" />
     <Compile Include="Model\Scenes\IScene.cs" />
+    <Compile Include="Service\Design\DesignDialogService.cs" />
     <Compile Include="Service\Design\DesignProjectsService.cs" />
+    <Compile Include="Service\DialogService.cs" />
     <Compile Include="Service\IProjectsService.cs" />
+    <Compile Include="Service\NavigationService.cs" />
     <Compile Include="Temporary\TempCube.cs" />
     <Compile Include="Temporary\TempEqui.cs" />
     <Compile Include="Temporary\TempJsonConverter.cs" />

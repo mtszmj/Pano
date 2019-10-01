@@ -9,10 +9,11 @@
              DataContext="{Binding ProjectDetails, Source={StaticResource Locator}}">
     <StackPanel>
 
-        <Label 
-            Margin="5"
+        <Label
             Content="{Binding VmName}"
-            Visibility="{Binding IsInDeveloperModeVisibility}"/>
+            Visibility="{Binding IsInDeveloperModeVisibility}"
+            Style="{StaticResource DeveloperStyle}"
+            />
         <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -30,15 +31,18 @@
         <Label Grid.Row="1">Opis projektu:</Label>
         <Label Grid.Row="2">Data utworzenia:</Label>
         <Label Grid.Row="3">Data modyfikacji:</Label>
-        <Label Grid.Row="4" Visibility="{Binding IsInDeveloperModeVisibility}">Guid:</Label>
+        <Label Grid.Row="4" Visibility="{Binding IsInDeveloperModeVisibility}"
+               Style="{StaticResource DeveloperStyle}">Guid:</Label>
 
 
-        <Label Grid.Row="0" Grid.Column="1" Content="{Binding SelectedProject.Model.Name}"/>
-        <Label Grid.Row="1" Grid.Column="1" Content="{Binding SelectedProject.Model.Description}"/>
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedProject.Model.Name}" Margin="0 2 5 2"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedProject.Model.Description}" Margin="0 2 5 2"/>
         <Label Grid.Row="2" Grid.Column="1" Content="{Binding SelectedProject.Model.DateOfCreation}"/>
         <Label Grid.Row="3" Grid.Column="1" Content="{Binding SelectedProject.Model.DateOfLastModification}"/>
         <Label Grid.Row="4" Grid.Column="1" Content="{Binding SelectedProject.Model.Guid}"
-               Visibility="{Binding IsInDeveloperModeVisibility}"/>
+               Visibility="{Binding IsInDeveloperModeVisibility}"
+               Style="{StaticResource DeveloperStyle}"/>
     </Grid>
+        <Button Content="Zapisz projekt" Command="{Binding SaveSelectedProjectCommand}"/>
     </StackPanel>
 </UserControl>

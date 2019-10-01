@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Views;
 using Pano.Model;
 using Pano.Service;
 
@@ -14,9 +15,11 @@ namespace Pano.ViewModel
     public class ProjectsListViewModel : ViewModelBaseDecorator
     {
         private IProjectsService _projectsService;
-        public ProjectsListViewModel(IProjectsService projectService)
+        public ProjectsListViewModel(IProjectsService projectService,
+            IDialogService dialogService)
         {
             _projectsService = projectService;
+            DialogService = dialogService;
 
             LoadProjectsCommand = new RelayCommand(
                 () => _projectsService.GetProjects(GetProjectsCompleted));
@@ -28,7 +31,8 @@ namespace Pano.ViewModel
         }
 
         public ObservableCollection<ProjectViewModel> Projects { get; private set; }
-
+        
+        public IDialogService DialogService { get; set; }
 
         public RelayCommand LoadProjectsCommand { get; }
 
@@ -48,7 +52,8 @@ namespace Pano.ViewModel
         {
             if (exception != null)
             {
-                throw exception;
+                DialogService.ShowError(exception, "Exception", "OK", null);
+                return;
             }
 
             Projects = new ObservableCollection<ProjectViewModel>();
@@ -58,6 +63,7 @@ namespace Pano.ViewModel
             }
 
             RaisePropertyChanged(nameof(Projects));
+            DialogService.ShowMessage("Wczytano projekty", "Info");
         }
     }
 }
