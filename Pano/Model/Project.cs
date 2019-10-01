@@ -9,10 +9,23 @@ namespace Pano.Model
 {
     public class Project : ObservableObject
     {
+        private Guid _guid = Guid.NewGuid();
         private string _name = "";
         private string _description = "";
         private DateTime _dateOfCreation = DateTime.MinValue;
         private DateTime _dateOfLastModification = DateTime.MinValue;
+
+        public Guid Guid
+        {
+            get => _guid;
+            set
+            {
+                Set(ref _guid, value);
+                RaisePropertyChanged(nameof(GuidString));
+            }
+        }
+
+        public string GuidString => _guid.ToString();
 
         public string Name
         {

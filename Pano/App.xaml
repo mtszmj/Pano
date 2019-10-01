@@ -2,6 +2,7 @@
   <Application.Resources>
     <ResourceDictionary>
       <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:Pano.ViewModel" />
+      <vm:ViewModelGlobalResources x:Key="VmResources" d:IsDataSource="True" xmlns:vm="clr-namespace:Pano.ViewModel" />
     </ResourceDictionary>
   </Application.Resources>
 </Application>

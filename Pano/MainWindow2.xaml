@@ -9,12 +9,25 @@
         Title="{Binding Title}" Height="450" Width="800"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-
-        <view:ProjectsListView></view:ProjectsListView>
+        
+        <Menu Grid.Row="0" 
+              Grid.ColumnSpan="2"
+              HorizontalAlignment="Stretch" 
+              VerticalAlignment="Top"
+              Height="30">
+            <MenuItem Header="_Developer Mode" IsCheckable="True" IsChecked="{Binding IsInDeveloperMode, Source={StaticResource VmResources}, Mode=TwoWay}"/>
+        </Menu>
+        <view:ProjectsListView Grid.Row="1"/>
+        <view:ProjectDetailsView Grid.Row="1" Grid.Column="1"/>
+        
 
     </Grid>
 </Window>

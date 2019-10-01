@@ -14,7 +14,6 @@ namespace Pano.ViewModel
     public class ProjectsListViewModel : ViewModelBase
     {
         private IProjectsService _projectsService;
-
         public ProjectsListViewModel(IProjectsService projectService)
         {
             _projectsService = projectService;

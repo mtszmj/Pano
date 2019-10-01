@@ -96,7 +96,12 @@
     <Compile Include="ViewModel\ProjectDetailsViewModel.cs" />
     <Compile Include="ViewModel\ProjectsListViewModel.cs" />
     <Compile Include="ViewModel\ProjectViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelBaseDecorator.cs" />
+    <Compile Include="ViewModel\ViewModelGlobalResources.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\ProjectDetailsView.xaml.cs">
+      <DependentUpon>ProjectDetailsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ProjectsListView.xaml.cs">
       <DependentUpon>ProjectsListView.xaml</DependentUpon>
     </Compile>
@@ -126,6 +131,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="MainWindow2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ProjectDetailsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

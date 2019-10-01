@@ -13,6 +13,7 @@
 */
 
 using System.Net.Mime;
+using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Pano.Model;
