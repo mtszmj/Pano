@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="Pano.View.Control.ProjectEditDetailsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Pano.View.Control"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             DataContext="{Binding ProjectDetails, Source={StaticResource Locator}}">
+    <StackPanel>
+
+        <Label
+            Content="{Binding VmName}"
+            Visibility="{Binding IsInDeveloperModeVisibility}"
+            Style="{StaticResource DeveloperStyle}"
+        />
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0">Nazwa projektu:</Label>
+            <Label Grid.Row="1">Opis projektu:</Label>
+            <Label Grid.Row="2">Data utworzenia:</Label>
+            <Label Grid.Row="3">Data modyfikacji:</Label>
+            <Label Grid.Row="4" Visibility="{Binding IsInDeveloperModeVisibility}"
+                   Style="{StaticResource DeveloperStyle}">Guid:</Label>
+
+
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedProject.Model.Name}" Margin="0 2 0 2"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedProject.Model.Description}" Margin="0 2 0 2"/>
+            <Label Grid.Row="2" Grid.Column="1" Content="{Binding SelectedProject.Model.DateOfCreation}"/>
+            <Label Grid.Row="3" Grid.Column="1" Content="{Binding SelectedProject.Model.DateOfLastModification}"/>
+            <Label Grid.Row="4" Grid.Column="1" Content="{Binding SelectedProject.Model.Guid}"
+                   Visibility="{Binding IsInDeveloperModeVisibility}"
+                   Style="{StaticResource DeveloperStyle}"/>
+        </Grid>
+        <Button Content="{Binding ButtonText}" Command="{Binding SaveSelectedProjectCommand}" MinHeight="20" Margin="0 15 0 5" MaxWidth="200"/>
+    </StackPanel>
+</UserControl>

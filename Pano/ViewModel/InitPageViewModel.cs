@@ -7,6 +7,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
+using Pano.Model;
 
 namespace Pano.ViewModel
 {
@@ -18,7 +19,7 @@ namespace Pano.ViewModel
         {
             _navigationService = navigationService;
 
-            NewCommand = new RelayCommand(() => _navigationService.NavigateTo(ViewModelLocator.NewProjectKey));
+            NewCommand = new RelayCommand(() => _navigationService.NavigateTo(ViewModelLocator.NewProjectKey, new ProjectViewModel(new Project())));
             OpenCommand = new RelayCommand(() => _navigationService.NavigateTo(ViewModelLocator.ProjectsKey));
         }
 

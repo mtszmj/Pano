@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:Pano.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             DataContext="{Binding ProjectsList, Source={StaticResource Locator}}">
+             DataContext="{Binding ProjectsList, Source={StaticResource Locator}}"
+             >
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

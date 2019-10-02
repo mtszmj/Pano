@@ -43,12 +43,13 @@ namespace Pano.ViewModel
 
         public readonly Dictionary<Type, string> PageTitle = new Dictionary<Type, string>()
         {
-            [typeof(ProjectsPage)] = ProjectsKey,
+            [typeof(OpenProjectsPage)] = ProjectsKey,
             [typeof(Page2)] = PanoramaKey
         };
 
         public const string CurrentPageToken = "_current_page_token";
         public const string NavigationVisibleToken = "_navigation_visible_token";
+        public const string ProjectToOpenToken = "_project_to_open_token";
 
         /// <summary>
         /// Initializes a new instance of the ViewModelLocator class.
@@ -76,8 +77,8 @@ namespace Pano.ViewModel
 
                 NavigationService nav = new NavigationService();
                 nav.Configure(ViewModelLocator.InitPageKey, typeof(InitPage));
-                nav.Configure(ViewModelLocator.NewProjectKey, typeof(ProjectsPage));
-                nav.Configure(ViewModelLocator.ProjectsKey, typeof(ProjectsPage));
+                nav.Configure(ViewModelLocator.NewProjectKey, typeof(NewProjectPage));
+                nav.Configure(ViewModelLocator.ProjectsKey, typeof(OpenProjectsPage));
                 nav.Configure(ViewModelLocator.PanoramaKey, typeof(Page2));
 
 
@@ -91,6 +92,8 @@ namespace Pano.ViewModel
             SimpleIoc.Default.Register<InitPageViewModel>(true);
             SimpleIoc.Default.Register<ProjectsListViewModel>(false);
             SimpleIoc.Default.Register<ProjectDetailsViewModel>(true);
+            SimpleIoc.Default.Register<NewProjectViewModel>();
+            SimpleIoc.Default.Register<OpenProjectsViewModel>();
 
 
             SimpleIoc.Default.Register<Page1ViewModel>(() => new Page1ViewModel(Page1Key), Page1Key);
@@ -105,6 +108,10 @@ namespace Pano.ViewModel
         public ProjectsListViewModel ProjectsList => SimpleIoc.Default.GetInstance<ProjectsListViewModel>();
         public ProjectDetailsViewModel ProjectDetails => SimpleIoc.Default.GetInstance<ProjectDetailsViewModel>();
         public NavigationViewModel Navigation => SimpleIoc.Default.GetInstance<NavigationViewModel>();
+
+        public NewProjectViewModel NewProject => SimpleIoc.Default.GetInstance<NewProjectViewModel>();
+        public OpenProjectsViewModel OpenProjects => SimpleIoc.Default.GetInstance<OpenProjectsViewModel>();
+
         public Page1ViewModel Page1 => SimpleIoc.Default.GetInstance<Page1ViewModel>(Page1Key);
         public Page1ViewModel Page2 => SimpleIoc.Default.GetInstance<Page1ViewModel>(Page2Key);
         public Page1ViewModel Page3 => SimpleIoc.Default.GetInstance<Page1ViewModel>(Page3Key);

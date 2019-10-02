@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,17 +12,26 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+    using Pano.ViewModel;
 
-namespace Pano.View
+    namespace Pano.View
 {
     /// <summary>
-    /// Interaction logic for ProjectsPage.xaml
+    /// Interaction logic for ProjectDetailsView.xaml
     /// </summary>
-    public partial class ProjectsPage : Page
+    public partial class ProjectDetailsView : UserControl
     {
-        public ProjectsPage()
+        public ProjectDetailsView()
         {
             InitializeComponent();
+        }
+
+        private void ProjectDetailsView_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is ProjectDetailsViewModel vm)
+            {
+                vm.SelectedProject = null;
+            }
         }
     }
 }

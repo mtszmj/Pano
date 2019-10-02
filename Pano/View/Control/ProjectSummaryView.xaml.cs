@@ -12,21 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Pano.ViewModel;
 
 namespace Pano.View
 {
     /// <summary>
-    /// Interaction logic for ProjectsListView.xaml
+    /// Interaction logic for ProjectSummaryView.xaml
     /// </summary>
-    public partial class ProjectsListView : UserControl
+    public partial class ProjectSummaryView : UserControl
     {
-        private ProjectsListViewModel ViewModel { get; }
-
-        public ProjectsListView()
+        public ProjectSummaryView()
         {
             InitializeComponent();
-            //DataContext = ViewModel = ViewModelLocator.Locator.ProjectsList;
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using Pano.Model;
 using Pano.Service;
@@ -45,9 +46,13 @@ namespace Pano.ViewModel
             {
                 var oldValue = _selectedProject;
                 _selectedProject = value;
-                RaisePropertyChanged(nameof(SelectedProject), oldValue, _selectedProject, true);
+                RaisePropertyChanged();
+
+                var msg = new PropertyChangedMessage<ProjectViewModel>(oldValue, _selectedProject, nameof(SelectedProject));
+                MessengerInstance.Send(msg, ViewModelLocator.ProjectToOpenToken);
             }
         }
+
         private void GetProjectsCompleted(IList<Project> result, Exception exception)
         {
             if (exception != null)
