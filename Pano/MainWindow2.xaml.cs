@@ -16,6 +16,7 @@ using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using Pano.Service;
 using Pano.ViewModel;
+using Pano.ViewModels;
 
 namespace Pano
 {
@@ -32,7 +33,7 @@ namespace Pano
             var nav = SimpleIoc.Default.GetInstance<INavigationService>();
             var navinit = nav as IInitializeService<Frame>;
             navinit?.InitializeService(frame);
-            nav.NavigateTo(ViewModelLocator.Page1Key);
+            nav.NavigateTo(ViewModelLocator.InitPageKey);
         }
 
         //Disable keyboard shortcuts
@@ -43,6 +44,12 @@ namespace Pano
             {
                 e.Cancel = true;
             }
+        }
+
+        private void GlobalMainFrame_LoadCompleted(object sender, NavigationEventArgs e)
+        {
+            var vm = DataContext as MainViewModel;
+            vm.SendMessageWithCurrentPageTitle(GlobalMainFrame.Content as Page);
         }
     }
 }

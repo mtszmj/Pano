@@ -1,4 +1,4 @@
-﻿<Page x:Class="Pano.View.Page1"
+﻿<Page x:Class="Pano.View.ProjectsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,11 +6,12 @@
       xmlns:local="clr-namespace:Pano.View"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Page1"
-      DataContext="{Binding Page1, Source={StaticResource Locator}}">
+      Title="ProjectsPage"
+      >
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -19,13 +20,10 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <local:ProjectsListView Grid.Row="0" Grid.Column="0"/>
-        <local:ProjectDetailsView Grid.Row="0" Grid.Column="1"/>
-
-        <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
-            <Label Content="Page 1" HorizontalContentAlignment="Center"/>
-            <Label Content="{Binding Description}" HorizontalContentAlignment="Center"/>
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <Button Content="Wstecz" Margin="5" MinHeight="20" MinWidth="80"/>
         </StackPanel>
-
+        <local:ProjectsListView Grid.Row="1" Grid.Column="0" Margin="5"/>
+        <local:ProjectDetailsView Grid.Row="1" Grid.Column="1" Margin="0 5 5 5"/>
     </Grid>
 </Page>

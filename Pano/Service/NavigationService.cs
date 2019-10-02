@@ -17,8 +17,6 @@ namespace Pano.Service
         private readonly Dictionary<string, Type> _pagesByKey = new Dictionary<string, Type>();
         private string _previousPageKey;
 
-
-
         public Frame CurrentFrame { get; set; }
 
         public string CurrentPageKey
@@ -27,13 +25,14 @@ namespace Pano.Service
             {
                 lock (_pagesByKey)
                 {
-                    if (CurrentFrame == null)
+                    if (CurrentFrame?.Content == null)
                     {
                         return null;
                     }
 
-                    var pageType = CurrentFrame.GetType();
+                    var pageType = CurrentFrame.Content.GetType();
 
+                    var todelete_value = _pagesByKey.FirstOrDefault(p => p.Value == pageType).Key;
                     return _pagesByKey.ContainsValue(pageType)
                         ? _pagesByKey.First(p => p.Value == pageType).Key
                         : null;

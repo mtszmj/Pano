@@ -11,8 +11,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -23,13 +23,16 @@
               Grid.ColumnSpan="2"
               HorizontalAlignment="Stretch" 
               VerticalAlignment="Top"
-              Height="30">
+              Height="30"
+              Visibility="{Binding NavigationOn, Converter={StaticResource BooleanToVisibilityConverter}}">
             <MenuItem Header="_Developer Mode" IsCheckable="True" IsChecked="{Binding IsInDeveloperModeStatic, Mode=TwoWay}"/>
         </Menu>
-        <view:ProjectsListView Grid.Row="1" Grid.Column="0"/>
-        <view:ProjectDetailsView Grid.Row="1" Grid.Column="1"/>
-        
+
+        <StackPanel Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="2" Visibility="{Binding NavigationVisibility}">
+            <view:NavigationView/>
+        </StackPanel>
+
         <Frame x:Name="GlobalMainFrame" x:FieldModifier="public"  NavigationUIVisibility="Hidden" Navigating="GlobalMainFrame_OnNavigating"
-               Grid.Row="2" Grid.ColumnSpan="2"></Frame>
+               Grid.Row="2" Grid.ColumnSpan="2" LoadCompleted="GlobalMainFrame_LoadCompleted"></Frame>
     </Grid>
 </Window>
