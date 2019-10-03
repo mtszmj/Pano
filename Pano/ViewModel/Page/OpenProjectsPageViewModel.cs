@@ -9,12 +9,12 @@ using GalaSoft.MvvmLight.Views;
 
 namespace Pano.ViewModel
 {
-    public class OpenProjectsViewModel : ViewModelBaseDecorator
+    public class OpenProjectsPageViewModel : ViewModelBaseDecorator
     {
         private INavigationService _navigationService;
         public RelayCommand BackCommand { get; set; }
 
-        public OpenProjectsViewModel(INavigationService navigationService)
+        public OpenProjectsPageViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
 

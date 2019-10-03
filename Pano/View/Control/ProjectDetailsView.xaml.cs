@@ -25,13 +25,5 @@ using System.Windows.Shapes;
         {
             InitializeComponent();
         }
-
-        private void ProjectDetailsView_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            if (DataContext is ProjectDetailsViewModel vm)
-            {
-                vm.SelectedProject = null;
-            }
-        }
     }
 }

@@ -24,6 +24,7 @@ using Pano.Model;
 using Pano.Service;
 using Pano.Service.Design;
 using Pano.View;
+using Pano.ViewModel.Control;
 
 namespace Pano.ViewModel
 {
@@ -40,16 +41,19 @@ namespace Pano.ViewModel
         public const string ProjectsKey = "ProjectsKey";
         public const string PanoramaKey = "PanoramaKey";
         public const string NewProjectKey = "NewProjectKey";
+        public const string ProjectMainKey = "ProjectMainKey";
+        public const string ProjectViewModelTestObjectKey = "ProjectViewModelTestObjectKey";
 
         public readonly Dictionary<Type, string> PageTitle = new Dictionary<Type, string>()
         {
             [typeof(OpenProjectsPage)] = ProjectsKey,
-            [typeof(Page2)] = PanoramaKey
         };
 
         public const string CurrentPageToken = "_current_page_token";
         public const string NavigationVisibleToken = "_navigation_visible_token";
         public const string ProjectToOpenToken = "_project_to_open_token";
+        public const string ProjectToCreateToken = "_project_to_create_token";
+        public const string CommandRequeryToken = "_command_requery_token";
 
         /// <summary>
         /// Initializes a new instance of the ViewModelLocator class.
@@ -67,6 +71,7 @@ namespace Pano.ViewModel
                     SimpleIoc.Default.Unregister<IDialogService>();
                 }
                 SimpleIoc.Default.Register<IDialogService, DesignDialogService>();
+                SimpleIoc.Default.Register<ProjectViewModel>(() => ProjectViewModel.Factory.TestObject, ProjectViewModelTestObjectKey);
             }
             else
             {
@@ -79,7 +84,6 @@ namespace Pano.ViewModel
                 nav.Configure(ViewModelLocator.InitPageKey, typeof(InitPage));
                 nav.Configure(ViewModelLocator.NewProjectKey, typeof(NewProjectPage));
                 nav.Configure(ViewModelLocator.ProjectsKey, typeof(OpenProjectsPage));
-                nav.Configure(ViewModelLocator.PanoramaKey, typeof(Page2));
 
 
                 SimpleIoc.Default.Register<INavigationService>(() => nav);
@@ -92,32 +96,36 @@ namespace Pano.ViewModel
             SimpleIoc.Default.Register<InitPageViewModel>(true);
             SimpleIoc.Default.Register<ProjectsListViewModel>(false);
             SimpleIoc.Default.Register<ProjectDetailsViewModel>(true);
-            SimpleIoc.Default.Register<NewProjectViewModel>();
-            SimpleIoc.Default.Register<OpenProjectsViewModel>();
-
-
-            SimpleIoc.Default.Register<Page1ViewModel>(() => new Page1ViewModel(Page1Key), Page1Key);
-            SimpleIoc.Default.Register<Page1ViewModel>(() => new Page1ViewModel(Page2Key), Page2Key);
-            SimpleIoc.Default.Register<Page1ViewModel>(() => new Page1ViewModel(Page3Key), Page3Key);
-
-
+            SimpleIoc.Default.Register<NewProjectPageViewModel>();
+            SimpleIoc.Default.Register<OpenProjectsPageViewModel>();
+            SimpleIoc.Default.Register<ProjectOpenDetailsViewModel>(true);
+            SimpleIoc.Default.Register<ProjectNewViewModel>(true);
         }
 
+        // Locator instance
+        public static ViewModelLocator Locator => System.Windows.Application.Current.Resources["Locator"] as ViewModelLocator;
+
+        // Main Window
         public MainViewModel Main => SimpleIoc.Default.GetInstance<MainViewModel>();
+
+
+        // Pages
         public InitPageViewModel InitPage => SimpleIoc.Default.GetInstance<InitPageViewModel>();
+        public NewProjectPageViewModel NewProjectPage => SimpleIoc.Default.GetInstance<NewProjectPageViewModel>();
+        public OpenProjectsPageViewModel OpenProjectsPage => SimpleIoc.Default.GetInstance<OpenProjectsPageViewModel>();
+
+
+        // Controls
+        public NavigationViewModel Navigation => SimpleIoc.Default.GetInstance<NavigationViewModel>();
         public ProjectsListViewModel ProjectsList => SimpleIoc.Default.GetInstance<ProjectsListViewModel>();
         public ProjectDetailsViewModel ProjectDetails => SimpleIoc.Default.GetInstance<ProjectDetailsViewModel>();
-        public NavigationViewModel Navigation => SimpleIoc.Default.GetInstance<NavigationViewModel>();
-
-        public NewProjectViewModel NewProject => SimpleIoc.Default.GetInstance<NewProjectViewModel>();
-        public OpenProjectsViewModel OpenProjects => SimpleIoc.Default.GetInstance<OpenProjectsViewModel>();
-
-        public Page1ViewModel Page1 => SimpleIoc.Default.GetInstance<Page1ViewModel>(Page1Key);
-        public Page1ViewModel Page2 => SimpleIoc.Default.GetInstance<Page1ViewModel>(Page2Key);
-        public Page1ViewModel Page3 => SimpleIoc.Default.GetInstance<Page1ViewModel>(Page3Key);
+        public ProjectOpenDetailsViewModel ProjectOpenDetails => SimpleIoc.Default.GetInstance<ProjectOpenDetailsViewModel>();
+        public ProjectNewViewModel ProjectNew => SimpleIoc.Default.GetInstance<ProjectNewViewModel>();
 
 
-        public static ViewModelLocator Locator => System.Windows.Application.Current.Resources["Locator"] as ViewModelLocator;
+        // Design-time objects
+        public ProjectViewModel ProjectTestObject => SimpleIoc.Default.GetInstance<ProjectViewModel>(ProjectViewModelTestObjectKey);
+
 
         public static void Cleanup()
         {

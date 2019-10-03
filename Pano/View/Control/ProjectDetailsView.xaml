@@ -6,10 +6,11 @@
              xmlns:local="clr-namespace:Pano.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             DataContext="{Binding ProjectDetails, Source={StaticResource Locator}}"
-             Loaded="ProjectDetailsView_OnLoaded">
+             d:DesignStyle="{StaticResource DesignTimeBackgroundStyle}"
+             d:DataContext="{Binding ProjectTestObject, Source={StaticResource Locator}}"
+             >
     <StackPanel>
-
+        
         <Label
             Content="{Binding VmName}"
             Visibility="{Binding IsInDeveloperModeVisibility}"
@@ -36,14 +37,14 @@
                Style="{StaticResource DeveloperStyle}">Guid:</Label>
 
 
-        <Label Grid.Row="0" Grid.Column="1" Content="{Binding SelectedProject.Model.Name}" Margin="0 2 0 2"/>
-        <Label Grid.Row="1" Grid.Column="1" Content="{Binding SelectedProject.Model.Description}" Margin="0 2 0 2"/>
-        <Label Grid.Row="2" Grid.Column="1" Content="{Binding SelectedProject.Model.DateOfCreation}"/>
-        <Label Grid.Row="3" Grid.Column="1" Content="{Binding SelectedProject.Model.DateOfLastModification}"/>
-        <Label Grid.Row="4" Grid.Column="1" Content="{Binding SelectedProject.Model.Guid}"
+        <Label Grid.Row="0" Grid.Column="1" Content="{Binding Model.Name}" />
+        <Label Grid.Row="1" Grid.Column="1" Content="{Binding Model.Description}" />
+        <Label Grid.Row="2" Grid.Column="1" Content="{Binding Model.DateOfCreation}"/>
+        <Label Grid.Row="3" Grid.Column="1" Content="{Binding Model.DateOfLastModification}"/>
+        <Label Grid.Row="4" Grid.Column="1" Content="{Binding Model.Guid}"
                Visibility="{Binding IsInDeveloperModeVisibility}"
                Style="{StaticResource DeveloperStyle}"/>
     </Grid>
-        <Button Content="Otwórz" Command="{Binding SaveSelectedProjectCommand}" MinHeight="20" Margin="0 15 0 5" MaxWidth="200"/>
+     
     </StackPanel>
 </UserControl>

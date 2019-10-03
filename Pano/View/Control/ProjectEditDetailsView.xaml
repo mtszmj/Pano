@@ -6,7 +6,9 @@
              xmlns:local="clr-namespace:Pano.View.Control"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             DataContext="{Binding ProjectDetails, Source={StaticResource Locator}}">
+             d:DesignStyle="{StaticResource DesignTimeBackgroundStyle}"
+             d:DataContext="{Binding ProjectTestObject, Source={StaticResource Locator}}"
+             >
     <StackPanel>
 
         <Label
@@ -27,22 +29,29 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Row="0">Nazwa projektu:</Label>
-            <Label Grid.Row="1">Opis projektu:</Label>
-            <Label Grid.Row="2">Data utworzenia:</Label>
-            <Label Grid.Row="3">Data modyfikacji:</Label>
-            <Label Grid.Row="4" Visibility="{Binding IsInDeveloperModeVisibility}"
+            <Label Grid.Row="0" Style="{StaticResource MarginStyle}">Nazwa projektu:</Label>
+            <Label Grid.Row="1" Style="{StaticResource MarginStyle}">Opis projektu:</Label>
+            <Label Grid.Row="2" Visibility="{Binding IsInDeveloperModeVisibility}"
+                   Style="{StaticResource DeveloperStyle}">Data utworzenia:</Label>
+            <Label Grid.Row="3"        
+                   Visibility="{Binding IsInDeveloperModeVisibility}"
+                   Style="{StaticResource DeveloperStyle}">Data modyfikacji:</Label>
+            <Label Grid.Row="4" 
+                   Visibility="{Binding IsInDeveloperModeVisibility}"
                    Style="{StaticResource DeveloperStyle}">Guid:</Label>
 
 
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedProject.Model.Name}" Margin="0 2 0 2"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedProject.Model.Description}" Margin="0 2 0 2"/>
-            <Label Grid.Row="2" Grid.Column="1" Content="{Binding SelectedProject.Model.DateOfCreation}"/>
-            <Label Grid.Row="3" Grid.Column="1" Content="{Binding SelectedProject.Model.DateOfLastModification}"/>
-            <Label Grid.Row="4" Grid.Column="1" Content="{Binding SelectedProject.Model.Guid}"
+            <TextBox Grid.Row="0" Grid.Column="1" VerticalContentAlignment="Center" Text="{Binding Model.Name, Mode=TwoWay}" Style="{StaticResource MarginStyle}"/>
+            <TextBox Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center" Text="{Binding Model.Description, Mode=TwoWay}" Style="{StaticResource MarginStyle}"/>
+            <Label Grid.Row="2" Grid.Column="1" Content="{Binding Model.DateOfCreation}" 
+                   Visibility="{Binding IsInDeveloperModeVisibility}"
+                   Style="{StaticResource DeveloperStyle}"/>
+            <Label Grid.Row="3" Grid.Column="1" Content="{Binding Model.DateOfLastModification}"
+                   Visibility="{Binding IsInDeveloperModeVisibility}"
+                   Style="{StaticResource DeveloperStyle}"/>
+            <Label Grid.Row="4" Grid.Column="1" Content="{Binding Model.Guid}" Margin="0 0 0 1"
                    Visibility="{Binding IsInDeveloperModeVisibility}"
                    Style="{StaticResource DeveloperStyle}"/>
         </Grid>
-        <Button Content="{Binding ButtonText}" Command="{Binding SaveSelectedProjectCommand}" MinHeight="20" Margin="0 15 0 5" MaxWidth="200"/>
     </StackPanel>
 </UserControl>

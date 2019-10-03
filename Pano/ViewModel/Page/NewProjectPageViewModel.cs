@@ -9,12 +9,12 @@ using GalaSoft.MvvmLight.Views;
 
 namespace Pano.ViewModel
 {
-    public class NewProjectViewModel : ViewModelBaseDecorator
+    public class NewProjectPageViewModel : ViewModelBaseDecorator
     {
         private INavigationService _navigationService;
         private ProjectViewModel _selectedProject;
 
-        public NewProjectViewModel(INavigationService navigationService)
+        public NewProjectPageViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
 
@@ -36,7 +36,7 @@ namespace Pano.ViewModel
                 RaisePropertyChanged();
 
                 var msg = new PropertyChangedMessage<ProjectViewModel>(oldValue, _selectedProject, nameof(SelectedProject));
-                MessengerInstance.Send(msg, ViewModelLocator.ProjectToOpenToken);
+                MessengerInstance.Send(msg, ViewModelLocator.ProjectToCreateToken);
             }
         }
     }

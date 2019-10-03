@@ -4,10 +4,13 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Pano.View"
+      xmlns:controls="clr-namespace:Pano.View"
+      xmlns:control="clr-namespace:Pano.View.Control"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="OpenOpenProjectsPage"
-      DataContext="{Binding OpenProjects, Source={StaticResource Locator}}"
+      d:DesignStyle="{StaticResource DesignTimeBackgroundStyle}"
+      Title="OpenOpenProjectsPagePage"
+      DataContext="{Binding OpenProjectsPage, Source={StaticResource Locator}}"
 >
 
     <Grid>
@@ -25,7 +28,6 @@
             <Button Content="Wstecz" Margin="5" MinHeight="20" MinWidth="80" Command="{Binding BackCommand}"/>
         </StackPanel>
         <local:ProjectsListView Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Margin="5"/>
-        <local:ProjectDetailsView Grid.Row="1" Grid.Column="1" Margin="0 5 5 5"/>
-        <Button Grid.Row="2" Grid.Column="1"/>
+        <control:ProjectOpenDetailsView Grid.Row="1" Grid.Column="1" Margin="0 5 5 5"/>
     </Grid>
 </Page>

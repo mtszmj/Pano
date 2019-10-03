@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:Pano.View"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignStyle="{StaticResource DesignTimeBackgroundStyle}"
       Title="InitPage"
       DataContext="{Binding InitPage, Source={StaticResource Locator}}" Loaded="Page_Loaded">
 

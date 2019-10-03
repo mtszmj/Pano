@@ -48,5 +48,7 @@ namespace Pano.ViewModel
         {
             StaticPropertyChanged(null, new PropertyChangedEventArgs(propertyName));
         }
+
+        public virtual void InitializeView() { }
     }
 }

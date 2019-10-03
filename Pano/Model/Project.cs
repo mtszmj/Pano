@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using GalaSoft.MvvmLight;
 
 namespace Pano.Model
@@ -30,7 +31,10 @@ namespace Pano.Model
         public string Name
         {
             get => _name;
-            set => Set(ref _name, value);
+            set
+            {
+                Set(ref _name, value);
+            }
         }
 
         public string Description

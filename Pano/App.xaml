@@ -3,7 +3,6 @@
   <Application.Resources>
     <ResourceDictionary>
       <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:Pano.ViewModel" />
-      <vm:ViewModelGlobalResources x:Key="VmResources" d:IsDataSource="True" xmlns:vm="clr-namespace:Pano.ViewModel" /> 
 
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></BooleanToVisibilityConverter>
 
@@ -11,6 +10,20 @@
           <Setter Property="Control.BorderThickness" Value="1px"/>
           <Setter Property="Control.BorderBrush" Value="LightSlateGray"/>
           <Setter Property="Control.Background" Value="#FFEDAFAF"/>
+      </Style>
+
+      <Style x:Key="DefaultButtonStyle" TargetType="Button">
+          <Setter Property="FontSize" Value="14"/>
+          <Setter Property="Margin" Value="0 5 0 0"/>
+          <Setter Property="MinHeight" Value="20"/>
+      </Style>
+
+      <Style x:Key="DesignTimeBackgroundStyle" TargetType="Control">
+            <Setter Property="Background" Value="#FFEDEEEE"/>
+      </Style>
+
+      <Style x:Key="MarginStyle" TargetType="Control">
+          <Setter Property="Margin" Value="0 1 0 1"/>
       </Style>
     </ResourceDictionary>
   </Application.Resources>
