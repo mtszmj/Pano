@@ -84,6 +84,7 @@ namespace Pano.ViewModel
                 nav.Configure(ViewModelLocator.InitPageKey, typeof(InitPage));
                 nav.Configure(ViewModelLocator.NewProjectKey, typeof(NewProjectPage));
                 nav.Configure(ViewModelLocator.ProjectsKey, typeof(OpenProjectsPage));
+                nav.Configure(ViewModelLocator.ProjectMainKey, typeof(InitPage)); //TODO zmienic na odpowiednia strone po dodaniu
 
 
                 SimpleIoc.Default.Register<INavigationService>(() => nav);

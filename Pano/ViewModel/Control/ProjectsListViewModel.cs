@@ -53,11 +53,11 @@ namespace Pano.ViewModel
             }
         }
 
-        private void GetProjectsCompleted(IList<Project> result, Exception exception)
+        private async void GetProjectsCompleted(IList<Project> result, Exception exception)
         {
             if (exception != null)
             {
-                DialogService.ShowError(exception, "Exception", "OK", null);
+                await DialogService.ShowError(exception, "Exception", "OK", null);
                 return;
             }
 
@@ -68,7 +68,7 @@ namespace Pano.ViewModel
             }
 
             RaisePropertyChanged(nameof(Projects));
-            DialogService.ShowMessage("Wczytano projekty", "Info");
+            await DialogService.ShowMessage("Wczytano projekty", "Info");
         }
     }
 }

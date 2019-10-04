@@ -4,51 +4,53 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using GalaSoft.MvvmLight.Views;
+using MessageBox = System.Windows.MessageBox;
 
 namespace Pano.Service
 {
     public class DialogService : IDialogService
     {
-        public Task ShowError(string message, string title, string buttonText, Action afterHideCallback)
+        public async Task ShowError(string message, string title, string buttonText, Action afterHideCallback)
         {
-            return Task.Run(() =>
+            await Task.Run(() =>
             {
                 MessageBox.Show(message, title, MessageBoxButton.OK);
                 afterHideCallback?.Invoke();
             });
         }
 
-        public Task ShowError(Exception error, string title, string buttonText, Action afterHideCallback)
+        public async Task ShowError(Exception error, string title, string buttonText, Action afterHideCallback)
         {
-            return Task.Run(() =>
+            await Task.Run(() =>
             {
                 MessageBox.Show(error.Message, title, MessageBoxButton.OK);
                 afterHideCallback?.Invoke();
             });
         }
 
-        public Task ShowMessage(string message, string title)
+        public async Task ShowMessage(string message, string title)
         {
-            return Task.Run(() =>
+            await Task.Run(() =>
             {
                 MessageBox.Show(message, title, MessageBoxButton.OK);
             });
         }
 
-        public Task ShowMessage(string message, string title, string buttonText, Action afterHideCallback)
+        public async Task ShowMessage(string message, string title, string buttonText, Action afterHideCallback)
         {
-            return Task.Run(() =>
+            await Task.Run(() =>
             {
                 MessageBox.Show(message, title, MessageBoxButton.OK);
                 afterHideCallback?.Invoke();
             });
         }
 
-        public Task<bool> ShowMessage(string message, string title, string buttonConfirmText, string buttonCancelText,
+        public async Task<bool> ShowMessage(string message, string title, string buttonConfirmText, string buttonCancelText,
             Action<bool> afterHideCallback)
         {
-            return Task.Run(() =>
+            return await Task.Run(() =>
             {
                 var messageBoxResult = MessageBox.Show(message, title, MessageBoxButton.OKCancel);
                 var result = messageBoxResult == MessageBoxResult.OK;
@@ -57,9 +59,9 @@ namespace Pano.Service
             });
         }
 
-        public Task ShowMessageBox(string message, string title)
+        public async Task ShowMessageBox(string message, string title)
         {
-            return Task.Run(() =>
+            await Task.Run(() =>
             {
                 MessageBox.Show(message, title, MessageBoxButton.OK);
             });
