@@ -15,8 +15,29 @@ namespace Pano.ViewModel
 {
     public class MainViewModel : ViewModelBaseDecorator
     {
+        private readonly INavigationService _navigationService;
+
+        public MainViewModel(INavigationService navigationService)
+        {
+            _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
+
+            Title = IsInDesignMode ? "Pano (Design Mode)" : "Pano";
+
+            RegisterForMessages();
+        }
+
         public string Title { get; set; }
         public string CurrentPage { get; set; }
+
+        private Frame _mainFrame;
+        public Frame MainFrame { get => _mainFrame;
+            set
+            {
+                Set(ref _mainFrame, value);
+                (_navigationService as IInitializeService<Frame>)?.InitializeService(_mainFrame);
+                _navigationService.NavigateTo(ViewModelLocator.InitPageKey);
+            }
+        }
 
         private bool _navigationOn = true;
         public bool NavigationOn
@@ -31,13 +52,6 @@ namespace Pano.ViewModel
         }
 
         public Visibility NavigationVisibility => NavigationOn ? Visibility.Visible : Visibility.Collapsed;
-
-        public MainViewModel()
-        {
-            Title = IsInDesignMode ? "Pano (Design Mode)" : "Pano";
-
-            RegisterForMessages();
-        }
 
         public void RegisterForMessages()
         {

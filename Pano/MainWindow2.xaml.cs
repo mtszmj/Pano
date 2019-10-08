@@ -29,11 +29,11 @@ namespace Pano
         {
             InitializeComponent();
 
-            var frame = GlobalMainFrame;
-            var nav = SimpleIoc.Default.GetInstance<INavigationService>();
-            var navinit = nav as IInitializeService<Frame>;
-            navinit?.InitializeService(frame);
-            nav.NavigateTo(ViewModelLocator.InitPageKey);
+            if(DataContext is MainViewModel vm)
+            { 
+                vm.MainFrame = GlobalMainFrame;
+            }
+            else throw new ApplicationException("No main view model found.");
         }
 
         //Disable keyboard shortcuts

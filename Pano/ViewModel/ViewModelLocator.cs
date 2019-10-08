@@ -17,6 +17,8 @@ using System.Collections.Generic;
 using System.Net.Mime;
 using System.Windows;
 using System.Windows.Controls;
+using Autofac;
+using Autofac.Features.Indexed;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
@@ -57,12 +59,15 @@ namespace Pano.ViewModel
         public const string ProjectToCreateToken = "_project_to_create_token";
         public const string CommandRequeryToken = "_command_requery_token";
 
+        private static IContainer _container;
+
         /// <summary>
         /// Initializes a new instance of the ViewModelLocator class.
         /// </summary>
         static ViewModelLocator()
         {
             //ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+            var builder = new ContainerBuilder();
 
             // Navigation service configuration
             NavigationService nav = new NavigationService();
@@ -74,73 +79,61 @@ namespace Pano.ViewModel
             if (ViewModelBase.IsInDesignModeStatic)
             {
                 // Create design time view services and models
-                SimpleIoc.Default.Register<IProjectsService, DesignProjectsService>();
-                if (SimpleIoc.Default.IsRegistered<IDialogService>())
-                {
-                    SimpleIoc.Default.Unregister<IDialogService>();
-                }
-
-                SimpleIoc.Default.Register<IDialogService, DesignDialogService>();
-
-
-                if (!SimpleIoc.Default.IsRegistered<INavigationService>())
-                {
-                    SimpleIoc.Default.Register<INavigationService>(() => nav);
-                }
-
+                builder.RegisterType<DesignProjectsService>().As<IProjectsService>().SingleInstance();
+                builder.RegisterType<DialogService>().As<IDialogService>().SingleInstance();
+                builder.Register(c => nav).As<INavigationService>().SingleInstance();
 
                 // Blendable objects
-                SimpleIoc.Default.Register<ProjectViewModel>(() => ProjectViewModel.Factory.TestObject, ProjectViewModelTestObjectKey);
+                builder.Register<ProjectViewModel>(c => ProjectViewModel.Factory.TestObject)
+                    .Keyed<ProjectViewModel>(ProjectViewModelTestObjectKey);
             }
             else
             {
                 // Create run time view services and models
-                SimpleIoc.Default.Register<IProjectsService, DesignProjectsService>();
-                SimpleIoc.Default.Register<IDialogService, DialogService>();
-                SimpleIoc.Default.Register<INavigationService>(() => nav);
+                builder.RegisterType<DesignProjectsService>().As<IProjectsService>().SingleInstance();
+                builder.RegisterType<DialogService>().As<IDialogService>().SingleInstance();
+                builder.Register(c => nav).As<INavigationService>().SingleInstance();
             }
 
             
 
 
             // View Models
-            SimpleIoc.Default.Register<NavigationViewModel>(true);
-            SimpleIoc.Default.Register<MainViewModel>(true);
-            var main = SimpleIoc.Default.GetInstance<MainViewModel>(); // Ensure VM
+            builder.RegisterType<NavigationViewModel>().SingleInstance();
+            builder.RegisterType<MainViewModel>().SingleInstance();
+            builder.RegisterType<InitPageViewModel>();
+            builder.RegisterType<ProjectsListViewModel>().SingleInstance();
+            builder.RegisterType<ProjectDetailsViewModel>();
+            builder.RegisterType<NewProjectPageViewModel>();
+            builder.RegisterType<OpenProjectsPageViewModel>();
+            builder.RegisterType<ProjectOpenDetailsViewModel>();
+            builder.RegisterType<ProjectNewViewModel>();
 
-            SimpleIoc.Default.Register<InitPageViewModel>(true);
-            SimpleIoc.Default.Register<ProjectsListViewModel>(false);
-            SimpleIoc.Default.Register<ProjectDetailsViewModel>(true);
-            SimpleIoc.Default.Register<NewProjectPageViewModel>();
-            SimpleIoc.Default.Register<OpenProjectsPageViewModel>();
-            SimpleIoc.Default.Register<ProjectOpenDetailsViewModel>(true);
-            SimpleIoc.Default.Register<ProjectNewViewModel>(true);
-
+            _container = builder.Build();
         }
 
         // Locator instance
         public static ViewModelLocator Locator => System.Windows.Application.Current.Resources["Locator"] as ViewModelLocator;
 
         // Main Window
-        public MainViewModel Main => SimpleIoc.Default.GetInstance<MainViewModel>();
+        public MainViewModel Main => _container.Resolve<MainViewModel>();
 
 
         // Pages
-        public InitPageViewModel InitPage => SimpleIoc.Default.GetInstance<InitPageViewModel>();
-        public NewProjectPageViewModel NewProjectPage => SimpleIoc.Default.GetInstance<NewProjectPageViewModel>();
-        public OpenProjectsPageViewModel OpenProjectsPage => SimpleIoc.Default.GetInstance<OpenProjectsPageViewModel>();
+        public InitPageViewModel InitPage => _container.Resolve<InitPageViewModel>();
+        public NewProjectPageViewModel NewProjectPage => _container.Resolve<NewProjectPageViewModel>();
+        public OpenProjectsPageViewModel OpenProjectsPage => _container.Resolve<OpenProjectsPageViewModel>();
 
 
         // Controls
-        public NavigationViewModel Navigation => SimpleIoc.Default.GetInstance<NavigationViewModel>();
-        public ProjectsListViewModel ProjectsList => SimpleIoc.Default.GetInstance<ProjectsListViewModel>();
-        public ProjectDetailsViewModel ProjectDetails => SimpleIoc.Default.GetInstance<ProjectDetailsViewModel>();
-        public ProjectOpenDetailsViewModel ProjectOpenDetails => SimpleIoc.Default.GetInstance<ProjectOpenDetailsViewModel>();
-        public ProjectNewViewModel ProjectNew => SimpleIoc.Default.GetInstance<ProjectNewViewModel>();
+        public NavigationViewModel Navigation => _container.Resolve<NavigationViewModel>();
+        public ProjectsListViewModel ProjectsList => _container.Resolve<ProjectsListViewModel>();
+        public ProjectDetailsViewModel ProjectDetails => _container.Resolve<ProjectDetailsViewModel>();
+        public ProjectOpenDetailsViewModel ProjectOpenDetails => _container.Resolve<ProjectOpenDetailsViewModel>();
+        public ProjectNewViewModel ProjectNew => _container.Resolve<ProjectNewViewModel>();
 
-
-        // Design-time objects
-        public ProjectViewModel ProjectTestObject => SimpleIoc.Default.GetInstance<ProjectViewModel>(ProjectViewModelTestObjectKey);
+        // Design time data
+        public ProjectViewModel ProjectTestObject => _container.Resolve<IIndex<string, ProjectViewModel>>()[ProjectViewModelTestObjectKey];
 
 
         public static void Cleanup()
