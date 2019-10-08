@@ -12,17 +12,24 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Pano.ViewModel;
+using Pano.ViewModel.Pages;
 
-namespace Pano.View.Controls
+namespace Pano.View.Pages
 {
     /// <summary>
-    /// Interaction logic for ProjectMainPage.xaml
+    /// Interaction logic for InitPage.xaml
     /// </summary>
-    public partial class ProjectMainPage : Page
+    public partial class InitPage : Page
     {
-        public ProjectMainPage()
+        public InitPage()
         {
             InitializeComponent();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            (DataContext as InitPageViewModel)?.NavigatedTo();
         }
     }
 }

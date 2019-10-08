@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Pano.View.Controls
 {
     /// <summary>
-    /// Interaction logic for ProjectMainPage.xaml
+    /// Interaction logic for ProjectSummaryView.xaml
     /// </summary>
-    public partial class ProjectMainPage : Page
+    public partial class ProjectSummaryView : UserControl
     {
-        public ProjectMainPage()
+        public ProjectSummaryView()
         {
             InitializeComponent();
         }

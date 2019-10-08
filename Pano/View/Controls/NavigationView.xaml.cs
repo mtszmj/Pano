@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Pano.View.Controls
 {
     /// <summary>
-    /// Interaction logic for ProjectMainPage.xaml
+    /// Interaction logic for NavigationView.xaml
     /// </summary>
-    public partial class ProjectMainPage : Page
+    public partial class NavigationView : UserControl
     {
-        public ProjectMainPage()
+        public NavigationView()
         {
             InitializeComponent();
         }

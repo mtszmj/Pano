@@ -23,8 +23,10 @@ using GalaSoft.MvvmLight.Views;
 using Pano.Model;
 using Pano.Service;
 using Pano.Service.Design;
-using Pano.View;
-using Pano.ViewModel.Control;
+using Pano.View.Controls;
+using Pano.View.Pages;
+using Pano.ViewModel.Controls;
+using Pano.ViewModel.Pages;
 
 namespace Pano.ViewModel
 {
@@ -62,6 +64,13 @@ namespace Pano.ViewModel
         {
             //ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
+            // Navigation service configuration
+            NavigationService nav = new NavigationService();
+            nav.Configure(ViewModelLocator.InitPageKey, typeof(InitPage));
+            nav.Configure(ViewModelLocator.NewProjectKey, typeof(NewProjectPage));
+            nav.Configure(ViewModelLocator.ProjectsKey, typeof(OpenProjectsPage));
+            nav.Configure(ViewModelLocator.ProjectMainKey, typeof(InitPage)); //TODO zmienic na odpowiednia strone po dodaniu
+
             if (ViewModelBase.IsInDesignModeStatic)
             {
                 // Create design time view services and models
@@ -70,7 +79,17 @@ namespace Pano.ViewModel
                 {
                     SimpleIoc.Default.Unregister<IDialogService>();
                 }
+
                 SimpleIoc.Default.Register<IDialogService, DesignDialogService>();
+
+
+                if (!SimpleIoc.Default.IsRegistered<INavigationService>())
+                {
+                    SimpleIoc.Default.Register<INavigationService>(() => nav);
+                }
+
+
+                // Blendable objects
                 SimpleIoc.Default.Register<ProjectViewModel>(() => ProjectViewModel.Factory.TestObject, ProjectViewModelTestObjectKey);
             }
             else
@@ -78,18 +97,13 @@ namespace Pano.ViewModel
                 // Create run time view services and models
                 SimpleIoc.Default.Register<IProjectsService, DesignProjectsService>();
                 SimpleIoc.Default.Register<IDialogService, DialogService>();
-
-
-                NavigationService nav = new NavigationService();
-                nav.Configure(ViewModelLocator.InitPageKey, typeof(InitPage));
-                nav.Configure(ViewModelLocator.NewProjectKey, typeof(NewProjectPage));
-                nav.Configure(ViewModelLocator.ProjectsKey, typeof(OpenProjectsPage));
-                nav.Configure(ViewModelLocator.ProjectMainKey, typeof(InitPage)); //TODO zmienic na odpowiednia strone po dodaniu
-
-
                 SimpleIoc.Default.Register<INavigationService>(() => nav);
             }
 
+            
+
+
+            // View Models
             SimpleIoc.Default.Register<NavigationViewModel>(true);
             SimpleIoc.Default.Register<MainViewModel>(true);
             var main = SimpleIoc.Default.GetInstance<MainViewModel>(); // Ensure VM
@@ -101,6 +115,7 @@ namespace Pano.ViewModel
             SimpleIoc.Default.Register<OpenProjectsPageViewModel>();
             SimpleIoc.Default.Register<ProjectOpenDetailsViewModel>(true);
             SimpleIoc.Default.Register<ProjectNewViewModel>(true);
+
         }
 
         // Locator instance

@@ -12,15 +12,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Pano.ViewModel;
+using Pano.ViewModel.Controls;
 
 namespace Pano.View.Controls
 {
     /// <summary>
-    /// Interaction logic for ProjectMainPage.xaml
+    /// Interaction logic for ProjectsListView.xaml
     /// </summary>
-    public partial class ProjectMainPage : Page
+    public partial class ProjectsListView : UserControl
     {
-        public ProjectMainPage()
+        private ProjectsListViewModel ViewModel { get; }
+
+        public ProjectsListView()
         {
             InitializeComponent();
         }

@@ -12,15 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Pano.ViewModel;
 
-namespace Pano.View.Controls
+namespace Pano.View.Pages
 {
     /// <summary>
-    /// Interaction logic for ProjectMainPage.xaml
+    /// Interaction logic for OpenProjectsPage.xaml
     /// </summary>
-    public partial class ProjectMainPage : Page
+    public partial class OpenProjectsPage : Page
     {
-        public ProjectMainPage()
+        public OpenProjectsPage()
         {
             InitializeComponent();
         }

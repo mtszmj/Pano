@@ -95,50 +95,50 @@
     <Compile Include="Temporary\TempScene.cs" />
     <Compile Include="ViewModels\HotSpots\SceneHotSpotViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="ViewModel\Control\ProjectNewViewModel.cs" />
-    <Compile Include="ViewModel\Page\InitPageViewModel.cs" />
+    <Compile Include="ViewModel\Controls\ProjectNewViewModel.cs" />
+    <Compile Include="ViewModel\Pages\InitPageViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\Control\NavigationViewModel.cs" />
-    <Compile Include="ViewModel\Page\NewProjectPageViewModel.cs" />
-    <Compile Include="ViewModel\Page\OpenProjectsPageViewModel.cs" />
-    <Compile Include="ViewModel\Control\ProjectDetailsViewModel.cs" />
-    <Compile Include="ViewModel\Control\ProjectOpenDetailsViewModel.cs" />
-    <Compile Include="ViewModel\Control\ProjectsListViewModel.cs" />
-    <Compile Include="ViewModel\ProjectSummaryViewModel.cs" />
+    <Compile Include="ViewModel\Controls\NavigationViewModel.cs" />
+    <Compile Include="ViewModel\Pages\NewProjectPageViewModel.cs" />
+    <Compile Include="ViewModel\Pages\OpenProjectsPageViewModel.cs" />
+    <Compile Include="ViewModel\Controls\ProjectDetailsViewModel.cs" />
+    <Compile Include="ViewModel\Controls\ProjectOpenDetailsViewModel.cs" />
+    <Compile Include="ViewModel\Controls\ProjectsListViewModel.cs" />
+    <Compile Include="ViewModel\Controls\ProjectSummaryViewModel.cs" />
     <Compile Include="ViewModel\ProjectViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBaseDecorator.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="View\Control\ProjectEditDetailsView.xaml.cs">
+    <Compile Include="View\Controls\ProjectEditDetailsView.xaml.cs">
       <DependentUpon>ProjectEditDetailsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Control\ProjectNewView.xaml.cs">
+    <Compile Include="View\Controls\ProjectNewView.xaml.cs">
       <DependentUpon>ProjectNewView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Control\ProjectOpenDetailsView.xaml.cs">
+    <Compile Include="View\Controls\ProjectOpenDetailsView.xaml.cs">
       <DependentUpon>ProjectOpenDetailsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Page\InitPage.xaml.cs">
+    <Compile Include="View\Pages\InitPage.xaml.cs">
       <DependentUpon>InitPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Control\NavigationView.xaml.cs">
+    <Compile Include="View\Controls\NavigationView.xaml.cs">
       <DependentUpon>NavigationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Page\NewProjectPage.xaml.cs">
+    <Compile Include="View\Pages\NewProjectPage.xaml.cs">
       <DependentUpon>NewProjectPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Control\ProjectDetailsView.xaml.cs">
+    <Compile Include="View\Controls\ProjectDetailsView.xaml.cs">
       <DependentUpon>ProjectDetailsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ProjectMainPage.xaml.cs">
       <DependentUpon>ProjectMainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Control\ProjectsListView.xaml.cs">
+    <Compile Include="View\Controls\ProjectsListView.xaml.cs">
       <DependentUpon>ProjectsListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Page\OpenProjectsPage.xaml.cs">
+    <Compile Include="View\Pages\OpenProjectsPage.xaml.cs">
       <DependentUpon>OpenProjectsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Control\ProjectSummaryView.xaml.cs">
+    <Compile Include="View\Controls\ProjectSummaryView.xaml.cs">
       <DependentUpon>ProjectSummaryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SceneHotSpotView.xaml.cs">
@@ -170,31 +170,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Control\ProjectEditDetailsView.xaml">
+    <Page Include="View\Controls\ProjectEditDetailsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Control\ProjectNewView.xaml">
+    <Page Include="View\Controls\ProjectNewView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Control\ProjectOpenDetailsView.xaml">
+    <Page Include="View\Controls\ProjectOpenDetailsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Page\InitPage.xaml">
+    <Page Include="View\Pages\InitPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Control\NavigationView.xaml">
+    <Page Include="View\Controls\NavigationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Page\NewProjectPage.xaml">
+    <Page Include="View\Pages\NewProjectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Control\ProjectDetailsView.xaml">
+    <Page Include="View\Controls\ProjectDetailsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -202,15 +202,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Control\ProjectsListView.xaml">
+    <Page Include="View\Controls\ProjectsListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Page\OpenProjectsPage.xaml">
+    <Page Include="View\Pages\OpenProjectsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Control\ProjectSummaryView.xaml">
+    <Page Include="View\Controls\ProjectSummaryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

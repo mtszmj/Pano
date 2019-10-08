@@ -12,17 +12,29 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Pano.ViewModel;
+using Pano.ViewModel.Pages;
 
-namespace Pano.View.Controls
+namespace Pano.View.Pages
 {
     /// <summary>
-    /// Interaction logic for ProjectMainPage.xaml
+    /// Interaction logic for NewProjectPage.xaml
     /// </summary>
-    public partial class ProjectMainPage : Page
+    public partial class NewProjectPage : Page
     {
-        public ProjectMainPage()
+        public NewProjectPage()
         {
             InitializeComponent();
+        }
+
+        public NewProjectPage(ProjectViewModel newProject) : this()
+        {
+            
+            if (DataContext is NewProjectPageViewModel vm)
+            {
+                vm.SelectedProject = null;
+                vm.SelectedProject = newProject;
+            }
         }
     }
 }

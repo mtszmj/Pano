@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Pano.View
+namespace Pano.View.Controls
 {
     /// <summary>
     /// Interaction logic for SceneHotSpotView.xaml

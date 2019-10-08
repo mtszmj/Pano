@@ -8,7 +8,7 @@ using System.Windows;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using Pano.Service;
-using Pano.View;
+using Pano.View.Controls;
 using Pano.ViewModel;
 
 namespace Pano
