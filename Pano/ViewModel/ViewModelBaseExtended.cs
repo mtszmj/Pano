@@ -11,12 +11,12 @@ using GalaSoft.MvvmLight;
 
 namespace Pano.ViewModel
 {
-    public abstract class ViewModelBaseDecorator : ViewModelBase
+    public abstract class ViewModelBaseExtended : ViewModelBase
     {
         private static bool _isInDeveloperMode;
         public static event EventHandler<PropertyChangedEventArgs> StaticPropertyChanged = delegate { };
 
-        static ViewModelBaseDecorator()
+        static ViewModelBaseExtended()
         {
 #if DEBUG
         _isInDeveloperMode = true;

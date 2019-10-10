@@ -32,7 +32,6 @@ namespace Pano.Service
 
                     var pageType = CurrentFrame.Content.GetType();
 
-                    var todelete_value = _pagesByKey.FirstOrDefault(p => p.Value == pageType).Key;
                     return _pagesByKey.ContainsValue(pageType)
                         ? _pagesByKey.First(p => p.Value == pageType).Key
                         : null;

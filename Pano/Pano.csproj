@@ -108,8 +108,9 @@
     <Compile Include="ViewModel\Controls\ProjectOpenDetailsViewModel.cs" />
     <Compile Include="ViewModel\Controls\ProjectsListViewModel.cs" />
     <Compile Include="ViewModel\Controls\ProjectSummaryViewModel.cs" />
+    <Compile Include="ViewModel\Pages\ProjectPageViewModel.cs" />
     <Compile Include="ViewModel\ProjectViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelBaseDecorator.cs" />
+    <Compile Include="ViewModel\ViewModelBaseExtended.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\Controls\ProjectEditDetailsView.xaml.cs">
       <DependentUpon>ProjectEditDetailsView.xaml</DependentUpon>
@@ -131,6 +132,9 @@
     </Compile>
     <Compile Include="View\Controls\ProjectDetailsView.xaml.cs">
       <DependentUpon>ProjectDetailsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Pages\ProjectPage.xaml.cs">
+      <DependentUpon>ProjectPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ProjectMainPage.xaml.cs">
       <DependentUpon>ProjectMainPage.xaml</DependentUpon>
@@ -198,6 +202,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controls\ProjectDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Pages\ProjectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

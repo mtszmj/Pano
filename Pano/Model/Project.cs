@@ -16,6 +16,13 @@ namespace Pano.Model
         private DateTime _dateOfCreation = DateTime.MinValue;
         private DateTime _dateOfLastModification = DateTime.MinValue;
 
+        public Project()
+        {
+            var now = DateTime.Now;
+            DateOfCreation = now;
+            DateOfLastModification = now;
+        }
+
         public Guid Guid
         {
             get => _guid;

@@ -74,7 +74,7 @@ namespace Pano.ViewModel
             nav.Configure(ViewModelLocator.InitPageKey, typeof(InitPage));
             nav.Configure(ViewModelLocator.NewProjectKey, typeof(NewProjectPage));
             nav.Configure(ViewModelLocator.ProjectsKey, typeof(OpenProjectsPage));
-            nav.Configure(ViewModelLocator.ProjectMainKey, typeof(InitPage)); //TODO zmienic na odpowiednia strone po dodaniu
+            nav.Configure(ViewModelLocator.ProjectMainKey, typeof(ProjectPage));
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
@@ -108,6 +108,7 @@ namespace Pano.ViewModel
             builder.RegisterType<OpenProjectsPageViewModel>();
             builder.RegisterType<ProjectOpenDetailsViewModel>();
             builder.RegisterType<ProjectNewViewModel>();
+            builder.RegisterType<ProjectPageViewModel>();
 
             _container = builder.Build();
         }
@@ -131,6 +132,7 @@ namespace Pano.ViewModel
         public ProjectDetailsViewModel ProjectDetails => _container.Resolve<ProjectDetailsViewModel>();
         public ProjectOpenDetailsViewModel ProjectOpenDetails => _container.Resolve<ProjectOpenDetailsViewModel>();
         public ProjectNewViewModel ProjectNew => _container.Resolve<ProjectNewViewModel>();
+        public ProjectPageViewModel ProjectPage => _container.Resolve<ProjectPageViewModel>();
 
         // Design time data
         public ProjectViewModel ProjectTestObject => _container.Resolve<IIndex<string, ProjectViewModel>>()[ProjectViewModelTestObjectKey];

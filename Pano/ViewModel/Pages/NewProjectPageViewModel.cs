@@ -9,7 +9,7 @@ using GalaSoft.MvvmLight.Views;
 
 namespace Pano.ViewModel.Pages
 {
-    public class NewProjectPageViewModel : ViewModelBaseDecorator
+    public class NewProjectPageViewModel : ViewModelBaseExtended
     {
         private INavigationService _navigationService;
         private ProjectViewModel _selectedProject;

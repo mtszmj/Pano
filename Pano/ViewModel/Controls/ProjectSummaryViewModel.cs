@@ -7,7 +7,7 @@ using GalaSoft.MvvmLight.Messaging;
 
 namespace Pano.ViewModel.Controls
 {
-    public class ProjectSummaryViewModel : ViewModelBaseDecorator
+    public class ProjectSummaryViewModel : ViewModelBaseExtended
     {
         private ProjectViewModel _selectedProject;
 

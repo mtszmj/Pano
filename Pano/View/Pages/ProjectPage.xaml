@@ -1,0 +1,26 @@
+﻿<Page x:Class="Pano.View.Pages.ProjectPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Pano.View.Pages"
+      xmlns:controls="clr-namespace:Pano.View.Controls"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="1000"
+      d:DesignStyle="{StaticResource DesignTimeBackgroundStyle}"
+      DataContext="{Binding ProjectPage, Source={StaticResource Locator}}"
+      Title="ProjectPage"
+      >
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" BorderThickness="1" BorderBrush="Gray">
+            <controls:ProjectEditDetailsView DataContext="{Binding Project}" MinWidth="300"/>
+        </Border>
+
+        <Label Grid.Column="1" Content="TEST"/>
+    </Grid>
+</Page>

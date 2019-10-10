@@ -5,7 +5,7 @@ using GalaSoft.MvvmLight.Views;
 
 namespace Pano.ViewModel.Controls
 {
-    public class NavigationViewModel : ViewModelBaseDecorator
+    public class NavigationViewModel : ViewModelBaseExtended
     {
         private INavigationService _navigationService;
 

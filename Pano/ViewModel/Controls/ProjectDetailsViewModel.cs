@@ -12,7 +12,7 @@ using Pano.Service;
 
 namespace Pano.ViewModel.Controls
 {
-    public class ProjectDetailsViewModel : ViewModelBaseDecorator
+    public class ProjectDetailsViewModel : ViewModelBaseExtended
     {
         private readonly IProjectsService _projectsService;
         private ProjectViewModel _selectedProject;

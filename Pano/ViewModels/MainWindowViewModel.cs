@@ -9,7 +9,7 @@ using Pano.ViewModel;
 
 namespace Pano.ViewModels
 {
-    public class MainWindowViewModel : ViewModelBaseDecorator, INotifyPropertyChanged
+    public class MainWindowViewModel : ViewModelBaseExtended, INotifyPropertyChanged
     {
         //TODO - converter
         public Visibility IsDragging => IsRequiredFileIncludedInDragDrop ? Visibility.Visible : Visibility.Collapsed;

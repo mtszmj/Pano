@@ -13,7 +13,7 @@ using Pano.Service;
 
 namespace Pano.ViewModel
 {
-    public class MainViewModel : ViewModelBaseDecorator
+    public class MainViewModel : ViewModelBaseExtended
     {
         private readonly INavigationService _navigationService;
 

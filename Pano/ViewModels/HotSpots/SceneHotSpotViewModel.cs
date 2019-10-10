@@ -9,7 +9,7 @@ using Pano.ViewModel;
 
 namespace Pano.ViewModels.HotSpots
 {
-    public class SceneHotSpotViewModel : ViewModelBaseDecorator
+    public class SceneHotSpotViewModel : ViewModelBaseExtended
     {
         SceneHotSpot Model { get; set; }
 

@@ -5,7 +5,7 @@ using Pano.Service;
 
 namespace Pano.ViewModel.Controls
 {
-    public class ProjectOpenDetailsViewModel : ViewModelBaseDecorator
+    public class ProjectOpenDetailsViewModel : ViewModelBaseExtended
     {
         private readonly INavigationService _navigationService;
         private ProjectViewModel _selectedProject;
