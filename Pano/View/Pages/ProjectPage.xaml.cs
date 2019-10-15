@@ -23,6 +23,8 @@ namespace Pano.View.Pages
     /// </summary>
     public partial class ProjectPage : Page
     {
+        private ProjectPageViewModel vm;
+
         public ProjectPage()
         {
             InitializeComponent();
@@ -32,8 +34,14 @@ namespace Pano.View.Pages
         {
             if (DataContext is ProjectPageViewModel vm)
             {
+                this.vm = vm;
                 vm.Project = project;
             }
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            vm?.InitializeView();
         }
     }
 }

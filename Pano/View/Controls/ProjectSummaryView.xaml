@@ -26,7 +26,7 @@
         <Label Grid.Row="2">Data utworzenia:</Label>
         <Label Grid.Row="3">Data modyfikacji:</Label>
         <Label Grid.Row="4" Visibility="{Binding IsInDeveloperModeVisibility}"
-               Style="{StaticResource DeveloperStyle}">Guid:</Label>
+               Style="{StaticResource DeveloperStyle}">ProjectId:</Label>
 
 
         <Label Grid.Row="0" Grid.Column="1" Content="{Binding SelectedProject.Model.Name}" Margin="0 2 0 2"/>

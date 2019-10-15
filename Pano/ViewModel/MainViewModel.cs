@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms.VisualStyles;
@@ -9,6 +10,7 @@ using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using Pano.Model;
+using Pano.Repository;
 using Pano.Service;
 
 namespace Pano.ViewModel
@@ -16,12 +18,20 @@ namespace Pano.ViewModel
     public class MainViewModel : ViewModelBaseExtended
     {
         private readonly INavigationService _navigationService;
+        private readonly IProjectsService _projectsService;
+        private readonly IDialogService _dialogService;
 
-        public MainViewModel(INavigationService navigationService)
+        public MainViewModel(INavigationService navigationService, 
+            IProjectsService projectsService, 
+            IDialogService dialogService)
         {
             _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
+            _projectsService = projectsService ?? throw new ArgumentNullException(nameof(projectsService));
+            _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
 
             Title = IsInDesignMode ? "Pano (Design Mode)" : "Pano";
+
+            SaveCommand = new RelayCommand(SaveProject);
 
             RegisterForMessages();
         }
@@ -51,6 +61,8 @@ namespace Pano.ViewModel
             }
         }
 
+        public RelayCommand SaveCommand { get; set; }
+
         public Visibility NavigationVisibility => NavigationOn ? Visibility.Visible : Visibility.Collapsed;
 
         public void RegisterForMessages()
@@ -70,6 +82,13 @@ namespace Pano.ViewModel
             var msg = new PropertyChangedMessage<string>(null, newValue, nameof(CurrentPage));
 
             MessengerInstance.Send(msg, ViewModelLocator.CurrentPageToken);
+        }
+
+        private void SaveProject()
+        {
+            Console.WriteLine("TEST");
+            _projectsService.SaveAll();
+            Task.Run(() => _dialogService.ShowMessageBox("Zapisano", "Zapis"));
         }
     }
 }

@@ -9,18 +9,34 @@
       d:DesignHeight="450" d:DesignWidth="1000"
       d:DesignStyle="{StaticResource DesignTimeBackgroundStyle}"
       DataContext="{Binding ProjectPage, Source={StaticResource Locator}}"
-      Title="ProjectPage"
+      Title="ProjectPage" Loaded="Page_Loaded"
       >
 
+
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Border Grid.Column="0" BorderThickness="1" BorderBrush="Gray">
+
+        <Menu Grid.Row="0" 
+              Grid.ColumnSpan="2"
+              HorizontalAlignment="Stretch" 
+              VerticalAlignment="Top"
+              Height="30"
+             >
+            <MenuItem Header="Zapisz" Command="{Binding SaveCommand}"></MenuItem>
+            <MenuItem Header="Tryb _Dewelopera" IsCheckable="True" IsChecked="{Binding IsInDeveloperModeStatic, Mode=TwoWay}"/>
+        </Menu>
+
+        <Border Grid.Row="1" Grid.Column="0" BorderThickness="1" BorderBrush="Gray">
             <controls:ProjectEditDetailsView DataContext="{Binding Project}" MinWidth="300"/>
         </Border>
 
-        <Label Grid.Column="1" Content="TEST"/>
+        <Label Grid.Row="1" Grid.Column="1" Content="TEST"/>
     </Grid>
 </Page>

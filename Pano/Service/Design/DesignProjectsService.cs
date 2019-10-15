@@ -22,6 +22,7 @@ namespace Pano.Service.Design
             {
                 new Project()
                 {
+                    ProjectId = new Random().Next(),
                     DateOfCreation = weekAgo,
                     DateOfLastModification = weekAgo,
                     Name = "PROJEKT_01",
@@ -30,6 +31,7 @@ namespace Pano.Service.Design
 
                 new Project()
                 {
+                    ProjectId = new Random().Next(),
                     DateOfCreation = yesterday,
                     DateOfLastModification = yesterday,
                     Name = "PROJEKT_02",
@@ -38,6 +40,7 @@ namespace Pano.Service.Design
 
                 new Project()
                 {
+                    ProjectId = new Random().Next(),
                     DateOfCreation = today,
                     DateOfLastModification = today,
                     Name = "PROJEKT_03",
@@ -52,9 +55,20 @@ namespace Pano.Service.Design
             callback?.Invoke(_list, null);
         }
 
-        public void Save(Project project)
+        public Project GetProject(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Save(Project project)
         {
             project.DateOfLastModification = DateTime.Now;
+            return 1;
+        }
+
+        public int SaveAll()
+        {
+            throw new NotImplementedException();
         }
     }
 }

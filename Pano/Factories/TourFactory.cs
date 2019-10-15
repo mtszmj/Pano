@@ -9,11 +9,11 @@ namespace Pano.Factories
 {
     public class TourFactory
     {
-        public Tour CreateDefaultTour()
+        public TourForSerialization CreateDefaultTour()
         {
             var spotsFactory = new HotSpotFactory();
             var sceneFactory = new ScenesFactory();
-            var tour = new Tour();
+            var tour = new TourForSerialization();
 
             var scene1 = sceneFactory.CreateDefaultScene();
             var scene2 = sceneFactory.CreateDefaultScene();

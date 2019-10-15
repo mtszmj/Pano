@@ -16,7 +16,7 @@ namespace Pano.Factories.Tests
         [TestMethod()]
         public void CreateDefaultProjectTest()
         {
-            var tour = new Tour();
+            var tour = new TourForSerialization();
 
             var salon = new Equirectangular()
             {
@@ -144,7 +144,7 @@ namespace Pano.Factories.Tests
 
             repository.Save(tour);
 
-            var tour2 = repository.Load<Tour>();
+            var tour2 = repository.Load<TourForSerialization>();
 
             foreach (var kvp in tour.Scenes)
             {
@@ -158,7 +158,7 @@ namespace Pano.Factories.Tests
         [TestMethod()]
         public void CreateDefaultProjectTest3()
         {
-            var tour = new Tour();
+            var tour = new TourForSerialization();
 
             var salon = new Equirectangular()
             {
@@ -186,7 +186,7 @@ namespace Pano.Factories.Tests
 
             repository.Save(tour);
 
-            var tour2 = repository.Load<Tour>();
+            var tour2 = repository.Load<TourForSerialization>();
 
             foreach (var kvp in tour.Scenes)
             {
@@ -207,7 +207,7 @@ namespace Pano.Factories.Tests
 
             repository.Save(tour);
 
-            var tour2 = repository.Load<Tour>();
+            var tour2 = repository.Load<TourForSerialization>();
             
             foreach (var kvp in tour.Scenes)
             {
@@ -223,9 +223,9 @@ namespace Pano.Factories.Tests
             Debug.Write(json);
         }
 
-        private Tour CreateDefaultProject()
+        private TourForSerialization CreateDefaultProject()
         {
-            var tour = new Tour();
+            var tour = new TourForSerialization();
 
             var salon = new Equirectangular()
             {
@@ -328,7 +328,7 @@ namespace Pano.Factories.Tests
             return tour;
         }
 
-        private Tour CreateProject2()
+        private TourForSerialization CreateProject2()
         {
             var scenes = new Dictionary<string, Scene>
             {
@@ -340,7 +340,7 @@ namespace Pano.Factories.Tests
             scenes["kuchnia"].AddSceneHotSpot(scenes["salon"], -17, -138, -14, -48);
             scenes["kuchnia"].AddSceneHotSpot(scenes["lazienka"], -17, 148, -15, 93);
 
-            var tour = new Tour();
+            var tour = new TourForSerialization();
             foreach (var kv in scenes)
             {
                 tour.AddScene(kv.Value);

@@ -34,14 +34,14 @@
         <Label Grid.Row="2">Data utworzenia:</Label>
         <Label Grid.Row="3">Data modyfikacji:</Label>
         <Label Grid.Row="4" Visibility="{Binding IsInDeveloperModeVisibility}"
-               Style="{StaticResource DeveloperStyle}">Guid:</Label>
+               Style="{StaticResource DeveloperStyle}">ProjectId:</Label>
 
 
         <Label Grid.Row="0" Grid.Column="1" Content="{Binding Model.Name}" />
         <Label Grid.Row="1" Grid.Column="1" Content="{Binding Model.Description}" />
         <Label Grid.Row="2" Grid.Column="1" Content="{Binding Model.DateOfCreation}"/>
         <Label Grid.Row="3" Grid.Column="1" Content="{Binding Model.DateOfLastModification}"/>
-        <Label Grid.Row="4" Grid.Column="1" Content="{Binding Model.Guid}"
+        <Label Grid.Row="4" Grid.Column="1" Content="{Binding Model.ProjectId}"
                Visibility="{Binding IsInDeveloperModeVisibility}"
                Style="{StaticResource DeveloperStyle}"/>
     </Grid>

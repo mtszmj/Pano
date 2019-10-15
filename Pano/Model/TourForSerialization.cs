@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pano.Model
 {
-    public class Tour
+    public class TourForSerialization
     {
         #region Fields
 
@@ -75,7 +75,7 @@ namespace Pano.Model
             }
         }
 
-        protected bool Equals(Tour other)
+        protected bool Equals(TourForSerialization other)
         {
             return Equals(_DefaultScene, other._DefaultScene) && Scenes.SequenceEqual(other.Scenes);
         }
@@ -91,7 +91,7 @@ namespace Pano.Model
             if (obj.GetType() != this.GetType())
                 return false;
 
-            return Equals((Tour) obj);
+            return Equals((TourForSerialization) obj);
         }
 
         #endregion

@@ -48,5 +48,6 @@ namespace Pano.Model
 
             return FirstScene?.Equals(scene.FirstScene) ?? false;
         }
+
     }
 }

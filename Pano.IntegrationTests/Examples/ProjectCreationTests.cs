@@ -20,16 +20,16 @@ namespace Pano.IntegrationTests.Examples
 
             var serializer = new Pano.IO.JsonSerializer(new JsonConverter[] { new HotSpotJsonConverter(new JObjectParser()), new SceneJsonConverter(new JObjectParser()) });
             var json = serializer.Serialize(tour);
-            var tourAfterDeserialization = serializer.Deserialize<Tour>(json);
+            var tourAfterDeserialization = serializer.Deserialize<TourForSerialization>(json);
 
             Assert.That(tour, Is.EqualTo(tourAfterDeserialization));
         }
 
         private static class ExampleProjects
         {
-            public static Tour CreateProject01()
+            public static TourForSerialization CreateProject01()
             {
-                var tour = new Tour();
+                var tour = new TourForSerialization();
 
                 var salon = new Equirectangular()
                 {

@@ -10,6 +10,8 @@ namespace Pano.Service
     public interface IProjectsService
     {
         void GetProjects(Action<IList<Project>, Exception> callback);
-        void Save(Project project);
+        Project GetProject(int id);
+        int Save(Project project);
+        int SaveAll();
     }
 }

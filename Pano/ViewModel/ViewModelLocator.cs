@@ -22,7 +22,9 @@ using Autofac.Features.Indexed;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
+using Pano.DB;
 using Pano.Model;
+using Pano.Repository;
 using Pano.Service;
 using Pano.Service.Design;
 using Pano.View.Controls;
@@ -90,12 +92,17 @@ namespace Pano.ViewModel
             else
             {
                 // Create run time view services and models
-                builder.RegisterType<DesignProjectsService>().As<IProjectsService>().SingleInstance();
+                var connection = System.Configuration.ConfigurationManager.
+                        ConnectionStrings["PanoDBConnectionString"].ConnectionString;
+
+                builder.Register(c => new PanoContext());
+                builder.RegisterType<ProjectRepository>().As<IProjectRepository>();
+                builder.RegisterType<ProjectsService>().As<IProjectsService>().SingleInstance();
                 builder.RegisterType<DialogService>().As<IDialogService>().SingleInstance();
                 builder.Register(c => nav).As<INavigationService>().SingleInstance();
             }
 
-            
+
 
 
             // View Models
@@ -111,6 +118,16 @@ namespace Pano.ViewModel
             builder.RegisterType<ProjectPageViewModel>();
 
             _container = builder.Build();
+
+
+            //using (var ctx = new PanoContext())
+            //{
+            //    var project = new Project() { Name = "EF6 Test" };
+            //    ctx.Projects.Add(project);
+            //    ctx.SaveChanges();
+            //}
+
+
         }
 
         // Locator instance
