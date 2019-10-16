@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Pano.Model.Db.Helpers;
 
 namespace Pano.Model.Db.Scenes
 {
@@ -33,6 +34,7 @@ namespace Pano.Model.Db.Scenes
         /// definition in pannellum.js for more details.
         /// </summary>
         //public virtual Dictionary<string, string> Strings { get; } = new Dictionary<string, string>(); // TODO
+        public virtual ICollection<StringDictionaryEntry> Strings { get; set; } = new List<StringDictionaryEntry>();
 
         /// <summary>
         /// This specifies a base path to load the images from.

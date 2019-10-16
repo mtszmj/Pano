@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿using System;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using Pano.Service;
@@ -8,14 +9,21 @@ namespace Pano.ViewModel.Controls
     public class ProjectOpenDetailsViewModel : ViewModelBaseExtended
     {
         private readonly INavigationService _navigationService;
+        private readonly IProjectsService _projectsService;
         private ProjectViewModel _selectedProject;
 
-        public ProjectOpenDetailsViewModel(INavigationService navigationService)
+        public ProjectOpenDetailsViewModel(INavigationService navigationService,
+            IProjectsService projectsService)
         {
-            _navigationService = navigationService;
+            _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
+            _projectsService = projectsService ?? throw new ArgumentNullException(nameof(projectsService));
 
             OpenSelectedProjectCommand = new RelayCommand(
-                () => _navigationService.NavigateTo(ViewModelLocator.ProjectMainKey, SelectedProject),
+                () =>
+                {
+                    var project = _projectsService.GetProject(SelectedProject.Model.ProjectId);
+                    _navigationService.NavigateTo(ViewModelLocator.ProjectMainKey, new ProjectViewModel(project));
+                },
                 () => SelectedProject?.Model != null);
 
             Messenger.Default.Register<PropertyChangedMessage<ProjectViewModel>>(

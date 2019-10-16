@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,12 +21,17 @@ namespace Pano.Repository
 
         public async Task<IEnumerable<Project>> GetProjects()
         {
-            return await _context.Projects.ToListAsync();
+            return await _context.Projects
+                                 .Include(p => p.Tour)
+                                 .ToListAsync();
         }
 
         public async Task<Project> GetProject(int id)
         {
-            return await _context.Projects.FirstOrDefaultAsync(p => p.ProjectId == id);
+            return await _context.Projects
+                                 .Include(p => p.Tour) //.Default.FirstSceneRef)
+                                // .Include(p => p.Tour.Scenes.Select(s => s.HotSpots))
+                                 .FirstOrDefaultAsync(p => p.ProjectId == id);
         }
 
         public async Task<int> SaveProject(Project project)
@@ -34,7 +40,14 @@ namespace Pano.Repository
 
             if (project.ProjectId == 0)
             {
+                var tour = project.Tour;
+                project.Tour = null;
+
+                if (tour != null)
+                    tour.Project = project;
+
                 _context.Projects.Add(project);
+                _context.TourForDbs.AddOrUpdate(tour);
             }
 
             else

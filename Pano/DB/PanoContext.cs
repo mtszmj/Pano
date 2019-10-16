@@ -6,15 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using Pano.Model;
 using Pano.Model.Db;
+using Pano.Model.Db.Helpers;
 
 namespace Pano.DB
 {
     public class PanoContext : DbContext
     {
-        public PanoContext() : base()
-        {
-            SetInitializers();
-        }
+        //public PanoContext() : base()
+        //{
+        //    SetInitializers();
+        //}
         public PanoContext(string connection) : base(connection)
         {
             SetInitializers();
@@ -24,10 +25,13 @@ namespace Pano.DB
         public DbSet<TourForDb> TourForDbs { get; set; }
         public DbSet<Model.Db.Scenes.Scene> Scenes { get; set; }
         public DbSet<Model.Db.HotSpots.HotSpot> HotSpots { get; set; }
+        public DbSet<StringDictionaryEntry> StringDictionaryEntries { get; set; }
 
         private void SetInitializers()
         {
             Database.SetInitializer<PanoContext>(new DropCreateDatabaseIfModelChanges<PanoContext>());
+            //Database.SetInitializer(new PanoDbInitializerDropCreateDatabaseAlways());
+
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -38,12 +42,12 @@ namespace Pano.DB
                 .HasOptional(p => p.Tour)
                 .WithRequired(t => t.Project);
 
-            modelBuilder.Entity<TourForDb>()
-                .HasOptional(x => x.Default)
-                .WithRequired(x => x.Tour);
+            //modelBuilder.Entity<TourForDb>()
+            //    .HasOptional(x => x.Default)
+            //    .WithRequired(x => x.Tour);
 
-            modelBuilder.Entity<Model.Db.Scenes.DefaultScene>()
-                .HasOptional(x => x.FirstSceneRef);
+            //modelBuilder.Entity<Model.Db.Scenes.DefaultScene>()
+            //    .HasOptional(x => x.FirstSceneRef);
 
         }
     }

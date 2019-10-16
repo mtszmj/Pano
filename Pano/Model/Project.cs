@@ -25,15 +25,15 @@ namespace Pano.Model
             DateOfCreation = now;
             DateOfLastModification = now;
             _tour = new TourForDb();
-            var defaultScene = new Model.Db.Scenes.DefaultScene() {Title = "default scene title"};
-            var scene1 = new Model.Db.Scenes.Equirectangular() {Title = "equirectangular title 1"};
-            var scene2 = new Model.Db.Scenes.Equirectangular() {Title = "equirectangular title 2"};
-            var spot = new Model.Db.HotSpots.SceneHotSpot() {Scene = scene1, TargetScene = scene2};
-            defaultScene.FirstSceneRef = scene1;
-            scene1.HotSpots.Add(spot);
-            _tour.Default = defaultScene;
-            _tour.Scenes.Add(scene1);
-            _tour.Scenes.Add(scene2);
+            //var defaultScene = new Model.Db.Scenes.DefaultScene() {Title = "default scene title"};
+            //var scene1 = new Model.Db.Scenes.Equirectangular() {Title = "equirectangular title 1"};
+            //var scene2 = new Model.Db.Scenes.Equirectangular() {Title = "equirectangular title 2"};
+            //var spot = new Model.Db.HotSpots.SceneHotSpot() {Scene = scene1, TargetScene = scene2};
+            //defaultScene.FirstSceneRef = scene1;
+            //scene1.HotSpots.Add(spot);
+            //_tour.Default = defaultScene;
+            //_tour.Scenes.Add(scene1);
+            //_tour.Scenes.Add(scene2);
 
 
         }

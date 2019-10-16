@@ -55,6 +55,8 @@
     <Compile Include="Examples\TempTest.cs" />
     <Compile Include="IO\JsonSerializerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\CreateTestDatabaseAttribute.cs" />
+    <Compile Include="Repository\ProjectRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

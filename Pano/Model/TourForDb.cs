@@ -25,17 +25,17 @@ namespace Pano.Model
         /// for individual scenes override these options. The default property is required to have 
         /// a firstScene property that contains the scene ID for the first scene to be displayed.
         /// </summary>
-        public virtual Db.Scenes.DefaultScene Default
-        {
-            get => _defaultScene;
-            set => _defaultScene = value;
-        }
+        //public virtual Db.Scenes.DefaultScene Default
+        //{
+        //    get => _defaultScene;
+        //    set => _defaultScene = value;
+        //}
         
         /// <summary>
         /// The scenes property contains a dictionary of scenes, specified by scene IDs. The values 
         /// assigned to these IDs are specific to each scene.
         /// </summary>
-        public virtual ICollection<Db.Scenes.Scene> Scenes { get; private set; } = new List<Db.Scenes.Scene>();
+        //public virtual ICollection<Db.Scenes.Scene> Scenes { get; private set; } = new List<Db.Scenes.Scene>();
 
         // Navigation property
         public virtual Project Project { get; set; }

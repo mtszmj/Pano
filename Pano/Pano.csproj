@@ -92,11 +92,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DB\PanoContext.cs" />
+    <Compile Include="DB\PanoDbInitializerDropCreateDatabaseIfModelChanges.cs" />
+    <Compile Include="DB\PanoDbInitializerDropCreateDatabaseAlways.cs" />
+    <Compile Include="DB\PanoDbInitializerSeed.cs" />
     <Compile Include="IO\IJObjectParser.cs" />
     <Compile Include="IO\JObjectParser.cs" />
     <Compile Include="MainWindow2.xaml.cs">
       <DependentUpon>MainWindow2.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Db\Helpers\DictionaryEntry.cs" />
+    <Compile Include="Model\Db\Helpers\StringDictionaryEntry.cs" />
     <Compile Include="Model\Db\HotSpots\HotSpot.cs" />
     <Compile Include="Model\Db\HotSpots\IHotSpot.cs" />
     <Compile Include="Model\Db\HotSpots\SceneHotSpot.cs" />
