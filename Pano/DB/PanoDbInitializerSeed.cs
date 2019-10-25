@@ -18,11 +18,11 @@ namespace Pano.DB
             var scene2 = new Model.Db.Scenes.Equirectangular() { Title = "equirectangular title 2" };
             var spot = new Model.Db.HotSpots.SceneHotSpot() { Scene = scene1, TargetScene = scene2 };
             defaultScene.FirstSceneRef = scene1;
-            scene1.HotSpots.Add(spot);
+            //scene1.HotSpots.Add(spot);
             //tour.Default = defaultScene;
             //tour.Scenes.Add(scene1);
             //tour.Scenes.Add(scene2);
-            scene1.Strings.Add(new StringDictionaryEntry() { Key = "Title", Value = "CuStOm TiTlE" });
+            //scene1.Strings.Add(new StringDictionaryEntry() { Key = "Title", Value = "CuStOm TiTlE" });
             var project = new Project() { Tour = tour };
 
             return project;

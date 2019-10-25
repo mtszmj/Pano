@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -20,6 +21,8 @@ namespace Pano.Model
             set => Set(ref _tourForDbId, value);
         }
 
+        public string Title { get; set; }
+
         /// <summary>
         /// The default property contains options that are used for each scene, but options specified 
         /// for individual scenes override these options. The default property is required to have 
@@ -30,15 +33,15 @@ namespace Pano.Model
         //    get => _defaultScene;
         //    set => _defaultScene = value;
         //}
-        
+
         /// <summary>
         /// The scenes property contains a dictionary of scenes, specified by scene IDs. The values 
         /// assigned to these IDs are specific to each scene.
         /// </summary>
-        //public virtual ICollection<Db.Scenes.Scene> Scenes { get; private set; } = new List<Db.Scenes.Scene>();
+        public ObservableCollection<Db.Scenes.Scene> Scenes { get; set; } = new ObservableCollection<Db.Scenes.Scene>();
 
         // Navigation property
-        public virtual Project Project { get; set; }
+        public Project Project { get; set; }
 
         //private Scene FirstScene => null; //Scenes?.FirstOrDefault().Value; // TODO
 

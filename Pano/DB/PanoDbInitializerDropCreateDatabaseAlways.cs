@@ -15,7 +15,7 @@ namespace Pano.DB
 
         public override void InitializeDatabase(PanoContext context)
         {
-            context.Projects.Add(Seed.SeedProject());
+            //context.Projects.Add(Seed.SeedProject());
             base.Seed(context);
         }
     }

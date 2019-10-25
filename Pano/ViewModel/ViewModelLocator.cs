@@ -95,7 +95,8 @@ namespace Pano.ViewModel
                 var connection = System.Configuration.ConfigurationManager.
                         ConnectionStrings["PanoDBConnectionString"].ConnectionString;
 
-                builder.Register(c => new PanoContext(connection));
+                //builder.Register(c => new PanoContext(connection));
+                builder.Register(c => new PanoContext());
                 builder.RegisterType<ProjectRepository>().As<IProjectRepository>();
                 builder.RegisterType<ProjectsService>().As<IProjectsService>().SingleInstance();
                 builder.RegisterType<DialogService>().As<IDialogService>().SingleInstance();

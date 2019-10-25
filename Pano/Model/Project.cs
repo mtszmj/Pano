@@ -24,7 +24,7 @@ namespace Pano.Model
             var now = DateTime.Now;
             DateOfCreation = now;
             DateOfLastModification = now;
-            _tour = new TourForDb();
+            //_tour = new TourForDb();
             //var defaultScene = new Model.Db.Scenes.DefaultScene() {Title = "default scene title"};
             //var scene1 = new Model.Db.Scenes.Equirectangular() {Title = "equirectangular title 1"};
             //var scene2 = new Model.Db.Scenes.Equirectangular() {Title = "equirectangular title 2"};
@@ -38,8 +38,6 @@ namespace Pano.Model
 
         }
 
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        //[Key]
         public int ProjectId
         {
             get => _projectId;
@@ -76,7 +74,7 @@ namespace Pano.Model
             set => Set(ref _dateOfLastModification, value);
         }
 
-        public virtual TourForDb Tour
+        public TourForDb Tour
         {
             get => _tour;
             set => Set(ref _tour, value);

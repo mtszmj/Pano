@@ -100,6 +100,19 @@
     <Compile Include="MainWindow2.xaml.cs">
       <DependentUpon>MainWindow2.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910252050297_InitialModel.cs" />
+    <Compile Include="Migrations\201910252050297_InitialModel.designer.cs">
+      <DependentUpon>201910252050297_InitialModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910252116565_AddScenesToTour.cs" />
+    <Compile Include="Migrations\201910252116565_AddScenesToTour.designer.cs">
+      <DependentUpon>201910252116565_AddScenesToTour.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910252138346_AddColumnTitleToTourForDbsTable.cs" />
+    <Compile Include="Migrations\201910252138346_AddColumnTitleToTourForDbsTable.designer.cs">
+      <DependentUpon>201910252138346_AddColumnTitleToTourForDbsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Db\Helpers\DictionaryEntry.cs" />
     <Compile Include="Model\Db\Helpers\StringDictionaryEntry.cs" />
     <Compile Include="Model\Db\HotSpots\HotSpot.cs" />
@@ -286,6 +299,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Migrations\201910252050297_InitialModel.resx">
+      <DependentUpon>201910252050297_InitialModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910252116565_AddScenesToTour.resx">
+      <DependentUpon>201910252116565_AddScenesToTour.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910252138346_AddColumnTitleToTourForDbsTable.resx">
+      <DependentUpon>201910252138346_AddColumnTitleToTourForDbsTable.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

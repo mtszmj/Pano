@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Pano.Model.Db.Helpers;
 
@@ -9,7 +10,8 @@ namespace Pano.Model.Db.Scenes
     {
         public int SceneId { get; set; }
 
-        public virtual TourForDb Tour { get; set; } // navigation property
+        public int TourId { get; set; }
+        public TourForDb Tour { get; set; } // navigation property
 
         /// <summary>
         /// This specifies the panorama type. Can be equirectangular, cubemap, or multires. 
@@ -34,7 +36,7 @@ namespace Pano.Model.Db.Scenes
         /// definition in pannellum.js for more details.
         /// </summary>
         //public virtual Dictionary<string, string> Strings { get; } = new Dictionary<string, string>(); // TODO
-        public virtual ICollection<StringDictionaryEntry> Strings { get; set; } = new List<StringDictionaryEntry>();
+        //public ICollection<StringDictionaryEntry> Strings { get; set; } = new List<StringDictionaryEntry>();
 
         /// <summary>
         /// This specifies a base path to load the images from.
@@ -234,7 +236,7 @@ namespace Pano.Model.Db.Scenes
         /// This specifies an array of hot spots that can be links to other scenes, 
         /// information, or external links. Each array element has the following properties.
         /// </summary>
-        public virtual ICollection<Model.Db.HotSpots.HotSpot> HotSpots { get; } = new List<Model.Db.HotSpots.HotSpot>();
+        //public ObservableCollection<Model.Db.HotSpots.HotSpot> HotSpots { get; } = new ObservableCollection<Model.Db.HotSpots.HotSpot>();
 
         /// <summary>
         /// When true, the mouse pointer’s pitch and yaw are logged to the console when 

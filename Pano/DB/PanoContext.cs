@@ -12,10 +12,11 @@ namespace Pano.DB
 {
     public class PanoContext : DbContext
     {
-        //public PanoContext() : base()
-        //{
-        //    SetInitializers();
-        //}
+        public PanoContext() : base()
+        {
+            SetInitializers();
+        }
+
         public PanoContext(string connection) : base(connection)
         {
             SetInitializers();
@@ -29,9 +30,9 @@ namespace Pano.DB
 
         private void SetInitializers()
         {
-            Database.SetInitializer<PanoContext>(new DropCreateDatabaseIfModelChanges<PanoContext>());
+            this.Configuration.LazyLoadingEnabled = false;
+            //Database.SetInitializer<PanoContext>(new DropCreateDatabaseIfModelChanges<PanoContext>());
             //Database.SetInitializer(new PanoDbInitializerDropCreateDatabaseAlways());
-
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -41,6 +42,11 @@ namespace Pano.DB
             modelBuilder.Entity<Project>()
                 .HasOptional(p => p.Tour)
                 .WithRequired(t => t.Project);
+
+            modelBuilder.Entity<TourForDb>()
+                .HasMany(t => t.Scenes)
+                .WithRequired(s => s.Tour)
+                .HasForeignKey(s => s.TourId);
 
             //modelBuilder.Entity<TourForDb>()
             //    .HasOptional(x => x.Default)
