@@ -13,11 +13,11 @@ namespace Pano.DB
         public Project SeedProject()
         {
             var tour = new TourForDb();
-            var defaultScene = new Model.Db.Scenes.DefaultScene() { Title = "default scene title" };
+            var defaultScene = new Model.Db.Scenes.DefaultSceneConfig() { Title = "default scene title" };
             var scene1 = new Model.Db.Scenes.Equirectangular() { Title = "equirectangular title 1" };
             var scene2 = new Model.Db.Scenes.Equirectangular() { Title = "equirectangular title 2" };
             var spot = new Model.Db.HotSpots.SceneHotSpot() { Scene = scene1, TargetScene = scene2 };
-            defaultScene.FirstSceneRef = scene1;
+            //defaultScene.FirstSceneRef = scene1;
             //scene1.HotSpots.Add(spot);
             //tour.Default = defaultScene;
             //tour.Scenes.Add(scene1);

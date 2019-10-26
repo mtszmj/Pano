@@ -15,7 +15,8 @@ namespace Pano.Model.Db.HotSpots
         /// <summary>
         /// Specifies the ID of the scene to link to for scene hot spots. Not applicable for info hot spots.
         /// </summary>
-        public virtual Model.Db.Scenes.Scene TargetScene { get; set; }
+        public int TargetSceneId { get; set; }
+        public Model.Db.Scenes.Scene TargetScene { get; set; }
 
         /// <summary>
         /// Specifies the pitch of the target scene, in degrees. Can also be set to same, which uses the 

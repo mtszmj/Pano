@@ -35,8 +35,7 @@ namespace Pano.Model.Db.Scenes
         /// Allows user-facing strings to be changed / translated. See defaultConfig.strings 
         /// definition in pannellum.js for more details.
         /// </summary>
-        //public virtual Dictionary<string, string> Strings { get; } = new Dictionary<string, string>(); // TODO
-        //public ICollection<StringDictionaryEntry> Strings { get; set; } = new List<StringDictionaryEntry>();
+        public ObservableCollection<StringDictionaryEntry> Strings { get; set; } = new ObservableCollection<StringDictionaryEntry>();
 
         /// <summary>
         /// This specifies a base path to load the images from.
@@ -236,7 +235,7 @@ namespace Pano.Model.Db.Scenes
         /// This specifies an array of hot spots that can be links to other scenes, 
         /// information, or external links. Each array element has the following properties.
         /// </summary>
-        //public ObservableCollection<Model.Db.HotSpots.HotSpot> HotSpots { get; } = new ObservableCollection<Model.Db.HotSpots.HotSpot>();
+        public ObservableCollection<Model.Db.HotSpots.HotSpot> HotSpots { get; } = new ObservableCollection<Model.Db.HotSpots.HotSpot>();
 
         /// <summary>
         /// When true, the mouse pointer’s pitch and yaw are logged to the console when 

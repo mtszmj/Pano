@@ -11,20 +11,15 @@ namespace Pano.Model.Db.HotSpots
     {
         protected HotSpot() { }
 
-        protected HotSpot(int id)
-        {
-            Id = id;
-        }
-
         /// <summary>
         /// Specifies the pitch portion of the hot spot’s location, in degrees.
         /// </summary>
-        public virtual int Pitch { get; set; }
+        public int Pitch { get; set; }
 
         /// <summary>
         /// Specifies the yaw portion of the hot spot’s location, in degrees.
         /// </summary>
-        public virtual int Yaw { get; set; }
+        public int Yaw { get; set; }
 
         /// <summary>
         /// Specifies the type of the hot spot. Can be scene for scene links or info for information 
@@ -35,20 +30,20 @@ namespace Pano.Model.Db.HotSpots
         /// <summary>
         /// This specifies the text that is displayed when the user hovers over the hot spot.
         /// </summary>
-        public virtual string Text { get; set; }
+        public string Text { get; set; }
 
         /// <summary>
         /// Specifies hot spot ID, for use with API’s removeHotSpot function.
         /// </summary>
-        public virtual int Id { get; private set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// If specified, string is used as the CSS class for the hot spot instead of the default CSS classes.
         /// </summary>
-        public virtual string CssClass { get; set; }
+        public string CssClass { get; set; }
 
-        public virtual int SceneId { get; set; }
-        public virtual Model.Db.Scenes.Scene Scene { get; set; }
+        public int SceneId { get; set; }
+        public Model.Db.Scenes.Scene Scene { get; set; }
 
         //createTooltipFunc(function) and createTooltipArgs(object)
         //If createTooltipFunc is specified, this function is used to create the hot spot tooltip 

@@ -12,7 +12,7 @@ namespace Pano.Model
 {
     public class TourForDb : ObservableObject
     {
-        private Db.Scenes.DefaultScene _defaultScene = new Db.Scenes.DefaultScene();
+        private Db.Scenes.DefaultSceneConfig _defaultSceneConfig = new Db.Scenes.DefaultSceneConfig();
         private int _tourForDbId;
 
         public int TourForDbId
@@ -28,11 +28,7 @@ namespace Pano.Model
         /// for individual scenes override these options. The default property is required to have 
         /// a firstScene property that contains the scene ID for the first scene to be displayed.
         /// </summary>
-        //public virtual Db.Scenes.DefaultScene Default
-        //{
-        //    get => _defaultScene;
-        //    set => _defaultScene = value;
-        //}
+        public Db.Scenes.DefaultSceneConfig Default { get; set; }
 
         /// <summary>
         /// The scenes property contains a dictionary of scenes, specified by scene IDs. The values 

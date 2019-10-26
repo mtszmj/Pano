@@ -8,5 +8,7 @@ namespace Pano.Model.Db.Helpers
 {
     public class StringDictionaryEntry : DictionaryEntry<string, string>
     {
+        public int SceneId { get; set; }
+        public Scenes.Scene Scene { get; set; }
     }
 }

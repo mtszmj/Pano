@@ -112,13 +112,41 @@
     <Compile Include="Migrations\201910252138346_AddColumnTitleToTourForDbsTable.designer.cs">
       <DependentUpon>201910252138346_AddColumnTitleToTourForDbsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910261918036_AddStringsToScene.cs" />
+    <Compile Include="Migrations\201910261918036_AddStringsToScene.designer.cs">
+      <DependentUpon>201910261918036_AddStringsToScene.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910262023245_AddHotSpots.cs" />
+    <Compile Include="Migrations\201910262023245_AddHotSpots.designer.cs">
+      <DependentUpon>201910262023245_AddHotSpots.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910262040368_AddInheritanceToDefault.cs" />
+    <Compile Include="Migrations\201910262040368_AddInheritanceToDefault.designer.cs">
+      <DependentUpon>201910262040368_AddInheritanceToDefault.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910262056110_RemoveTourColumnFromDefaultSceneWhichIsAlreadyInSceneBase.cs" />
+    <Compile Include="Migrations\201910262056110_RemoveTourColumnFromDefaultSceneWhichIsAlreadyInSceneBase.designer.cs">
+      <DependentUpon>201910262056110_RemoveTourColumnFromDefaultSceneWhichIsAlreadyInSceneBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910262104197_RemoveDefaultSceneInheritance.cs" />
+    <Compile Include="Migrations\201910262104197_RemoveDefaultSceneInheritance.designer.cs">
+      <DependentUpon>201910262104197_RemoveDefaultSceneInheritance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910262108547_AddTourNavigationToDefault.cs" />
+    <Compile Include="Migrations\201910262108547_AddTourNavigationToDefault.designer.cs">
+      <DependentUpon>201910262108547_AddTourNavigationToDefault.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910262154369_CorrectedDefault.cs" />
+    <Compile Include="Migrations\201910262154369_CorrectedDefault.designer.cs">
+      <DependentUpon>201910262154369_CorrectedDefault.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Db\Helpers\DictionaryEntry.cs" />
     <Compile Include="Model\Db\Helpers\StringDictionaryEntry.cs" />
     <Compile Include="Model\Db\HotSpots\HotSpot.cs" />
     <Compile Include="Model\Db\HotSpots\IHotSpot.cs" />
     <Compile Include="Model\Db\HotSpots\SceneHotSpot.cs" />
-    <Compile Include="Model\Db\Scenes\DefaultScene.cs" />
+    <Compile Include="Model\Db\Scenes\DefaultSceneConfig.cs" />
     <Compile Include="Model\Db\Scenes\Equirectangular.cs" />
     <Compile Include="Model\Db\Scenes\IScene.cs" />
     <Compile Include="Model\Db\Scenes\Scene.cs" />
@@ -307,6 +335,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910252138346_AddColumnTitleToTourForDbsTable.resx">
       <DependentUpon>201910252138346_AddColumnTitleToTourForDbsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910261918036_AddStringsToScene.resx">
+      <DependentUpon>201910261918036_AddStringsToScene.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910262023245_AddHotSpots.resx">
+      <DependentUpon>201910262023245_AddHotSpots.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910262040368_AddInheritanceToDefault.resx">
+      <DependentUpon>201910262040368_AddInheritanceToDefault.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910262056110_RemoveTourColumnFromDefaultSceneWhichIsAlreadyInSceneBase.resx">
+      <DependentUpon>201910262056110_RemoveTourColumnFromDefaultSceneWhichIsAlreadyInSceneBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910262104197_RemoveDefaultSceneInheritance.resx">
+      <DependentUpon>201910262104197_RemoveDefaultSceneInheritance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910262108547_AddTourNavigationToDefault.resx">
+      <DependentUpon>201910262108547_AddTourNavigationToDefault.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910262154369_CorrectedDefault.resx">
+      <DependentUpon>201910262154369_CorrectedDefault.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
