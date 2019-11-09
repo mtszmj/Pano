@@ -21,7 +21,7 @@ namespace Pano.Model
             set => Set(ref _tourForDbId, value);
         }
 
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
         /// <summary>
         /// The default property contains options that are used for each scene, but options specified 

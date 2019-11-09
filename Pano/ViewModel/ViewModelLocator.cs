@@ -23,6 +23,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using Pano.DB;
+using Pano.Factories.Db;
 using Pano.Model;
 using Pano.Repository;
 using Pano.Service;
@@ -93,14 +94,17 @@ namespace Pano.ViewModel
             {
                 // Create run time view services and models
                 var connection = System.Configuration.ConfigurationManager.
-                        ConnectionStrings["PanoDBConnectionString"].ConnectionString;
+                        ConnectionStrings["PanoContext"].ConnectionString;
 
                 //builder.Register(c => new PanoContext(connection));
-                builder.Register(c => new PanoContext());
-                builder.RegisterType<ProjectRepository>().As<IProjectRepository>();
+                builder.Register(c => new PanoContext()).SingleInstance();
+                builder.RegisterType<ProjectRepository>().As<IProjectRepository>().SingleInstance();
                 builder.RegisterType<ProjectsService>().As<IProjectsService>().SingleInstance();
                 builder.RegisterType<DialogService>().As<IDialogService>().SingleInstance();
                 builder.Register(c => nav).As<INavigationService>().SingleInstance();
+
+                // Factories
+                builder.RegisterType<ProjectFactory>().As<IProjectFactory>();
             }
 
 

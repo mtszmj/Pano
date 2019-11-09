@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
@@ -36,8 +37,31 @@ namespace Pano.ViewModel.Pages
 
                 var oldValue = _project;
                 _project = value;
+                RaisePropertyChanged("");
+            }
+        }
+
+        public ObservableCollection<Model.Db.Scenes.Scene> Scenes => Project?.Model?.Tour?.Scenes;
+
+        private Model.Db.Scenes.Scene _selectedScene;
+        public Model.Db.Scenes.Scene SelectedScene
+        {
+            get => _selectedScene;
+            set
+            {
+                if (value == _selectedScene)
+                    return;
+
+                _selectedScene = value;
                 RaisePropertyChanged();
             }
+        }
+
+        private Model.Db.HotSpots.HotSpot _selectedHotSpot;
+        public Model.Db.HotSpots.HotSpot SelectedHotSpot
+        {
+            get => _selectedHotSpot;
+            set => Set(ref _selectedHotSpot, value);
         }
 
         public RelayCommand SaveCommand { get; set; }

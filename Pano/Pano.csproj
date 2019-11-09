@@ -95,6 +95,9 @@
     <Compile Include="DB\PanoDbInitializerDropCreateDatabaseIfModelChanges.cs" />
     <Compile Include="DB\PanoDbInitializerDropCreateDatabaseAlways.cs" />
     <Compile Include="DB\PanoDbInitializerSeed.cs" />
+    <Compile Include="Factories\Db\IProjectFactory.cs" />
+    <Compile Include="Factories\Db\ProjectFactory.cs" />
+    <Compile Include="Helpers\Converters\EnumToStringConverter.cs" />
     <Compile Include="IO\IJObjectParser.cs" />
     <Compile Include="IO\JObjectParser.cs" />
     <Compile Include="MainWindow2.xaml.cs">

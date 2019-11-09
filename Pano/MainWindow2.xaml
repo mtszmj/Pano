@@ -19,20 +19,6 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         
-        <Menu Grid.Row="0" 
-              Grid.ColumnSpan="2"
-              HorizontalAlignment="Stretch" 
-              VerticalAlignment="Top"
-              Height="30"
-              Visibility="{Binding NavigationOn, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <MenuItem Header="Save" Command="{Binding SaveCommand}"></MenuItem>
-            <MenuItem Header="_Developer Mode" IsCheckable="True" IsChecked="{Binding IsInDeveloperModeStatic, Mode=TwoWay}"/>
-        </Menu>
-
-        <StackPanel Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="2" Visibility="{Binding NavigationVisibility}">
-            <view:NavigationView/>
-        </StackPanel>
-
         <Frame x:Name="GlobalMainFrame" x:FieldModifier="public"  NavigationUIVisibility="Hidden" Navigating="GlobalMainFrame_OnNavigating"
                Grid.Row="2" Grid.ColumnSpan="2" LoadCompleted="GlobalMainFrame_LoadCompleted"></Frame>
     </Grid>

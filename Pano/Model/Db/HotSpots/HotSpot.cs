@@ -7,7 +7,7 @@ using Pano.Model.HotSpots;
 
 namespace Pano.Model.Db.HotSpots
 {
-    public abstract class HotSpot //: IHotSpot
+    public abstract class HotSpot : IHotSpot
     {
         protected HotSpot() { }
 

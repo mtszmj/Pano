@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using GalaSoft.MvvmLight;
 using Pano.Model.Db.Helpers;
 
 namespace Pano.Model.Db.Scenes
 {
-    public abstract class Scene //: IScene
+    public abstract class Scene : ObservableObject //: IScene
     {
         public int SceneId { get; set; }
 
@@ -19,11 +20,17 @@ namespace Pano.Model.Db.Scenes
         /// </summary>
         public virtual PanoramaType Type { get; protected set; }
 
+        protected string _title;
+
         /// <summary>
         /// If set, the value is displayed as the panorama’s title. If no title is desired, 
         /// don’t set this parameter.
         /// </summary>
-        public virtual string Title { get; set; }
+        public virtual string Title
+        {
+            get => _title;
+            set => Set(ref _title, value);
+        }
 
         /// <summary>
         /// If set, the value is displayed as the panorama’s author. If no author is desired, 

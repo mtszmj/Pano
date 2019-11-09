@@ -5,13 +5,16 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Pano.View.Pages"
       xmlns:controls="clr-namespace:Pano.View.Controls"
+      xmlns:converters="clr-namespace:Pano.Helpers.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="1000"
       d:DesignStyle="{StaticResource DesignTimeBackgroundStyle}"
       DataContext="{Binding ProjectPage, Source={StaticResource Locator}}"
       Title="ProjectPage" Loaded="Page_Loaded"
       >
-
+    <Page.Resources>
+        <converters:EnumToStringConverter x:Key="EnumToStringConverter" />
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -19,7 +22,9 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
@@ -37,6 +42,93 @@
             <controls:ProjectEditDetailsView DataContext="{Binding Project}" MinWidth="300"/>
         </Border>
 
-        <Label Grid.Row="1" Grid.Column="1" Content="TEST"/>
+        <!--<Label Grid.Row="1" Grid.Column="1" Content="TEST"/>-->
+        <ListView Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Scenes}" SelectedItem="{Binding SelectedScene}"
+                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.ColumnSpan="2"
+                            Content="{Binding Title}"
+                            FontSize="14"
+                            VerticalAlignment="Center"/>
+                        <Label
+                            Grid.Row="1"
+                            Content="{Binding Type, Converter={StaticResource EnumToStringConverter}}"
+                            FontSize="10"
+                            VerticalAlignment="Center"/>
+
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <StackPanel Grid.Row="1" Grid.Column="2">
+            <Label HorizontalContentAlignment="Center" 
+                   FontWeight="Bold" 
+                   BorderThickness="1" 
+                   BorderBrush="Gray" 
+                   Background="LightGray">Scena</Label>
+            <Label>Tytuł:</Label>
+            <TextBox Text="{Binding SelectedScene.Title}"></TextBox>
+            <Label>Autor:</Label>
+            <TextBox Text="{Binding SelectedScene.Author}"></TextBox>
+            <Label>Yaw:</Label>
+            <TextBox Text="{Binding SelectedScene.Yaw}"></TextBox>
+            <Label>Pitch:</Label>
+            <TextBox Text="{Binding SelectedScene.Pitch}"></TextBox>
+            <Label>Hfov:</Label>
+            <TextBox Text="{Binding SelectedScene.Hfov}"></TextBox>
+
+            <ListView Margin="0 5 0 0" ItemsSource="{Binding SelectedScene.HotSpots}"
+                      SelectedItem="{Binding SelectedHotSpot}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Label
+                                Grid.ColumnSpan="2"
+                                Content="{Binding Text}"
+                                FontSize="10"
+                                VerticalAlignment="Center"/>
+                            <Label
+                                Grid.Row="1"
+                                Content="{Binding Type, Converter={StaticResource EnumToStringConverter}}"
+                                FontSize="8"
+                                VerticalAlignment="Center"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="3">
+            <Label HorizontalContentAlignment="Center" 
+                   FontWeight="Bold" 
+                   BorderThickness="1" 
+                   BorderBrush="Gray" 
+                   Background="LightGray">Hot Spot</Label>
+            <Label>Id:</Label>
+            <TextBox Text="{Binding SelectedHotSpot.Id, Mode=OneWay}" IsEnabled="False"/>
+            <Label>Tekst:</Label>
+            <TextBox Text="{Binding SelectedHotSpot.Text}"/>
+            <Label>Yaw:</Label>
+            <TextBox Text="{Binding SelectedHotSpot.Yaw}"/>
+            <Label>Pitch:</Label>
+            <TextBox Text="{Binding SelectedHotSpot.Pitch}"/>
+        </StackPanel>
     </Grid>
 </Page>

@@ -29,7 +29,8 @@ namespace Pano.Repository
         public async Task<Project> GetProject(int id)
         {
             return await _context.Projects
-                                 .Include(p => p.Tour) //.Default.FirstSceneRef)
+                                 .Include(p => p.Tour.Default) //.Default.FirstSceneRef)
+                                 .Include(p => p.Tour.Scenes.Select(x => x.HotSpots))
                                 // .Include(p => p.Tour.Scenes.Select(s => s.HotSpots))
                                  .FirstOrDefaultAsync(p => p.ProjectId == id);
         }
@@ -37,30 +38,25 @@ namespace Pano.Repository
         public async Task<int> SaveProject(Project project)
         {
             project.DateOfLastModification = DateTime.Now;
+            _context.Projects.AddOrUpdate(project);
 
-            if (project.ProjectId == 0)
-            {
-                var tour = project.Tour;
-                project.Tour = null;
+            //if (project.ProjectId == 0)
+            //{
+            //    var tour = project.Tour;
+            //    project.Tour = null;
 
-                if (tour != null)
-                    tour.Project = project;
+            //    if (tour != null)
+            //        tour.Project = project;
 
-                _context.Projects.Add(project);
-                _context.TourForDbs.AddOrUpdate(tour);
-            }
+            //    _context.Projects.Add(project);
+            //    _context.TourForDbs.AddOrUpdate(tour);
+            //}
 
-            else
-            {
-                _context.Projects.Attach(project);
-                _context.Entry(project).State = EntityState.Modified;
-            }
-
-            //_context.Entry(project).State = project.ProjectId == Guid.Empty ? EntityState.Added : EntityState.Modified;
-
-            //var tour = project.Tour;
-            //_context.TourForDbs.Attach(tour);
-            //_context.Entry(tour).State = tour.TourForDbId == Guid.Empty ? EntityState.Added : EntityState.Modified;
+            //else
+            //{
+            //    _context.Projects.Attach(project);
+            //    _context.Entry(project).State = EntityState.Modified;
+            //}
 
             return await _context.SaveChangesAsync();
         }
