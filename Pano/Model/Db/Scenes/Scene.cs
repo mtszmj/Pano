@@ -289,14 +289,19 @@ namespace Pano.Model.Db.Scenes
         //    scene.AddHotSpot(spot);
         //}
 
-        //public bool AddHotSpot(IHotSpot spot)
-        //{
-        //    if (spot == null || HotSpots.Contains(spot))
-        //        return false;
+        public bool AddHotSpot(Model.Db.HotSpots.HotSpot spot)
+        {
+            if (spot == null || HotSpots.Contains(spot))
+                return false;
 
-        //    HotSpots.Add(spot);
-        //    return true;
-        //}
+            HotSpots.Add(spot);
+            return true;
+        }
+
+        public bool DeleteHotSpot(HotSpots.HotSpot spot)
+        {
+            return HotSpots.Remove(spot);
+        }
 
         public virtual bool Equals(Scene other)
         {

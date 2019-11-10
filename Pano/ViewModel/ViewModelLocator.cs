@@ -32,6 +32,7 @@ using Pano.View.Controls;
 using Pano.View.Pages;
 using Pano.ViewModel.Controls;
 using Pano.ViewModel.Pages;
+using IScene = Pano.Model.Db.IScene;
 
 namespace Pano.ViewModel
 {
@@ -105,6 +106,8 @@ namespace Pano.ViewModel
 
                 // Factories
                 builder.RegisterType<ProjectFactory>().As<IProjectFactory>();
+                builder.RegisterType<SceneFactory>().As<ISceneFactory>();
+                builder.RegisterType<HotSpotFactory>().As<IHotSpotFactory>();
             }
 
 

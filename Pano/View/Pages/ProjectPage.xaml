@@ -14,121 +14,259 @@
       >
     <Page.Resources>
         <converters:EnumToStringConverter x:Key="EnumToStringConverter" />
+        <converters:NullToEnabledConverter x:Key="NullToEnabledConverter" />
     </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
         <Menu Grid.Row="0" 
-              Grid.ColumnSpan="2"
               HorizontalAlignment="Stretch" 
               VerticalAlignment="Top"
               Height="30"
-             >
+        >
             <MenuItem Header="Zapisz" Command="{Binding SaveCommand}"></MenuItem>
             <MenuItem Header="Tryb _Dewelopera" IsCheckable="True" IsChecked="{Binding IsInDeveloperModeStatic, Mode=TwoWay}"/>
         </Menu>
-
-        <Border Grid.Row="1" Grid.Column="0" BorderThickness="1" BorderBrush="Gray">
+        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="Gray">
             <controls:ProjectEditDetailsView DataContext="{Binding Project}" MinWidth="300"/>
         </Border>
-
-        <!--<Label Grid.Row="1" Grid.Column="1" Content="TEST"/>-->
-        <ListView Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Scenes}" SelectedItem="{Binding SelectedScene}"
-                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid HorizontalAlignment="Stretch">
+        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="Gray">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Row="0" Grid.Column="0" BorderThickness="1" BorderBrush="Gray" Padding="0">
+                    <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Label
-                            Grid.ColumnSpan="2"
-                            Content="{Binding Title}"
-                            FontSize="14"
-                            VerticalAlignment="Center"/>
-                        <Label
-                            Grid.Row="1"
-                            Content="{Binding Type, Converter={StaticResource EnumToStringConverter}}"
-                            FontSize="10"
-                            VerticalAlignment="Center"/>
+                        <Label Grid.Row="0"
+                               HorizontalContentAlignment="Center" 
+                               FontWeight="Bold" 
+                               BorderThickness="1" 
+                               BorderBrush="Gray" 
+                               Background="LightGray">
+                            Lista scen
+                        </Label>
+                        <Button Grid.Row="2"
+                                Content="Dodaj"
+                                MinHeight="25"
+                                Command="{Binding AddSceneCommand}"/>
+                        <ListView Grid.Row="1" Padding="0"
+                            ItemsSource="{Binding Scenes}" SelectedItem="{Binding SelectedScene}"
+                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                        >
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    <Setter Property="Padding" Value="0"/>
+                                    <Setter Property="Margin" Value="0"/>
+                                    <Style.Triggers>
 
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="IsSelected" Value="true" />
+                                                <Condition Property="Selector.IsSelectionActive" Value="true" />
+                                            </MultiTrigger.Conditions>
+                                            <Setter Property="Foreground" Value="Yellow" />
+                                            <Setter Property="Background" Value="Yellow" />
+                                        </MultiTrigger>
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="IsSelected" Value="true" />
+                                                <Condition Property="Selector.IsSelectionActive" Value="false" />
+                                            </MultiTrigger.Conditions>
+                                            <Setter Property="Foreground" Value="ForestGreen" />
+                                            <Setter Property="Background" Value="ForestGreen" />
+                                        </MultiTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderThickness="1">
+                                        <Grid HorizontalAlignment="Stretch">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition></RowDefinition>
+                                                <RowDefinition></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Label
+                                                Grid.ColumnSpan="2"
+                                                Content="{Binding Title}"
+                                                FontSize="14"
+                                                VerticalAlignment="Center"/>
+                                            <Label
+                                                Grid.Row="1"
+                                                Content="{Binding Type, Converter={StaticResource EnumToStringConverter}}"
+                                                FontSize="10"
+                                                VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                            <ListBox.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Usuń" Command="{Binding DeleteSceneCommand}"/>
+                                </ContextMenu>
+                            </ListBox.ContextMenu>
+
+                        </ListView>
                     </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
 
-        <StackPanel Grid.Row="1" Grid.Column="2">
-            <Label HorizontalContentAlignment="Center" 
-                   FontWeight="Bold" 
-                   BorderThickness="1" 
-                   BorderBrush="Gray" 
-                   Background="LightGray">Scena</Label>
-            <Label>Tytuł:</Label>
-            <TextBox Text="{Binding SelectedScene.Title}"></TextBox>
-            <Label>Autor:</Label>
-            <TextBox Text="{Binding SelectedScene.Author}"></TextBox>
-            <Label>Yaw:</Label>
-            <TextBox Text="{Binding SelectedScene.Yaw}"></TextBox>
-            <Label>Pitch:</Label>
-            <TextBox Text="{Binding SelectedScene.Pitch}"></TextBox>
-            <Label>Hfov:</Label>
-            <TextBox Text="{Binding SelectedScene.Hfov}"></TextBox>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="1" BorderThickness="1" BorderBrush="Gray" MaxHeight="1024">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0"
+                            HorizontalContentAlignment="Center" 
+                            FontWeight="Bold" 
+                            BorderThickness="1" 
+                            BorderBrush="Gray" 
+                            Background="LightGray" Grid.ColumnSpan="2" Margin="0,0,0,0"
+                            Content="Scena"
+                            MinHeight="28"/>
 
-            <ListView Margin="0 5 0 0" ItemsSource="{Binding SelectedScene.HotSpots}"
-                      SelectedItem="{Binding SelectedHotSpot}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid HorizontalAlignment="Stretch">
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <Label
-                                Grid.ColumnSpan="2"
-                                Content="{Binding Text}"
-                                FontSize="10"
-                                VerticalAlignment="Center"/>
-                            <Label
-                                Grid.Row="1"
-                                Content="{Binding Type, Converter={StaticResource EnumToStringConverter}}"
-                                FontSize="8"
-                                VerticalAlignment="Center"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>
+                        <Label Grid.Row="1"
+                               HorizontalContentAlignment="Center" 
+                               FontWeight="Normal" 
+                               BorderThickness="1 0 1 1" 
+                               BorderBrush="Gray" 
+                               Background="#E3E3E3" Grid.ColumnSpan="2" Margin="0"
+                               Content="{Binding SelectedScene.Title}"
+                               MinHeight="28"/>
 
-        <StackPanel Grid.Row="1" Grid.Column="3">
-            <Label HorizontalContentAlignment="Center" 
-                   FontWeight="Bold" 
-                   BorderThickness="1" 
-                   BorderBrush="Gray" 
-                   Background="LightGray">Hot Spot</Label>
-            <Label>Id:</Label>
-            <TextBox Text="{Binding SelectedHotSpot.Id, Mode=OneWay}" IsEnabled="False"/>
-            <Label>Tekst:</Label>
-            <TextBox Text="{Binding SelectedHotSpot.Text}"/>
-            <Label>Yaw:</Label>
-            <TextBox Text="{Binding SelectedHotSpot.Yaw}"/>
-            <Label>Pitch:</Label>
-            <TextBox Text="{Binding SelectedHotSpot.Pitch}"/>
-        </StackPanel>
+                        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Padding="5"
+                                      IsEnabled="{Binding SelectedScene, Converter={StaticResource NullToEnabledConverter}}" Grid.ColumnSpan="2" Margin="0,0,0.2,0.4">
+                            <StackPanel>
+                                <Label>Tytuł:</Label>
+                                <TextBox Text="{Binding SelectedScene.Title, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                <Label>Autor:</Label>
+                                <TextBox Text="{Binding SelectedScene.Author}"></TextBox>
+                                <Label>Yaw:</Label>
+                                <TextBox Text="{Binding SelectedScene.Yaw}"></TextBox>
+                                <Label>Pitch:</Label>
+                                <TextBox Text="{Binding SelectedScene.Pitch}"></TextBox>
+                                <Label>Hfov:</Label>
+                                <TextBox Text="{Binding SelectedScene.Hfov}"></TextBox>
+
+                                <GroupBox Header="Hot Spot">
+                                    <StackPanel>
+                                    <ListView Margin="0 5 0 0" 
+                              ItemsSource="{Binding SelectedScene.HotSpots}"
+                              SelectedItem="{Binding SelectedHotSpot}"
+                              MinHeight="100">
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="ListViewItem">
+                                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                                <Setter Property="Padding" Value="0"/>
+                                                <Setter Property="Margin" Value="0"/>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border BorderThickness="1 1 1 1" BorderBrush="LightGray">
+                                                    <Grid HorizontalAlignment="Stretch">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition/>
+                                                            <RowDefinition/>
+                                                        </Grid.RowDefinitions>
+                                                        <Label
+                                        Grid.ColumnSpan="2"
+                                        Content="{Binding Text}"
+                                        FontSize="10"
+                                        VerticalAlignment="Center"/>
+                                                        <Label
+                                        Grid.Row="1"
+                                        Content="{Binding Type, Converter={StaticResource EnumToStringConverter}}"
+                                        FontSize="8"
+                                        VerticalAlignment="Center"/>
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                        <ListView.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header="Usuń" Command="{Binding DeleteHotSpotCommand}"></MenuItem>
+                                            </ContextMenu>
+                                        </ListView.ContextMenu>
+                                    </ListView>
+                                    <Button Content="Dodaj" Command="{Binding AddHotSpotCommand}"/>
+                                    </StackPanel>
+                                </GroupBox>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+
+                </Border>
+                <Border Grid.Row="0" Grid.Column="2" BorderThickness="1" BorderBrush="Gray">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Label 
+                            Grid.Row="0"
+                            HorizontalContentAlignment="Center" 
+                               FontWeight="Bold" 
+                               BorderThickness="1" 
+                               BorderBrush="Gray" 
+                               Background="LightGray">Hot Spot</Label>
+                        <Label Grid.Row="1"
+                               HorizontalContentAlignment="Center" 
+                               FontWeight="Normal" 
+                               BorderThickness="1 0 1 1" 
+                               BorderBrush="Gray" 
+                               Background="#E3E3E3" Grid.ColumnSpan="2" Margin="0"
+                               Content="{Binding SelectedHotSpot.Text}"
+                               MinHeight="28"/>
+                        <ScrollViewer 
+                            Grid.Row="2"
+                            Padding="5"
+                            VerticalScrollBarVisibility="Auto" 
+                            CanContentScroll="True"
+                            IsEnabled="{Binding SelectedHotSpot, Converter={StaticResource NullToEnabledConverter}}">
+                            <StackPanel>
+                                <Label>Id:</Label>
+                                <TextBox Text="{Binding SelectedHotSpot.Id, Mode=OneWay}" IsEnabled="False"/>
+                                <Label>Tekst:</Label>
+                                <TextBox Text="{Binding SelectedHotSpot.Text, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Label>Yaw:</Label>
+                                <TextBox Text="{Binding SelectedHotSpot.Yaw}"/>
+                                <Label>Pitch:</Label>
+                                <TextBox Text="{Binding SelectedHotSpot.Pitch}"/>
+                                <Label>Test:</Label>
+                                <RichTextBox Height="400"></RichTextBox>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
     </Grid>
 </Page>

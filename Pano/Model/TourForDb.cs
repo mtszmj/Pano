@@ -42,6 +42,26 @@ namespace Pano.Model
         //private Scene FirstScene => null; //Scenes?.FirstOrDefault().Value; // TODO
 
 
+        public void AddScene(Model.Db.Scenes.Scene scene)
+        {
+            if(scene == null)
+                throw new ArgumentNullException(nameof(scene));
+
+            if(Scenes.Contains(scene))
+                throw new ArgumentException(nameof(scene));
+
+            scene.Tour = this;
+            Scenes.Add(scene);
+        }
+
+        public void DeleteScene(Model.Db.Scenes.Scene scene)
+        {
+            if(scene == null)
+                throw new ArgumentNullException(nameof(scene));
+
+            Scenes.Remove(scene);
+        }
+
         //public void AddScene(Scene scene)
         //{
         //    if (scene == null || Scenes.ContainsValue(scene))
