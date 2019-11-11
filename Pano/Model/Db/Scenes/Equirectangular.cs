@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace Pano.Model.Db.Scenes
 {
@@ -50,6 +53,58 @@ namespace Pano.Model.Db.Scenes
         /// </summary>
         public float[] BackgroundColor { get; set; } = { 0, 0, 0 };
 
+        public byte[] Image;
+        public override BitmapImage BitmapImage
+        {
+            get
+            {
+                if (Image == null)
+                { 
+                    var uri = @"C:\Users\Mateusz\Desktop\bt\PANO_20191107_095729.jpg";
+                    var img = System.Drawing.Image.FromFile(uri);
+                    Image = ImageToByteArray(img);
+                }
+
+                return ByteArrayToBitmapImage(Image);
+            }
+        }
+        public byte[] ImageToByteArray(System.Drawing.Image imageIn)
+        {
+            using (var ms = new MemoryStream())
+            {
+                imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                return ms.ToArray();
+            }
+        }
+
+        public Image ByteArrayToImage(byte[] byteArrayIn)
+        {
+            using (var ms = new MemoryStream(byteArrayIn))
+            { 
+                Image returnImage = System.Drawing.Image.FromStream(ms);
+                return returnImage;
+            }
+        }
+        public BitmapImage ByteArrayToBitmapImage(byte[] byteArrayIn)
+        {
+            using (var ms = new MemoryStream(byteArrayIn))
+            {
+                ms.Position = 0;
+                var bi = new BitmapImage();
+                bi.BeginInit();
+                bi.CacheOption = BitmapCacheOption.OnLoad;
+                bi.StreamSource = ms;
+                bi.EndInit();
+                return bi;
+            }
+        }
+
+        public override void SetImage(string pathToImage)
+        {
+            var img = System.Drawing.Image.FromFile(pathToImage);
+            Image = ImageToByteArray(img);
+            RaisePropertyChanged(nameof(BitmapImage));
+        }
         public override bool Equals(Scene other)
         {
             if (!base.Equals(other))

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Media.Imaging;
 using GalaSoft.MvvmLight;
 using Pano.Model.Db.Helpers;
 
@@ -264,6 +265,9 @@ namespace Pano.Model.Db.Scenes
         /// Currently, only equirectangular dynamic content is supported.
         /// </remarks>
         public virtual bool? Dynamic { get; set; }
+
+        public abstract BitmapImage BitmapImage { get; }
+        public abstract void SetImage(string pathToImage);
 
         //public void AddSceneHotSpot(IScene scene, int pitch = 0, int yaw = 0, int pitchBack = 0, int yawBack = 0)
         //{

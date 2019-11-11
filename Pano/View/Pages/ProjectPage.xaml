@@ -117,6 +117,8 @@
                                                 Content="{Binding Type, Converter={StaticResource EnumToStringConverter}}"
                                                 FontSize="10"
                                                 VerticalAlignment="Center"/>
+                                            <Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Source="{Binding BitmapImage}"
+                                                   MaxWidth="100" MaxHeight="50" HorizontalAlignment="Right" Margin="2"/>
                                         </Grid>
                                     </Border>
                                 </DataTemplate>
@@ -140,6 +142,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Label Grid.Row="0"
@@ -160,9 +163,14 @@
                                Content="{Binding SelectedScene.Title}"
                                MinHeight="28"/>
 
-                        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Padding="5"
+                        <Image Grid.Row="2" Source="{Binding SelectedScene.BitmapImage}"
+                               Grid.ColumnSpan="2"
+                               HorizontalAlignment="Stretch" Margin="3"/>
+
+                        <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto" Padding="5"
                                       IsEnabled="{Binding SelectedScene, Converter={StaticResource NullToEnabledConverter}}" Grid.ColumnSpan="2" Margin="0,0,0.2,0.4">
                             <StackPanel>
+                                <Button Content="Zmień zdjęcie" Command="{Binding ChangeImageCommand}"/>
                                 <Label>Tytuł:</Label>
                                 <TextBox Text="{Binding SelectedScene.Title, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                                 <Label>Autor:</Label>

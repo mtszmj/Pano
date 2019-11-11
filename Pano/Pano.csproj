@@ -150,6 +150,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Db\Helpers\DictionaryEntry.cs" />
+    <Compile Include="Model\Db\Helpers\Image.cs" />
     <Compile Include="Model\Db\Helpers\StringDictionaryEntry.cs" />
     <Compile Include="Model\Db\HotSpots\HotSpot.cs" />
     <Compile Include="Model\Db\HotSpots\IHotSpot.cs" />

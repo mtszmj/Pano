@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
+using Microsoft.Win32;
 using Pano.Factories.Db;
 using Pano.Model;
 using Pano.Service;
@@ -36,6 +37,16 @@ namespace Pano.ViewModel.Pages
             DeleteSceneCommand = new RelayCommand(DeleteScene, () => SelectedScene != null);
             AddHotSpotCommand = new RelayCommand(AddHotSpot, () => SelectedScene != null);
             DeleteHotSpotCommand = new RelayCommand(DeleteHotSpot, () => SelectedHotSpot != null);
+            ChangeImageCommand = new RelayCommand(() =>
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg";
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    var path = openFileDialog.FileName;
+                    SelectedScene.SetImage(path);
+                }
+            });
         }
 
         public ProjectViewModel Project
@@ -80,6 +91,7 @@ namespace Pano.ViewModel.Pages
         public RelayCommand DeleteSceneCommand { get; set; }
         public RelayCommand AddHotSpotCommand { get; set; }
         public RelayCommand DeleteHotSpotCommand { get; set; }
+        public RelayCommand ChangeImageCommand { get; set; }
 
         private void SaveProject()
         {
