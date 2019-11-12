@@ -10,48 +10,28 @@ using Pano.Model;
 
 namespace Pano.Repository
 {
-    public class ProjectRepository : IProjectRepository
+    public class ProjectRepository : Repository<Project>, IProjectRepository
     {
-        private readonly PanoContext _context;
-
-        public ProjectRepository(PanoContext context)
+        public ProjectRepository(PanoContext context) : base(context)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IEnumerable<Project>> GetProjects()
+        private PanoContext PanoContext => Context as PanoContext;
+
+        public IEnumerable<Project> GetAllProjects()
         {
-            return await _context.Projects
+            return PanoContext.Projects
                                  .Include(p => p.Tour)
-                                 .ToListAsync();
+                                 .ToList();
         }
 
-        public async Task<Project> GetProject(int id)
+        public Project GetProject(int id)
         {
-            return await _context.Projects
+            return PanoContext.Projects
                                  .Include(p => p.Tour.Default) //.Default.FirstSceneRef)
                                  .Include(p => p.Tour.Scenes.Select(x => x.HotSpots))
                                  .Include(p => p.Tour.Scenes.Select(s => s.Images))
-                                // .Include(p => p.Tour.Scenes.Select(s => s.HotSpots))
-                                 .FirstOrDefaultAsync(p => p.ProjectId == id);
-        }
-
-        public async Task<int> SaveProject(Project project)
-        {
-            project.DateOfLastModification = DateTime.Now;
-            _context.Projects.AddOrUpdate(project);
-
-            return await _context.SaveChangesAsync();
-        }
-
-        public async Task<int> SaveChanges()
-        {
-            return await _context.SaveChangesAsync();
-        }
-
-        public void RemoveHotSpot(Model.Db.HotSpots.HotSpot spot)
-        {
-            _context.HotSpots.Remove(spot);
+                                 .FirstOrDefault(p => p.ProjectId == id);
         }
     }
 }

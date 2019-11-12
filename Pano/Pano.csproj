@@ -171,8 +171,14 @@
     <Compile Include="Model\Project.cs" />
     <Compile Include="Model\Scenes\IScene.cs" />
     <Compile Include="Model\TourForDb.cs" />
+    <Compile Include="Repository\IHotSpotRepository.cs" />
     <Compile Include="Repository\IProjectRepository.cs" />
+    <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\IUnitOfWork.cs" />
     <Compile Include="Repository\ProjectRepository.cs" />
+    <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Repository\HotSpotRepository.cs" />
+    <Compile Include="Repository\UnitOfWork.cs" />
     <Compile Include="Service\Design\DesignDialogService.cs" />
     <Compile Include="Service\Design\DesignProjectsService.cs" />
     <Compile Include="Service\DialogService.cs" />

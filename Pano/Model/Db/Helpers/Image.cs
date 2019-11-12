@@ -35,6 +35,10 @@ namespace Pano.Model.Db.Helpers
         public void RotateImageClockwise()
         {
             var img = DrawingImage;
+
+            if (img == null)
+                return;
+
             img.RotateFlip(RotateFlipType.Rotate90FlipNone);
             Data = ImageToByteArray(img);
         }
@@ -42,6 +46,10 @@ namespace Pano.Model.Db.Helpers
         public void RotateImageCounterclockwise()
         {
             var img = DrawingImage;
+
+            if (img == null)
+                return;
+
             img.RotateFlip(RotateFlipType.Rotate270FlipNone);
             Data = ImageToByteArray(img);
         }

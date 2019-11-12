@@ -10,44 +10,53 @@ namespace Pano.Service
 {
     public class ProjectsService : IProjectsService
     {
-        private readonly IProjectRepository _repo;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ProjectsService(IProjectRepository repo)
+        public ProjectsService(IUnitOfWork unitOfWork)
         {
-            _repo = repo;
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
         public void GetProjects(Action<IList<Project>, Exception> callback)
         {
+            
+            //    List<Project> projects = Task.Run(() => _repo.GetAllProjects()).Result.ToList();
             try
             {
-                List<Project> projects = Task.Run(() => _repo.GetProjects()).Result.ToList();
+                List<Project> projects = _unitOfWork.Projects.GetAllProjects().ToList();
                 callback?.Invoke(projects, null);
             }
             catch (Exception e)
             {
                 callback?.Invoke(Enumerable.Empty<Project>().ToList(), e);
             }
+
         }
 
         public Project GetProject(int id)
         {
-            return Task.Run(() => _repo.GetProject(id).Result).Result;
+            return _unitOfWork.Projects.GetProject(id);
         }
 
         public int Save(Project project)
         {
-            return Task.Run(() => _repo.SaveProject(project)).Result;
+            //return Task.Run(() => _repo.SaveProject(project)).Result;
+            project.DateOfLastModification = DateTime.Now;
+            _unitOfWork.Projects.AddOrUpdate(project);
+
+            return _unitOfWork.Complete();
         }
 
         public int SaveAll()
         {
-            return Task.Run(() => _repo.SaveChanges()).Result;
+            //return Task.Run(() => _repo.SaveChanges()).Result;
+            return _unitOfWork.Complete();
         }
 
         public void RemoveHotSpot(Model.Db.HotSpots.HotSpot spot)
         {
-            _repo.RemoveHotSpot(spot);
+            //_repo.RemoveHotSpot(spot);
+            _unitOfWork.HotSpots.Remove(spot);
         }
     }
 }

@@ -23,7 +23,6 @@ namespace Pano.ViewModel.Controls
                 {
                     var project = _projectsService.GetProject(SelectedProject.Model.ProjectId);
                     _navigationService.NavigateTo(ViewModelLocator.ProjectMainKey, new ProjectViewModel(project));
-                    project.Description += " test"; // TODO delete
                 },
                 () => SelectedProject?.Model != null);
 

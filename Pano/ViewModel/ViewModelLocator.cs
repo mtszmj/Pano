@@ -100,6 +100,9 @@ namespace Pano.ViewModel
                 //builder.Register(c => new PanoContext(connection));
                 builder.Register(c => new PanoContext()).SingleInstance();
                 builder.RegisterType<ProjectRepository>().As<IProjectRepository>().SingleInstance();
+                builder.RegisterType<HotSpotRepository>().As<IHotSpotRepository>().SingleInstance();
+                builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().SingleInstance();
+
                 builder.RegisterType<ProjectsService>().As<IProjectsService>().SingleInstance();
                 builder.RegisterType<DialogService>().As<IDialogService>().SingleInstance();
                 builder.Register(c => nav).As<INavigationService>().SingleInstance();
