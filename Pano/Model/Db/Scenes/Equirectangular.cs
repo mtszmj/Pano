@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms.VisualStyles;
 using System.Windows.Media.Imaging;
 
 namespace Pano.Model.Db.Scenes
@@ -53,56 +54,70 @@ namespace Pano.Model.Db.Scenes
         /// </summary>
         public float[] BackgroundColor { get; set; } = { 0, 0, 0 };
 
-        public byte[] Image;
+        //public byte[] Image;
+
+        public override Helpers.Image Image
+        {
+            get
+            {
+                if (!Images.Any())
+                    Images.Add(new Helpers.Image());
+
+                return Images[0];
+            }
+        }
         public override BitmapImage BitmapImage
         {
             get
             {
-                if (Image == null)
-                { 
-                    var uri = @"C:\Users\Mateusz\Desktop\bt\PANO_20191107_095729.jpg";
-                    var img = System.Drawing.Image.FromFile(uri);
-                    Image = ImageToByteArray(img);
-                }
+                return Image.BitmapImage;
+                //if (Image == null)
+                //{ 
+                //    var uri = @"C:\Users\Mateusz\Desktop\bt\PANO_20191107_095729.jpg";
+                //    var img = System.Drawing.Image.FromFile(uri);
+                //    Image = ImageToByteArray(img);
+                //}
 
-                return ByteArrayToBitmapImage(Image);
+                //return ByteArrayToBitmapImage(Image);
             }
         }
-        public byte[] ImageToByteArray(System.Drawing.Image imageIn)
-        {
-            using (var ms = new MemoryStream())
-            {
-                imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                return ms.ToArray();
-            }
-        }
+        //public byte[] ImageToByteArray(System.Drawing.Image imageIn)
+        //{
+        //    using (var ms = new MemoryStream())
+        //    {
+        //        imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+        //        return ms.ToArray();
+        //    }
+        //}
 
-        public Image ByteArrayToImage(byte[] byteArrayIn)
-        {
-            using (var ms = new MemoryStream(byteArrayIn))
-            { 
-                Image returnImage = System.Drawing.Image.FromStream(ms);
-                return returnImage;
-            }
-        }
-        public BitmapImage ByteArrayToBitmapImage(byte[] byteArrayIn)
-        {
-            using (var ms = new MemoryStream(byteArrayIn))
-            {
-                ms.Position = 0;
-                var bi = new BitmapImage();
-                bi.BeginInit();
-                bi.CacheOption = BitmapCacheOption.OnLoad;
-                bi.StreamSource = ms;
-                bi.EndInit();
-                return bi;
-            }
-        }
+        //public Image ByteArrayToImage(byte[] byteArrayIn)
+        //{
+        //    using (var ms = new MemoryStream(byteArrayIn))
+        //    { 
+        //        Image returnImage = System.Drawing.Image.FromStream(ms);
+        //        return returnImage;
+        //    }
+        //}
+        //public BitmapImage ByteArrayToBitmapImage(byte[] byteArrayIn)
+        //{
+        //    using (var ms = new MemoryStream(byteArrayIn))
+        //    {
+        //        ms.Position = 0;
+        //        var bi = new BitmapImage();
+        //        bi.BeginInit();
+        //        bi.CacheOption = BitmapCacheOption.OnLoad;
+        //        bi.StreamSource = ms;
+        //        bi.EndInit();
+        //        return bi;
+        //    }
+        //}
 
         public override void SetImage(string pathToImage)
         {
-            var img = System.Drawing.Image.FromFile(pathToImage);
-            Image = ImageToByteArray(img);
+            Image.SetImage(pathToImage);
+            //if(Images)
+            //var img = System.Drawing.Image.FromFile(pathToImage);
+            //Image = ImageToByteArray(img);
             RaisePropertyChanged(nameof(BitmapImage));
         }
         public override bool Equals(Scene other)

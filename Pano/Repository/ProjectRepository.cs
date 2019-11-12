@@ -31,6 +31,7 @@ namespace Pano.Repository
             return await _context.Projects
                                  .Include(p => p.Tour.Default) //.Default.FirstSceneRef)
                                  .Include(p => p.Tour.Scenes.Select(x => x.HotSpots))
+                                 .Include(p => p.Tour.Scenes.Select(s => s.Images))
                                 // .Include(p => p.Tour.Scenes.Select(s => s.HotSpots))
                                  .FirstOrDefaultAsync(p => p.ProjectId == id);
         }
@@ -40,30 +41,17 @@ namespace Pano.Repository
             project.DateOfLastModification = DateTime.Now;
             _context.Projects.AddOrUpdate(project);
 
-            //if (project.ProjectId == 0)
-            //{
-            //    var tour = project.Tour;
-            //    project.Tour = null;
-
-            //    if (tour != null)
-            //        tour.Project = project;
-
-            //    _context.Projects.Add(project);
-            //    _context.TourForDbs.AddOrUpdate(tour);
-            //}
-
-            //else
-            //{
-            //    _context.Projects.Attach(project);
-            //    _context.Entry(project).State = EntityState.Modified;
-            //}
-
             return await _context.SaveChangesAsync();
         }
 
         public async Task<int> SaveChanges()
         {
             return await _context.SaveChangesAsync();
+        }
+
+        public void RemoveHotSpot(Model.Db.HotSpots.HotSpot spot)
+        {
+            _context.HotSpots.Remove(spot);
         }
     }
 }

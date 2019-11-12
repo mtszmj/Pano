@@ -266,6 +266,9 @@ namespace Pano.Model.Db.Scenes
         /// </remarks>
         public virtual bool? Dynamic { get; set; }
 
+        public abstract Helpers.Image Image { get; }
+        public ObservableCollection<Image> Images { get; set; }= new ObservableCollection<Image>();
+
         public abstract BitmapImage BitmapImage { get; }
         public abstract void SetImage(string pathToImage);
 

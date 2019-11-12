@@ -44,5 +44,10 @@ namespace Pano.Service
         {
             return Task.Run(() => _repo.SaveChanges()).Result;
         }
+
+        public void RemoveHotSpot(Model.Db.HotSpots.HotSpot spot)
+        {
+            _repo.RemoveHotSpot(spot);
+        }
     }
 }

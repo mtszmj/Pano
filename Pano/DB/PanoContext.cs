@@ -32,6 +32,7 @@ namespace Pano.DB
         public DbSet<Model.Db.Scenes.Scene> Scenes { get; set; }
         public DbSet<Model.Db.HotSpots.HotSpot> HotSpots { get; set; }
         public DbSet<StringDictionaryEntry> StringDictionaryEntries { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         private void SetInitializers()
         {
@@ -65,11 +66,20 @@ namespace Pano.DB
                 .WithRequired(h => h.Scene)
                 .HasForeignKey(h => h.SceneId);
 
+            modelBuilder.Entity<Scene>()
+                .HasMany(s => s.Images)
+                .WithOptional(i => i.Scene)
+                .HasForeignKey(i => i.SceneId);
+
             modelBuilder.Entity<SceneHotSpot>()
                 .HasRequired(h => h.TargetScene)
                 .WithMany()
                 .HasForeignKey(h => h.TargetSceneId)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Image>()
+                .Ignore(x => x.BitmapImage)
+                .Ignore(x => x.DrawingImage);
         }
     }
 }

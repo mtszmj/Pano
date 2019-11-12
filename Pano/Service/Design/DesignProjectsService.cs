@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Pano.Model;
+using HotSpot = Pano.Model.Db.HotSpots.HotSpot;
 
 namespace Pano.Service.Design
 {
@@ -67,6 +68,11 @@ namespace Pano.Service.Design
         }
 
         public int SaveAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveHotSpot(HotSpot spot)
         {
             throw new NotImplementedException();
         }

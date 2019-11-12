@@ -148,6 +148,14 @@
     <Compile Include="Migrations\201910262154369_CorrectedDefault.designer.cs">
       <DependentUpon>201910262154369_CorrectedDefault.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911111806252_AddImagesTable.cs" />
+    <Compile Include="Migrations\201911111806252_AddImagesTable.designer.cs">
+      <DependentUpon>201911111806252_AddImagesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911111825357_AddImagesColumnToScenesTable.cs" />
+    <Compile Include="Migrations\201911111825357_AddImagesColumnToScenesTable.designer.cs">
+      <DependentUpon>201911111825357_AddImagesColumnToScenesTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Db\Helpers\DictionaryEntry.cs" />
     <Compile Include="Model\Db\Helpers\Image.cs" />
@@ -365,6 +373,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910262154369_CorrectedDefault.resx">
       <DependentUpon>201910262154369_CorrectedDefault.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911111806252_AddImagesTable.resx">
+      <DependentUpon>201911111806252_AddImagesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911111825357_AddImagesColumnToScenesTable.resx">
+      <DependentUpon>201911111825357_AddImagesColumnToScenesTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

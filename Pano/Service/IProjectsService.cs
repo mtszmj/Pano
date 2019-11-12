@@ -13,5 +13,6 @@ namespace Pano.Service
         Project GetProject(int id);
         int Save(Project project);
         int SaveAll();
+        void RemoveHotSpot(Model.Db.HotSpots.HotSpot spot);
     }
 }

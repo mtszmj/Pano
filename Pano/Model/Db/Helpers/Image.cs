@@ -14,7 +14,6 @@ namespace Pano.Model.Db.Helpers
     {
         public int ImageId { get; set; }
 
-
         private byte[] _data;
         public byte[] Data
         {
@@ -27,8 +26,12 @@ namespace Pano.Model.Db.Helpers
             }
         }
 
+        public int? SceneId { get; set; }
+        public Model.Db.Scenes.Scene Scene { get; set; }
+
         public BitmapImage BitmapImage => ByteArrayToBitmapImage(Data);
         public System.Drawing.Image DrawingImage => ByteArrayToImage(Data);
+
         public void RotateImageClockwise()
         {
             var img = DrawingImage;
@@ -43,6 +46,11 @@ namespace Pano.Model.Db.Helpers
             Data = ImageToByteArray(img);
         }
 
+        public void SetImage(string pathToImage)
+        {
+            var img = System.Drawing.Image.FromFile(pathToImage);
+            Data = ImageToByteArray(img);
+        }
 
         protected byte[] ImageToByteArray(System.Drawing.Image image)
         {
@@ -52,17 +60,25 @@ namespace Pano.Model.Db.Helpers
                 return stream.ToArray();
             }
         }
+
         protected System.Drawing.Image ByteArrayToImage(byte[] byteArray)
         {
+            if (byteArray == null || byteArray.Length == 0)
+                return null;
+
             using (var stream = new MemoryStream(byteArray))
             {
                 System.Drawing.Image img = System.Drawing.Image.FromStream(stream);
                 return img;
             }
         }
-        protected BitmapImage ByteArrayToBitmapImage(byte[] byteArrayIn)
+
+        protected BitmapImage ByteArrayToBitmapImage(byte[] byteArray)
         {
-            using (var stream = new MemoryStream(byteArrayIn))
+            if (byteArray == null || byteArray.Length == 0)
+                return null;
+
+            using (var stream = new MemoryStream(byteArray))
             {
                 stream.Position = 0;
                 var img = new BitmapImage();
@@ -73,6 +89,5 @@ namespace Pano.Model.Db.Helpers
                 return img;
             }
         }
-
     }
 }

@@ -19,8 +19,8 @@ namespace Pano.Factories.Db
             //if (targetScene == null)
             //    throw new ArgumentNullException(nameof(targetScene));
 
-            if (scene == targetScene)
-                throw new ArgumentException(nameof(targetScene));
+            //if (scene == targetScene)
+            //    throw new ArgumentException(nameof(targetScene));
 
             var spot = new Model.Db.HotSpots.SceneHotSpot()
             {

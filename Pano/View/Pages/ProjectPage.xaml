@@ -117,7 +117,7 @@
                                                 Content="{Binding Type, Converter={StaticResource EnumToStringConverter}}"
                                                 FontSize="10"
                                                 VerticalAlignment="Center"/>
-                                            <Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Source="{Binding BitmapImage}"
+                                            <Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Source="{Binding BitmapImagee}"
                                                    MaxWidth="100" MaxHeight="50" HorizontalAlignment="Right" Margin="2"/>
                                         </Grid>
                                     </Border>
@@ -163,14 +163,30 @@
                                Content="{Binding SelectedScene.Title}"
                                MinHeight="28"/>
 
-                        <Image Grid.Row="2" Source="{Binding SelectedScene.BitmapImage}"
+                        <Image Grid.Row="2" Source="{Binding SelectedScene.BitmapImagee}"
                                Grid.ColumnSpan="2"
-                               HorizontalAlignment="Stretch" Margin="3"/>
+                               HorizontalAlignment="Stretch" Margin="3"
+                               MaxHeight="300"/>
 
                         <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto" Padding="5"
                                       IsEnabled="{Binding SelectedScene, Converter={StaticResource NullToEnabledConverter}}" Grid.ColumnSpan="2" Margin="0,0,0.2,0.4">
                             <StackPanel>
-                                <Button Content="Zmień zdjęcie" Command="{Binding ChangeImageCommand}"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Grid.Column="0" Command="{Binding RotateCounterclockwiseCommand}">
+                                        -90°
+                                    </Button>
+                                    <Button Grid.Column="1" Content="Ustaw zdjęcie" Command="{Binding ChangeImageCommand}"
+                                            Margin="5 0"/>
+                                    <Button Grid.Column="2" Command="{Binding RotateClockwiseCommand}">
+                                        +90°
+                                    </Button>
+                                </Grid>
+                                
                                 <Label>Tytuł:</Label>
                                 <TextBox Text="{Binding SelectedScene.Title, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                                 <Label>Autor:</Label>

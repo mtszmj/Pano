@@ -24,6 +24,11 @@ namespace Pano.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
 
+            //MySeed(context);
+        }
+
+        private void MySeed(Pano.DB.PanoContext context)
+        {
             var project = new Project()
             {
                 ProjectId = 1,
@@ -75,7 +80,7 @@ namespace Pano.Migrations
                 Value = "Title set by String KeyValue",
                 SceneId = 1
             };
-            context.StringDictionaryEntries.AddOrUpdate(s => new {s.Key, s.Value}, sde1);
+            context.StringDictionaryEntries.AddOrUpdate(s => new { s.Key, s.Value }, sde1);
 
             var sde2 = new StringDictionaryEntry()
             {
@@ -84,7 +89,7 @@ namespace Pano.Migrations
                 Value = "Title2 set by String KeyValue",
                 SceneId = 2
             };
-            context.StringDictionaryEntries.AddOrUpdate(s => new {s.Key, s.Value, s.SceneId}, sde2);
+            context.StringDictionaryEntries.AddOrUpdate(s => new { s.Key, s.Value, s.SceneId }, sde2);
 
             var spot1 = new Model.Db.HotSpots.SceneHotSpot()
             {
@@ -122,10 +127,10 @@ namespace Pano.Migrations
 
             pp.Tour = tt;
 
-            tt.Default = new DefaultSceneConfig() {Title = "Tytul default od calosci", Tour = tt};
+            tt.Default = new DefaultSceneConfig() { Title = "Tytul default od calosci", Tour = tt };
 
-            var sc1 = new Model.Db.Scenes.Equirectangular() {Title = "equi1"};
-            var sc2 = new Model.Db.Scenes.Equirectangular() {Title = "equi2"};
+            var sc1 = new Model.Db.Scenes.Equirectangular() { Title = "equi1" };
+            var sc2 = new Model.Db.Scenes.Equirectangular() { Title = "equi2" };
             var hs1 = new SceneHotSpot { Scene = sc1, TargetScene = sc2, Text = "spot 1" };
             var hs2 = new SceneHotSpot() { Scene = sc2, TargetScene = sc1, Text = "spot 2" };
             sc1.HotSpots.Add(hs1);
@@ -133,20 +138,7 @@ namespace Pano.Migrations
             tt.Scenes.Add(sc1);
             tt.Scenes.Add(sc2);
 
-
             context.Projects.Add(pp);
-
-            //context.HotSpots.AddOrUpdate(s => s.SceneId, spot2);
-
-
-            // na razie ponizej niedodane
-            //defaultScene.FirstSceneRef = scene1;
-            //scene1.HotSpots.Add(spot);
-            //tour.Default = defaultScene;
-            //tour.Scenes.Add(scene1);
-            //tour.Scenes.Add(scene2);
-            //scene1.Strings.Add(new StringDictionaryEntry() { Key = "Title", Value = "CuStOm TiTlE" });
-
         }
     }
 }

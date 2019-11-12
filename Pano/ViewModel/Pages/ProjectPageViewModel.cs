@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
@@ -47,6 +49,8 @@ namespace Pano.ViewModel.Pages
                     SelectedScene.SetImage(path);
                 }
             });
+            RotateClockwiseCommand = new RelayCommand(RotateClockwise, SelectedScene?.Image != null);
+            RotateCounterclockwiseCommand = new RelayCommand(RotateCounterclockwise, SelectedScene?.Image != null);
         }
 
         public ProjectViewModel Project
@@ -92,6 +96,8 @@ namespace Pano.ViewModel.Pages
         public RelayCommand AddHotSpotCommand { get; set; }
         public RelayCommand DeleteHotSpotCommand { get; set; }
         public RelayCommand ChangeImageCommand { get; set; }
+        public RelayCommand RotateClockwiseCommand { get; set; }
+        public RelayCommand RotateCounterclockwiseCommand { get; set; }
 
         private void SaveProject()
         {
@@ -118,7 +124,7 @@ namespace Pano.ViewModel.Pages
             if(SelectedScene == null)
                 throw new InvalidOperationException();
 
-            var spot = _hotSpotFactory.NewSceneHotSpot(SelectedScene, null); // TODO wybor targetScene
+            var spot = _hotSpotFactory.NewSceneHotSpot(SelectedScene, SelectedScene); // TODO wybor targetScene
             SelectedScene.AddHotSpot(spot);
         }
 
@@ -126,10 +132,22 @@ namespace Pano.ViewModel.Pages
         {
             if(SelectedHotSpot != null)
             {
+                _projectsService.RemoveHotSpot(SelectedHotSpot);
                 SelectedScene.DeleteHotSpot(SelectedHotSpot);
             }
         }
 
+        private void RotateClockwise()
+        {
+            SelectedScene.Image.RotateImageClockwise();
+            SelectedScene.RaisePropertyChanged(nameof(BitmapImage));
+        }
+
+        private void RotateCounterclockwise()
+        {
+            SelectedScene.Image.RotateImageCounterclockwise();
+            SelectedScene.RaisePropertyChanged(nameof(BitmapImage));
+        }
         public override void InitializeView()
         {
             MessengerInstance.Send(
