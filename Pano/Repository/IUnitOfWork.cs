@@ -10,6 +10,10 @@ namespace Pano.Repository
     {
         IHotSpotRepository HotSpots { get; }
         IProjectRepository Projects { get; }
+        ISceneRepository Scenes { get; }
+        IImageRepository Images { get; }
+        IDefaultSceneConfigRepository DefaultSceneConfigs { get; }
+
         int Complete();
     }
 }

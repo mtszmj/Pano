@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Pano.Model;
 using HotSpot = Pano.Model.Db.HotSpots.HotSpot;
+using Scene = Pano.Model.Db.Scenes.Scene;
 
 namespace Pano.Service.Design
 {
@@ -68,6 +69,11 @@ namespace Pano.Service.Design
         }
 
         public int SaveAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveScene(Scene scene)
         {
             throw new NotImplementedException();
         }

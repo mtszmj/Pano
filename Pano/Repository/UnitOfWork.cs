@@ -16,11 +16,16 @@ namespace Pano.Repository
             _context = context;
             HotSpots = new HotSpotRepository(context);
             Projects = new ProjectRepository(context);
+            Scenes = new SceneRepository(context);
+            Images = new ImageRepository(context);
+            DefaultSceneConfigs = new DefaultSceneConfigRepository(context);
         }
 
         public IHotSpotRepository HotSpots { get; }
         public IProjectRepository Projects { get; }
-
+        public ISceneRepository Scenes { get; }
+        public IImageRepository Images { get; }
+        public IDefaultSceneConfigRepository DefaultSceneConfigs { get; }
         public int Complete()
         {
             return _context.SaveChanges();

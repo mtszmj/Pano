@@ -115,7 +115,9 @@ namespace Pano.ViewModel.Pages
         {
             if (SelectedScene != null)
             {
-                _project.Model.Tour.DeleteScene(SelectedScene);
+                var scene = SelectedScene;
+                _projectsService.RemoveScene(SelectedScene);
+                _project.Model.Tour.DeleteScene(scene);
             }
         }
 

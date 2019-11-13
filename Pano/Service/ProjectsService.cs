@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Pano.Model;
 using Pano.Repository;
+using Scene = Pano.Model.Db.Scenes.Scene;
 
 namespace Pano.Service
 {
@@ -51,6 +52,11 @@ namespace Pano.Service
         {
             //return Task.Run(() => _repo.SaveChanges()).Result;
             return _unitOfWork.Complete();
+        }
+
+        public void RemoveScene(Model.Db.Scenes.Scene scene)
+        {
+            _unitOfWork.Scenes.Remove(scene);
         }
 
         public void RemoveHotSpot(Model.Db.HotSpots.HotSpot spot)
