@@ -54,6 +54,12 @@ namespace Pano.Service
             return _unitOfWork.Complete();
         }
 
+        public void RemoveProject(Project project)
+        {
+            var p = GetProject(project.ProjectId);
+            _unitOfWork.Projects.Remove(p);
+        }
+
         public void RemoveScene(Model.Db.Scenes.Scene scene)
         {
             _unitOfWork.Scenes.Remove(scene);

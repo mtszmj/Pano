@@ -41,8 +41,8 @@
                    Style="{StaticResource DeveloperStyle}">ProjectId:</Label>
 
 
-            <TextBox Grid.Row="0" Grid.Column="1" VerticalContentAlignment="Center" Text="{Binding Model.Name, Mode=TwoWay}" Style="{StaticResource MarginStyle}"/>
-            <TextBox Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center" Text="{Binding Model.Description, Mode=TwoWay}" Style="{StaticResource MarginStyle}"/>
+            <TextBox Grid.Row="0" Grid.Column="1" VerticalContentAlignment="Center" Text="{Binding Model.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MarginStyle}"/>
+            <TextBox Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center" Text="{Binding Model.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MarginStyle}"/>
             <Label Grid.Row="2" Grid.Column="1" Content="{Binding Model.DateOfCreation}" 
                    Visibility="{Binding IsInDeveloperModeVisibility}"
                    Style="{StaticResource DeveloperStyle}"/>

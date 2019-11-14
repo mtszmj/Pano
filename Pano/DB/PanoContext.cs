@@ -54,7 +54,8 @@ namespace Pano.DB
 
             modelBuilder.Entity<TourForDb>()
                 .HasRequired(t => t.Default)
-                .WithRequiredPrincipal(d => d.Tour);
+                .WithRequiredPrincipal(d => d.Tour)
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Scene>()
                 .HasMany(s => s.Strings)
@@ -69,7 +70,8 @@ namespace Pano.DB
             modelBuilder.Entity<Scene>()
                 .HasMany(s => s.Images)
                 .WithOptional(i => i.Scene)
-                .HasForeignKey(i => i.SceneId);
+                .HasForeignKey(i => i.SceneId)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<SceneHotSpot>()
                 .HasRequired(h => h.TargetScene)

@@ -31,6 +31,7 @@
         >
             <MenuItem Header="Zapisz" Command="{Binding SaveCommand}"></MenuItem>
             <MenuItem Header="Tryb _Dewelopera" IsCheckable="True" IsChecked="{Binding IsInDeveloperModeStatic, Mode=TwoWay}"/>
+            <MenuItem Header="Wróć" Command="{Binding BackCommand}"/>
         </Menu>
         <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="Gray">
             <controls:ProjectEditDetailsView DataContext="{Binding Project}" MinWidth="300"/>

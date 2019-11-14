@@ -59,6 +59,11 @@
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
+            <ListBox.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Usuń" Command="{Binding DeleteProjectCommand}"/>
+            </ContextMenu>
+            </ListBox.ContextMenu>
         </ListView>
 
     </Grid>

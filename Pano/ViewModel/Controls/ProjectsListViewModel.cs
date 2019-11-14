@@ -16,26 +16,23 @@ namespace Pano.ViewModel.Controls
     public class ProjectsListViewModel : ViewModelBaseExtended
     {
         private IProjectsService _projectsService;
+        public IDialogService _dialogService { get; set; }
         public ProjectsListViewModel(IProjectsService projectService,
             IDialogService dialogService)
         {
             _projectsService = projectService;
-            DialogService = dialogService;
+            _dialogService = dialogService;
 
-            LoadProjectsCommand = new RelayCommand(
-                () => _projectsService.GetProjects(GetProjectsCompleted));
+            LoadProjectsCommand = new RelayCommand(LoadCommand);
 
-            if (IsInDesignMode)
-            {
-                _projectsService.GetProjects(GetProjectsCompleted);
-            }
+            DeleteProjectCommand = new RelayCommand(DeleteCommand, SelectedProject != null);
         }
 
         public ObservableCollection<ProjectViewModel> Projects { get; private set; }
         
-        public IDialogService DialogService { get; set; }
 
         public RelayCommand LoadProjectsCommand { get; }
+        public RelayCommand DeleteProjectCommand { get; }
 
         private ProjectViewModel _selectedProject = null;
 
@@ -53,11 +50,16 @@ namespace Pano.ViewModel.Controls
             }
         }
 
+        private void LoadCommand()
+        {
+            _projectsService.GetProjects(GetProjectsCompleted);
+        }
+
         private async void GetProjectsCompleted(IList<Project> result, Exception exception)
         {
             if (exception != null)
             {
-                await DialogService.ShowError(exception, "Exception", "OK", null);
+                await _dialogService.ShowError(exception, "Exception", "OK", null);
                 return;
             }
 
@@ -68,7 +70,21 @@ namespace Pano.ViewModel.Controls
             }
 
             RaisePropertyChanged(nameof(Projects));
-            await DialogService.ShowMessage("Wczytano projekty", "Info");
+            await _dialogService.ShowMessage("Wczytano projekty", "Info");
+        }
+
+        private void DeleteCommand()
+        {
+            var project = SelectedProject;
+            var result = Task.Run(() => _dialogService.ShowMessage("Usunięcie jest nieodwracalne. Czy jesteś pewien?",
+                "Usuń projekt", "OK", "Anuluj", null)).Result;
+
+            if (result)
+            {
+                _projectsService.RemoveProject(project.Model);
+                _projectsService.SaveAll();
+                Projects.Remove(project);
+            }
         }
     }
 }

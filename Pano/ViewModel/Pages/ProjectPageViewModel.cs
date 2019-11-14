@@ -20,21 +20,26 @@ namespace Pano.ViewModel.Pages
     public class ProjectPageViewModel : ViewModelBaseExtended
     {
         private readonly IDialogService _dialogService;
+        private readonly INavigationService _navigationService;
         private readonly IProjectsService _projectsService;
         private readonly ISceneFactory _sceneFactory;
         private readonly IHotSpotFactory _hotSpotFactory;
         private ProjectViewModel _project;
 
-        public ProjectPageViewModel(IDialogService dialogService, IProjectsService projectsService,
-            ISceneFactory sceneFactory,
-            IHotSpotFactory hotSpotFactory)
+        public ProjectPageViewModel(IDialogService dialogService, 
+                                    INavigationService navigationService,
+                                    IProjectsService projectsService,
+                                    ISceneFactory sceneFactory,
+                                    IHotSpotFactory hotSpotFactory)
         {
             _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
+            _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
             _projectsService = projectsService ?? throw new ArgumentNullException(nameof(projectsService));
             _sceneFactory = sceneFactory ?? throw new ArgumentNullException(nameof(sceneFactory));
             _hotSpotFactory = hotSpotFactory ?? throw new ArgumentNullException(nameof(hotSpotFactory)); 
 
             SaveCommand = new RelayCommand(SaveProject);
+            BackCommand = new RelayCommand(() => _navigationService.NavigateTo(ViewModelLocator.InitPageKey));
             AddSceneCommand = new RelayCommand(AddScene);
             DeleteSceneCommand = new RelayCommand(DeleteScene, () => SelectedScene != null);
             AddHotSpotCommand = new RelayCommand(AddHotSpot, () => SelectedScene != null);
@@ -91,6 +96,7 @@ namespace Pano.ViewModel.Pages
         }
 
         public RelayCommand SaveCommand { get; set; }
+        public RelayCommand BackCommand { get; set; }
         public RelayCommand AddSceneCommand { get; set; }
         public RelayCommand DeleteSceneCommand { get; set; }
         public RelayCommand AddHotSpotCommand { get; set; }

@@ -156,6 +156,10 @@
     <Compile Include="Migrations\201911111825357_AddImagesColumnToScenesTable.designer.cs">
       <DependentUpon>201911111825357_AddImagesColumnToScenesTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911142118041_SetWillCascadeOnDeleteOnTourForDbTableToDefaultTableRelationship.cs" />
+    <Compile Include="Migrations\201911142118041_SetWillCascadeOnDeleteOnTourForDbTableToDefaultTableRelationship.designer.cs">
+      <DependentUpon>201911142118041_SetWillCascadeOnDeleteOnTourForDbTableToDefaultTableRelationship.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Db\Helpers\DictionaryEntry.cs" />
     <Compile Include="Model\Db\Helpers\Image.cs" />
@@ -391,6 +395,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911111825357_AddImagesColumnToScenesTable.resx">
       <DependentUpon>201911111825357_AddImagesColumnToScenesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911142118041_SetWillCascadeOnDeleteOnTourForDbTableToDefaultTableRelationship.resx">
+      <DependentUpon>201911142118041_SetWillCascadeOnDeleteOnTourForDbTableToDefaultTableRelationship.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

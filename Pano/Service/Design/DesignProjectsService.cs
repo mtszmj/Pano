@@ -73,6 +73,11 @@ namespace Pano.Service.Design
             throw new NotImplementedException();
         }
 
+        public void RemoveProject(Project project)
+        {
+            throw new NotImplementedException();
+        }
+
         public void RemoveScene(Scene scene)
         {
             throw new NotImplementedException();
