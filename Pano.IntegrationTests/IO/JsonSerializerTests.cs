@@ -29,7 +29,7 @@ namespace Pano.IntegrationTests.IO
             [Values(50)] int targetHfov
         )
         {
-            var hotSpotForSerialization = new SceneHotSpot(id, sceneId)
+            var hotSpotForSerialization = new SceneHotSpotDto(id, sceneId)
             {
                 Pitch = pitch,
                 Yaw = yaw,
@@ -42,7 +42,7 @@ namespace Pano.IntegrationTests.IO
 
             var serializer = new JsonSerializer();
             var json = serializer.Serialize(hotSpotForSerialization);
-            var hotSpotAfterDeserialization = serializer.Deserialize<SceneHotSpot>(json);
+            var hotSpotAfterDeserialization = serializer.Deserialize<SceneHotSpotDto>(json);
 
             Assert.That(hotSpotForSerialization, Is.EqualTo(hotSpotAfterDeserialization));
         }
@@ -57,7 +57,7 @@ namespace Pano.IntegrationTests.IO
             [Values("test_url")] string url
         )
         {
-            InfoHotSpot hotSpotForSerialization = new InfoHotSpot(id)
+            InfoHotSpotDto hotSpotForSerialization = new InfoHotSpotDto(id)
             {
                 Pitch = pitch,
                 Yaw = yaw,
@@ -69,7 +69,7 @@ namespace Pano.IntegrationTests.IO
 
             var serializer = new JsonSerializer();
             var json = serializer.Serialize(hotSpotForSerialization);
-            var hotSpotAfterDeserialization = serializer.Deserialize<InfoHotSpot>(json);
+            var hotSpotAfterDeserialization = serializer.Deserialize<InfoHotSpotDto>(json);
 
             Assert.That(hotSpotForSerialization, Is.EqualTo(hotSpotAfterDeserialization));
         }

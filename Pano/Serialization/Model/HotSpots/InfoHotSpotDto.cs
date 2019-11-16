@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Pano.Serialization.Model.HotSpots
 {
-    public class InfoHotSpot : HotSpot
+    public class InfoHotSpotDto : HotSpotDto
     {
-        public InfoHotSpot() : base() { }
+        public InfoHotSpotDto() : base() { }
 
-        public InfoHotSpot(string id) : base(id) { }
+        public InfoHotSpotDto(string id) : base(id) { }
 
         public override HotSpotType Type => HotSpotType.Info;
 
@@ -20,12 +20,12 @@ namespace Pano.Serialization.Model.HotSpots
         /// </summary>
         public string URL { get; set; }
 
-        public override bool Equals(IHotSpot obj)
+        public override bool Equals(IHotSpotDto obj)
         {
             if (!base.Equals(obj))
                 return false;
 
-            if (!(obj is InfoHotSpot scene))
+            if (!(obj is InfoHotSpotDto scene))
                 return false;
 
             return URL == scene.URL;
@@ -44,9 +44,9 @@ namespace Pano.Serialization.Model.HotSpots
                 return false;
             }
 
-            return Equals((InfoHotSpot)obj);
+            return Equals((InfoHotSpotDto)obj);
         }
-        public bool Equals(InfoHotSpot obj)
+        public bool Equals(InfoHotSpotDto obj)
         {
             if (obj == null)
             {
@@ -71,7 +71,7 @@ namespace Pano.Serialization.Model.HotSpots
             return URL == obj.URL;
         }
 
-        public static bool operator ==(InfoHotSpot left, InfoHotSpot right)
+        public static bool operator ==(InfoHotSpotDto left, InfoHotSpotDto right)
         {
             if (left is null)
             {
@@ -81,7 +81,7 @@ namespace Pano.Serialization.Model.HotSpots
             return (left.Equals(right));
         }
 
-        public static bool operator !=(InfoHotSpot left, InfoHotSpot right)
+        public static bool operator !=(InfoHotSpotDto left, InfoHotSpotDto right)
         {
             return !(left == right);
         }

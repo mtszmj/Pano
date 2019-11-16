@@ -244,7 +244,7 @@ namespace Pano.Serialization.Model.Scenes
         /// This specifies an array of hot spots that can be links to other scenes, 
         /// information, or external links. Each array element has the following properties.
         /// </summary>
-        public List<IHotSpot> HotSpots { get; } = new List<IHotSpot>();
+        public List<IHotSpotDto> HotSpots { get; } = new List<IHotSpotDto>();
 
         /// <summary>
         /// When true, the mouse pointer’s pitch and yaw are logged to the console when 
@@ -277,7 +277,7 @@ namespace Pano.Serialization.Model.Scenes
                 throw new ArgumentNullException(nameof(scene));
             }
 
-            var spot = new SceneHotSpot(Id, scene.Id)
+            var spot = new SceneHotSpotDto(Id, scene.Id)
             {
                 Text = scene.Title,
                 Pitch = pitch,
@@ -285,7 +285,7 @@ namespace Pano.Serialization.Model.Scenes
             };
             AddHotSpot(spot);
 
-            spot = new SceneHotSpot(Id, this.Id)
+            spot = new SceneHotSpotDto(Id, this.Id)
             {
                 Text = this.Title,
                 Pitch = pitchBack,
@@ -294,7 +294,7 @@ namespace Pano.Serialization.Model.Scenes
             scene.AddHotSpot(spot);
         }
 
-        public bool AddHotSpot(IHotSpot spot)
+        public bool AddHotSpot(IHotSpotDto spot)
         {
             if (spot == null || HotSpots.Contains(spot))
                 return false;
@@ -351,7 +351,7 @@ namespace Pano.Serialization.Model.Scenes
                 && other.Dynamic == Dynamic
                 && other.Strings.OrderBy(kvp => kvp.Key)
                                 .SequenceEqual(Strings.OrderBy(kvp => kvp.Key))
-                && other.HotSpots.OrderBy(x => x.Id).SequenceEqual(HotSpots.OrderBy(x => x.Id), HotSpot.GetDefaultEqualityComparer())
+                && other.HotSpots.OrderBy(x => x.Id).SequenceEqual(HotSpots.OrderBy(x => x.Id), HotSpotDto.GetDefaultEqualityComparer())
                 ;
         }
         public static bool operator ==(Scene left, Scene right)

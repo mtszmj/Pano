@@ -81,13 +81,13 @@ namespace Pano.UnitTests.Model.Scenes
                 )
             {
                 // Arrange hot spots mocks
-                var spot1Mock = new Mock<IHotSpot>();
+                var spot1Mock = new Mock<IHotSpotDto>();
                 spot1Mock.Setup(x => x.Id).Returns(hotSpotId1);
-                spot1Mock.Setup(x => x.Equals(It.Is<IHotSpot>(spot => ReferenceEquals(spot, spot1Mock.Object)))).Returns(true);
+                spot1Mock.Setup(x => x.Equals(It.Is<IHotSpotDto>(spot => ReferenceEquals(spot, spot1Mock.Object)))).Returns(true);
 
-                var spot2Mock = new Mock<IHotSpot>();
+                var spot2Mock = new Mock<IHotSpotDto>();
                 spot2Mock.Setup(x => x.Id).Returns(hotSpotId2);
-                spot2Mock.Setup(x => x.Equals(It.Is<IHotSpot>(spot => ReferenceEquals(spot, spot2Mock.Object)))).Returns(true);
+                spot2Mock.Setup(x => x.Equals(It.Is<IHotSpotDto>(spot => ReferenceEquals(spot, spot2Mock.Object)))).Returns(true);
 
                 // Arrange first scene
                 var scene = new Equirectangular()
@@ -1148,21 +1148,21 @@ namespace Pano.UnitTests.Model.Scenes
                 )
             {
                 // Arrange hot spots mocks
-                var spot1Mock = new Mock<IHotSpot>();
+                var spot1Mock = new Mock<IHotSpotDto>();
                 spot1Mock.Setup(x => x.Id).Returns(hotSpotId1);
-                spot1Mock.Setup(x => x.Equals(It.Is<IHotSpot>(spot => ReferenceEquals(spot, spot1Mock.Object)))).Returns(true);
+                spot1Mock.Setup(x => x.Equals(It.Is<IHotSpotDto>(spot => ReferenceEquals(spot, spot1Mock.Object)))).Returns(true);
 
-                var spot2Mock = new Mock<IHotSpot>();
+                var spot2Mock = new Mock<IHotSpotDto>();
                 spot2Mock.Setup(x => x.Id).Returns(hotSpotId2);
-                spot2Mock.Setup(x => x.Equals(It.Is<IHotSpot>(spot => ReferenceEquals(spot, spot2Mock.Object)))).Returns(true);
+                spot2Mock.Setup(x => x.Equals(It.Is<IHotSpotDto>(spot => ReferenceEquals(spot, spot2Mock.Object)))).Returns(true);
 
-                var spot1MockForComparison = new Mock<IHotSpot>();
+                var spot1MockForComparison = new Mock<IHotSpotDto>();
                 spot1MockForComparison.Setup(x => x.Id).Returns(hotSpotId1ForComparison);
-                spot1MockForComparison.Setup(x => x.Equals(It.Is<IHotSpot>(spot => ReferenceEquals(spot, spot1MockForComparison.Object)))).Returns(true);
+                spot1MockForComparison.Setup(x => x.Equals(It.Is<IHotSpotDto>(spot => ReferenceEquals(spot, spot1MockForComparison.Object)))).Returns(true);
 
-                var spot2MockForComparison = new Mock<IHotSpot>();
+                var spot2MockForComparison = new Mock<IHotSpotDto>();
                 spot2MockForComparison.Setup(x => x.Id).Returns(hotSpotId2ForComparison);
-                spot2MockForComparison.Setup(x => x.Equals(It.Is<IHotSpot>(spot => ReferenceEquals(spot, spot2MockForComparison.Object)))).Returns(true);
+                spot2MockForComparison.Setup(x => x.Equals(It.Is<IHotSpotDto>(spot => ReferenceEquals(spot, spot2MockForComparison.Object)))).Returns(true);
 
                 // Arrange first scene
                 var scene = new Equirectangular()
@@ -1300,8 +1300,8 @@ namespace Pano.UnitTests.Model.Scenes
         public void AddHotSpot_AdditionCorrect_ReturnTrue()
         {
             var scene = new Equirectangular();
-            var result1 = scene.AddHotSpot(new InfoHotSpot("id"));
-            var result2 = scene.AddHotSpot(new SceneHotSpot("id2", "sceneId"));
+            var result1 = scene.AddHotSpot(new InfoHotSpotDto("id"));
+            var result2 = scene.AddHotSpot(new SceneHotSpotDto("id2", "sceneId"));
 
             Assert.Multiple(() =>
             {
@@ -1328,7 +1328,7 @@ namespace Pano.UnitTests.Model.Scenes
         public void AddHotSpot_AddTwiceTheSameHotSpot_AddedOnlyOnce()
         {
             var scene = new Equirectangular();
-            var spot = new SceneHotSpot("id", "sceneId");
+            var spot = new SceneHotSpotDto("id", "sceneId");
             scene.AddHotSpot(spot);
             var result = scene.AddHotSpot(spot);
 
@@ -1367,13 +1367,13 @@ namespace Pano.UnitTests.Model.Scenes
                 Assert.That(scene.HotSpots.Count, Is.EqualTo(1));
                 Assert.That(scene2.HotSpots.Count, Is.EqualTo(1));
 
-                SceneHotSpot spot = (SceneHotSpot)scene.HotSpots.First();
+                SceneHotSpotDto spot = (SceneHotSpotDto)scene.HotSpots.First();
                 Assert.That(spot.Pitch, Is.EqualTo(1));
                 Assert.That(spot.Yaw, Is.EqualTo(2));
                 Assert.That(spot.SceneId, Is.EqualTo(scene2Id));
                 Assert.That(spot.Text, Is.EqualTo(scene2Title));
 
-                spot = (SceneHotSpot)scene2.HotSpots.First();
+                spot = (SceneHotSpotDto)scene2.HotSpots.First();
                 Assert.That(spot.Pitch, Is.EqualTo(3));
                 Assert.That(spot.Yaw, Is.EqualTo(4));
                 Assert.That(spot.SceneId, Is.EqualTo(scene1Id));

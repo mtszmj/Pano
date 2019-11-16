@@ -21,7 +21,7 @@ namespace Pano.UnitTests.Model.HotSpots
             [Values(-10, 0, 10, 100)] int targetHfov
             )
         {
-            SceneHotSpot sceneHotSpot1 = new SceneHotSpot(id, sceneId)
+            SceneHotSpotDto sceneHotSpot1 = new SceneHotSpotDto(id, sceneId)
             {
                 Pitch = pitch,
                 Yaw = yaw,
@@ -32,7 +32,7 @@ namespace Pano.UnitTests.Model.HotSpots
                 TargetHfov = targetHfov,
             };
 
-            SceneHotSpot sceneHotSpot2 = new SceneHotSpot(id, sceneId)
+            SceneHotSpotDto sceneHotSpot2 = new SceneHotSpotDto(id, sceneId)
             {
                 Pitch = pitch,
                 Yaw = yaw,
@@ -43,11 +43,11 @@ namespace Pano.UnitTests.Model.HotSpots
                 TargetHfov = targetHfov,
             };
 
-            HotSpot hotSpot1 = sceneHotSpot1;
-            HotSpot hotSpot2 = sceneHotSpot2;
+            HotSpotDto hotSpot1 = sceneHotSpot1;
+            HotSpotDto hotSpot2 = sceneHotSpot2;
 
-            IHotSpot iHotSpot1 = sceneHotSpot1;
-            IHotSpot iHotSpot2 = sceneHotSpot2;
+            IHotSpotDto iHotSpot1 = sceneHotSpot1;
+            IHotSpotDto iHotSpot2 = sceneHotSpot2;
 
             Assert.Multiple(() =>
             {
@@ -91,7 +91,7 @@ namespace Pano.UnitTests.Model.HotSpots
             int targetHfov2
             )
         {
-            SceneHotSpot sceneHotSpot1 = new SceneHotSpot(id1, sceneId1)
+            SceneHotSpotDto sceneHotSpot1 = new SceneHotSpotDto(id1, sceneId1)
             {
                 Pitch = pitch1,
                 Yaw = yaw1,
@@ -102,7 +102,7 @@ namespace Pano.UnitTests.Model.HotSpots
                 TargetHfov = targetHfov1,
             };
 
-            SceneHotSpot sceneHotSpot2 = new SceneHotSpot(id2, sceneId2)
+            SceneHotSpotDto sceneHotSpot2 = new SceneHotSpotDto(id2, sceneId2)
             {
                 Pitch = pitch2,
                 Yaw = yaw2,
@@ -113,11 +113,11 @@ namespace Pano.UnitTests.Model.HotSpots
                 TargetHfov = targetHfov2,
             };
 
-            HotSpot hotSpot1 = sceneHotSpot1;
-            HotSpot hotSpot2 = sceneHotSpot2;
+            HotSpotDto hotSpot1 = sceneHotSpot1;
+            HotSpotDto hotSpot2 = sceneHotSpot2;
 
-            IHotSpot iHotSpot1 = sceneHotSpot1;
-            IHotSpot iHotSpot2 = sceneHotSpot2;
+            IHotSpotDto iHotSpot1 = sceneHotSpot1;
+            IHotSpotDto iHotSpot2 = sceneHotSpot2;
 
             Assert.Multiple(() =>
             {
@@ -136,10 +136,10 @@ namespace Pano.UnitTests.Model.HotSpots
             [Values("id")] string id,
             [Values("sceneId")] string sceneId)
         {
-            var spot = new SceneHotSpot(id, sceneId);
+            var spot = new SceneHotSpotDto(id, sceneId);
 
-            HotSpot hotSpot = spot;
-            IHotSpot iHotSpot = spot;
+            HotSpotDto hotSpot = spot;
+            IHotSpotDto iHotSpotDto = spot;
 
             Assert.Multiple(() => {
                 Assert.That(spot.Equals(null), Is.False);
@@ -148,7 +148,7 @@ namespace Pano.UnitTests.Model.HotSpots
                 Assert.That(spot.Equals(null), Is.False);
                 Assert.That(hotSpot == null, Is.False);
                 Assert.That(hotSpot != null, Is.True);
-                Assert.That(iHotSpot.Equals(null), Is.False);
+                Assert.That(iHotSpotDto.Equals(null), Is.False);
             });
         }
 
@@ -157,13 +157,13 @@ namespace Pano.UnitTests.Model.HotSpots
             [Values("id")] string id,
             [Values("sceneId")] string sceneId)
         {
-            var spot = new SceneHotSpot(id, sceneId);
+            var spot = new SceneHotSpotDto(id, sceneId);
             var spot2 = spot;
 
-            HotSpot hotSpot1 = spot;
-            HotSpot hotSpot2 = spot2;
-            IHotSpot iHotSpot1 = spot;
-            IHotSpot iHotSpot2 = spot2;
+            HotSpotDto hotSpot1 = spot;
+            HotSpotDto hotSpot2 = spot2;
+            IHotSpotDto iHotSpot1 = spot;
+            IHotSpotDto iHotSpot2 = spot2;
 
             Assert.Multiple(() => {
                 Assert.That(spot.Equals(spot2), Is.True);

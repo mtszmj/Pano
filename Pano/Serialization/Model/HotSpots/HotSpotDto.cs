@@ -8,11 +8,11 @@ namespace Pano.Serialization.Model.HotSpots
     /// This specifies an array of hot spots that can be links to other scenes, information, or external links.
     /// Each array element has the following properties. 
     /// </summary>
-    public abstract class HotSpot : IHotSpot
+    public abstract class HotSpotDto : IHotSpotDto
     {
-        protected HotSpot() { }
+        protected HotSpotDto() { }
 
-        protected HotSpot(string id)
+        protected HotSpotDto(string id)
         {
             Id = id;
         }
@@ -58,7 +58,7 @@ namespace Pano.Serialization.Model.HotSpots
         //hot spot’s click event. The event object and the contents of clickHandlerArgs are passed 
         //to the function as arguments.
 
-        public static IEqualityComparer<IHotSpot> GetDefaultEqualityComparer() => new HotSpotEqualityComparer();
+        public static IEqualityComparer<IHotSpotDto> GetDefaultEqualityComparer() => new HotSpotEqualityComparer();
 
         #region Equals
 
@@ -73,9 +73,9 @@ namespace Pano.Serialization.Model.HotSpots
             {
                 return false;
             }
-            return Equals((IHotSpot)obj);
+            return Equals((IHotSpotDto)obj);
         }
-        public virtual bool Equals(IHotSpot obj)
+        public virtual bool Equals(IHotSpotDto obj)
         {
             if (obj == null)
             {
@@ -110,7 +110,7 @@ namespace Pano.Serialization.Model.HotSpots
                 && CssClass == obj.CssClass;
         }
 
-        public static bool operator ==(HotSpot left, HotSpot right)
+        public static bool operator ==(HotSpotDto left, HotSpotDto right)
         {
             if (left is null)
             {
@@ -120,7 +120,7 @@ namespace Pano.Serialization.Model.HotSpots
             return (left.Equals(right));
         }
 
-        public static bool operator !=(HotSpot left, HotSpot right)
+        public static bool operator !=(HotSpotDto left, HotSpotDto right)
         {
             return !(left == right);
         }

@@ -36,7 +36,7 @@ namespace Pano.Factories.Tests
 
             };
 
-            var dict = new Dictionary<string, HotSpot>
+            var dict = new Dictionary<string, HotSpotDto>
             {
                 ["pierwsza"] = hotSpot,
                 ["druga"] = factory.CreateDefaultHotSpot()
@@ -67,7 +67,7 @@ namespace Pano.Factories.Tests
 
             };
 
-            var list = new List<HotSpot>
+            var list = new List<HotSpotDto>
             {
                 factory.CreateSceneHotSpot(90, 90, "test", "testScena"),
                 factory.CreateSceneHotSpot(90, 90, "test2", "testScena")

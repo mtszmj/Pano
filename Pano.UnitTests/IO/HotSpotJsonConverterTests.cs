@@ -22,15 +22,15 @@ namespace Pano.UnitTests.IO
             var mock = new Mock<IJObjectParser>();
             mock.Setup(x => x.TryParseEnum<HotSpotType>(It.IsAny<JObject>(), It.IsAny<string>()))
                 .Returns(HotSpotType.Info);
-            mock.Setup(x => x.CreateAndPopulateObject<InfoHotSpot>(It.IsAny<JsonReader>(), It.IsAny<Newtonsoft.Json.JsonSerializer>()))
-                .Returns(new InfoHotSpot(id));
+            mock.Setup(x => x.CreateAndPopulateObject<InfoHotSpotDto>(It.IsAny<JsonReader>(), It.IsAny<Newtonsoft.Json.JsonSerializer>()))
+                .Returns(new InfoHotSpotDto(id));
 
             var converter = new HotSpotJsonConverter(mock.Object);
             var obj = converter.ReadJson(null, null, null, null);
 
             Assert.Multiple(() =>
             {
-                Assert.That(obj.GetType() == typeof(InfoHotSpot), Is.True);
+                Assert.That(obj.GetType() == typeof(InfoHotSpotDto), Is.True);
                 Assert.That(obj is null, Is.False);
             });
         }
@@ -41,15 +41,15 @@ namespace Pano.UnitTests.IO
             var mock = new Mock<IJObjectParser>();
             mock.Setup(x => x.TryParseEnum<HotSpotType>(It.IsAny<JObject>(), It.IsAny<string>()))
                 .Returns(HotSpotType.Scene);
-            mock.Setup(x => x.CreateAndPopulateObject<SceneHotSpot>(It.IsAny<JsonReader>(), It.IsAny<Newtonsoft.Json.JsonSerializer>()))
-                .Returns(new SceneHotSpot(id, sceneId));
+            mock.Setup(x => x.CreateAndPopulateObject<SceneHotSpotDto>(It.IsAny<JsonReader>(), It.IsAny<Newtonsoft.Json.JsonSerializer>()))
+                .Returns(new SceneHotSpotDto(id, sceneId));
 
             var converter = new HotSpotJsonConverter(mock.Object);
             var obj = converter.ReadJson(null, null, null, null);
 
             Assert.Multiple(() =>
             {
-                Assert.That(obj.GetType() == typeof(SceneHotSpot));
+                Assert.That(obj.GetType() == typeof(SceneHotSpotDto));
                 Assert.That(obj is null, Is.False);
             });
         }
@@ -69,8 +69,8 @@ namespace Pano.UnitTests.IO
         [Test]
         public void CanConvert_IsIHotSpot_ReturnsTrue()
         {
-            var mock = new Mock<IHotSpot>();
-            IHotSpot spot = mock.Object;
+            var mock = new Mock<IHotSpotDto>();
+            IHotSpotDto spot = mock.Object;
 
             var converter = new HotSpotJsonConverter(null);
 

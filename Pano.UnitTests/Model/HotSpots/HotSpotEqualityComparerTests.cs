@@ -18,7 +18,7 @@ namespace Pano.UnitTests.Model.HotSpots
         [Test]
         public void CompareHotSpots_ReferenceEquals()
         {
-            var sceneMock1 = new Mock<IHotSpot>();
+            var sceneMock1 = new Mock<IHotSpotDto>();
 
             Assert.That(comparer.Equals(sceneMock1.Object, sceneMock1.Object), Is.True);
         }
@@ -32,7 +32,7 @@ namespace Pano.UnitTests.Model.HotSpots
         [Test]
         public void CompareHotSpots_ConcreteIsNotEqualToNull()
         {
-            var mock = new Mock<IHotSpot>();
+            var mock = new Mock<IHotSpotDto>();
 
             Assert.Multiple(() =>
             {
@@ -44,10 +44,10 @@ namespace Pano.UnitTests.Model.HotSpots
         [Test]
         public void CompareHotSpots_AreEqual()
         {
-            var mock = new Mock<IHotSpot>();
-            mock.Setup(x => x.Equals(It.IsAny<IHotSpot>())).Returns(true);
+            var mock = new Mock<IHotSpotDto>();
+            mock.Setup(x => x.Equals(It.IsAny<IHotSpotDto>())).Returns(true);
 
-            var mock2 = new Mock<IHotSpot>();
+            var mock2 = new Mock<IHotSpotDto>();
 
             Assert.That(comparer.Equals(mock.Object, mock2.Object), Is.True);
         }
@@ -55,10 +55,10 @@ namespace Pano.UnitTests.Model.HotSpots
         [Test]
         public void CompareHotSpots_AreNotEqual()
         {
-            var mock = new Mock<IHotSpot>();
-            mock.Setup(x => x.Equals(It.IsAny<IHotSpot>())).Returns(false);
+            var mock = new Mock<IHotSpotDto>();
+            mock.Setup(x => x.Equals(It.IsAny<IHotSpotDto>())).Returns(false);
 
-            var mock2 = new Mock<IHotSpot>();
+            var mock2 = new Mock<IHotSpotDto>();
 
             Assert.That(comparer.Equals(mock.Object, mock2.Object), Is.False);
         }
@@ -73,7 +73,7 @@ namespace Pano.UnitTests.Model.HotSpots
         public void GetHashCode_InstanceNotNull_NotEqualToZero(
             [Values(Int32.MaxValue, Int32.MinValue)] int hash)
         {
-            var mock = new Mock<IHotSpot>();
+            var mock = new Mock<IHotSpotDto>();
             mock.Setup(x => x.GetHashCode()).Returns(hash);
 
             Assert.That(comparer.GetHashCode(mock.Object), Is.Not.EqualTo(0));

@@ -41,6 +41,9 @@
     <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="CommonServiceLocator, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.2\lib\net47\CommonServiceLocator.dll</HintPath>
     </Reference>
@@ -91,6 +94,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Automapper\HotSpotProfile.cs" />
     <Compile Include="DB\PanoContext.cs" />
     <Compile Include="DB\PanoDbInitializerDropCreateDatabaseIfModelChanges.cs" />
     <Compile Include="DB\PanoDbInitializerDropCreateDatabaseAlways.cs" />
@@ -180,7 +184,7 @@
     <Compile Include="Model\Db\Scenes\Equirectangular.cs" />
     <Compile Include="Model\Db\Scenes\IScene.cs" />
     <Compile Include="Model\Db\Scenes\Scene.cs" />
-    <Compile Include="Serialization\Model\HotSpots\IHotSpot.cs" />
+    <Compile Include="Serialization\Model\HotSpots\IHotSpotDto.cs" />
     <Compile Include="Model\Project.cs" />
     <Compile Include="Serialization\Model\Scenes\IScene.cs" />
     <Compile Include="Model\TourForDb.cs" />
@@ -358,12 +362,12 @@
     <Compile Include="Serialization\Model\Scenes\DefaultScene.cs" />
     <Compile Include="Model\Enums.cs" />
     <Compile Include="Serialization\Model\Scenes\Equirectangular.cs" />
-    <Compile Include="Serialization\Model\HotSpots\HotSpot.cs" />
+    <Compile Include="Serialization\Model\HotSpots\HotSpotDto.cs" />
     <Compile Include="Serialization\Model\HotSpots\HotSpotEqualityComparer.cs" />
-    <Compile Include="Serialization\Model\HotSpots\InfoHotSpot.cs" />
+    <Compile Include="Serialization\Model\HotSpots\InfoHotSpotDto.cs" />
     <Compile Include="Serialization\Model\Scenes\Multires.cs" />
     <Compile Include="Serialization\Model\Scenes\Scene.cs" />
-    <Compile Include="Serialization\Model\HotSpots\SceneHotSpot.cs" />
+    <Compile Include="Serialization\Model\HotSpots\SceneHotSpotDto.cs" />
     <Compile Include="Serialization\Model\Scenes\ScenesEqualityComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -436,10 +440,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\HotSpots\" />
-    <Folder Include="Model\Scenes\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -6,7 +6,7 @@ namespace Pano.Model.HotSpots.Tests
     [TestClass()]
     public class HotSpotEqualityComparerTests
     {
-        private SceneHotSpot SceneHotSpot1_0 => new SceneHotSpot("id", "sceneId")
+        private SceneHotSpotDto SceneHotSpot1_0 => new SceneHotSpotDto("id", "sceneId")
         {
             CssClass = "css",
             Pitch = 1,
@@ -17,7 +17,7 @@ namespace Pano.Model.HotSpots.Tests
             Yaw = 5
         };
 
-        private HotSpot SceneHotSpot1_1 => new SceneHotSpot("id", "sceneId")
+        private HotSpotDto SceneHotSpot1_1 => new SceneHotSpotDto("id", "sceneId")
         {
             CssClass = "css",
             Pitch = 1,
@@ -28,9 +28,9 @@ namespace Pano.Model.HotSpots.Tests
             Yaw = 5
         };
 
-        private SceneHotSpot SceneHotSpot2_0 => new SceneHotSpot("id", "sceneId");
+        private SceneHotSpotDto SceneHotSpot2_0 => new SceneHotSpotDto("id", "sceneId");
 
-        private HotSpot SceneHotSpot3_0 => new SceneHotSpot("id", "sceneId")
+        private HotSpotDto SceneHotSpot3_0 => new SceneHotSpotDto("id", "sceneId")
         {
             CssClass = "css",
             Pitch = 1,
@@ -41,7 +41,7 @@ namespace Pano.Model.HotSpots.Tests
             Yaw = 5
         };
 
-        private InfoHotSpot InfoHotSpot2_0 => new InfoHotSpot("id");
+        private InfoHotSpotDto InfoHotSpot2_0 => new InfoHotSpotDto("id");
 
 
         [TestMethod()]

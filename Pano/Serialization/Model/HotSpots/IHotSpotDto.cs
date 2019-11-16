@@ -2,7 +2,7 @@
 
 namespace Pano.Serialization.Model.HotSpots
 {
-    public interface IHotSpot : IEquatable<IHotSpot>
+    public interface IHotSpotDto : IEquatable<IHotSpotDto>
     {
         string CssClass { get; set; }
         string Id { get; }

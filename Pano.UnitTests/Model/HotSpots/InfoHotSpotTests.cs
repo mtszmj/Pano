@@ -23,7 +23,7 @@ namespace Pano.UnitTests.Model.HotSpots
             [Values("url")] string url
             )
         {
-            InfoHotSpot InfoHotSpot1 = new InfoHotSpot(id)
+            InfoHotSpotDto InfoHotSpot1 = new InfoHotSpotDto(id)
             {
                 Pitch = pitch,
                 Yaw = yaw,
@@ -32,7 +32,7 @@ namespace Pano.UnitTests.Model.HotSpots
                 URL = url
             };
 
-            InfoHotSpot InfoHotSpot2 = new InfoHotSpot(id)
+            InfoHotSpotDto InfoHotSpot2 = new InfoHotSpotDto(id)
             {
                 Pitch = pitch,
                 Yaw = yaw,
@@ -41,11 +41,11 @@ namespace Pano.UnitTests.Model.HotSpots
                 URL = url
             };
 
-            HotSpot hotSpot1 = InfoHotSpot1;
-            HotSpot hotSpot2 = InfoHotSpot2;
+            HotSpotDto hotSpot1 = InfoHotSpot1;
+            HotSpotDto hotSpot2 = InfoHotSpot2;
 
-            IHotSpot iHotSpot1 = InfoHotSpot1;
-            IHotSpot iHotSpot2 = InfoHotSpot2;
+            IHotSpotDto iHotSpot1 = InfoHotSpot1;
+            IHotSpotDto iHotSpot2 = InfoHotSpot2;
 
             Assert.Multiple(() =>
             {
@@ -80,7 +80,7 @@ namespace Pano.UnitTests.Model.HotSpots
             string url2
             )
         {
-            InfoHotSpot InfoHotSpot1 = new InfoHotSpot(id1)
+            InfoHotSpotDto InfoHotSpot1 = new InfoHotSpotDto(id1)
             {
                 Pitch = pitch1,
                 Yaw = yaw1,
@@ -89,7 +89,7 @@ namespace Pano.UnitTests.Model.HotSpots
                 URL = url1
             };
 
-            InfoHotSpot InfoHotSpot2 = new InfoHotSpot(id2)
+            InfoHotSpotDto InfoHotSpot2 = new InfoHotSpotDto(id2)
             {
                 Pitch = pitch2,
                 Yaw = yaw2,
@@ -98,11 +98,11 @@ namespace Pano.UnitTests.Model.HotSpots
                 URL = url2
             };
 
-            HotSpot hotSpot1 = InfoHotSpot1;
-            HotSpot hotSpot2 = InfoHotSpot2;
+            HotSpotDto hotSpot1 = InfoHotSpot1;
+            HotSpotDto hotSpot2 = InfoHotSpot2;
 
-            IHotSpot iHotSpot1 = InfoHotSpot1;
-            IHotSpot iHotSpot2 = InfoHotSpot2;
+            IHotSpotDto iHotSpot1 = InfoHotSpot1;
+            IHotSpotDto iHotSpot2 = InfoHotSpot2;
 
             Assert.Multiple(() =>
             {
@@ -120,9 +120,9 @@ namespace Pano.UnitTests.Model.HotSpots
         public void CompareSceneHotSpots_ComparedIsNull_AreNotEqual(
             [Values("id")] string id)
         {
-            var spot = new InfoHotSpot(id);
-            HotSpot hotSpot = spot;
-            IHotSpot iHotSpot = spot;
+            var spot = new InfoHotSpotDto(id);
+            HotSpotDto hotSpot = spot;
+            IHotSpotDto iHotSpotDto = spot;
 
             Assert.Multiple(() => {
                 Assert.That(spot.Equals(null), Is.False);
@@ -131,7 +131,7 @@ namespace Pano.UnitTests.Model.HotSpots
                 Assert.That(spot.Equals(null), Is.False);
                 Assert.That(hotSpot == null, Is.False);
                 Assert.That(hotSpot != null, Is.True);
-                Assert.That(iHotSpot.Equals(null), Is.False);
+                Assert.That(iHotSpotDto.Equals(null), Is.False);
             });
         }
 
@@ -139,13 +139,13 @@ namespace Pano.UnitTests.Model.HotSpots
         public void CompareSceneHotSpots_ReferenceEquals_AreEqual(
             [Values("id")] string id)
         {
-            var spot = new InfoHotSpot(id);
+            var spot = new InfoHotSpotDto(id);
             var spot2 = spot;
 
-            HotSpot hotSpot1 = spot;
-            HotSpot hotSpot2 = spot2;
-            IHotSpot iHotSpot1 = spot;
-            IHotSpot iHotSpot2 = spot2;
+            HotSpotDto hotSpot1 = spot;
+            HotSpotDto hotSpot2 = spot2;
+            IHotSpotDto iHotSpot1 = spot;
+            IHotSpotDto iHotSpot2 = spot2;
 
             Assert.Multiple(() => {
                 Assert.That(spot.Equals(spot2), Is.True);

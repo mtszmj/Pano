@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Pano.Serialization.Model.HotSpots
 {
-    public class SceneHotSpot : HotSpot
+    public class SceneHotSpotDto : HotSpotDto
     {
-        public SceneHotSpot() : base() { }
+        public SceneHotSpotDto() : base() { }
 
-        public SceneHotSpot(string id, string sceneId) : base(id)
+        public SceneHotSpotDto(string id, string sceneId) : base(id)
         {
             SceneId = sceneId;
         }
@@ -55,15 +55,15 @@ namespace Pano.Serialization.Model.HotSpots
                 return false;
             }
 
-            return Equals((SceneHotSpot)obj);
+            return Equals((SceneHotSpotDto)obj);
         }
 
-        public override bool Equals(IHotSpot obj)
+        public override bool Equals(IHotSpotDto obj)
         {
             if (!base.Equals(obj))
                 return false;
 
-            if (!(obj is SceneHotSpot scene))
+            if (!(obj is SceneHotSpotDto scene))
                 return false;
 
             return SceneId == scene.SceneId
@@ -72,7 +72,7 @@ namespace Pano.Serialization.Model.HotSpots
                 && TargetHfov == scene.TargetHfov;
         }
 
-        public bool Equals(SceneHotSpot obj)
+        public bool Equals(SceneHotSpotDto obj)
         {
             if (obj == null)
             {
@@ -100,7 +100,7 @@ namespace Pano.Serialization.Model.HotSpots
                 && TargetHfov == obj.TargetHfov;
         }
 
-        public static bool operator ==(SceneHotSpot left, SceneHotSpot right)
+        public static bool operator ==(SceneHotSpotDto left, SceneHotSpotDto right)
         {
             if (left is null)
             {
@@ -110,7 +110,7 @@ namespace Pano.Serialization.Model.HotSpots
             return (left.Equals(right));
         }
 
-        public static bool operator !=(SceneHotSpot left, SceneHotSpot right)
+        public static bool operator !=(SceneHotSpotDto left, SceneHotSpotDto right)
         {
             return !(left == right);
         }

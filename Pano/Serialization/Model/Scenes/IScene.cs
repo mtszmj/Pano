@@ -23,7 +23,7 @@ namespace Pano.Serialization.Model.Scenes
         int? HorizonPitch { get; set; }
         int? HorizonRoll { get; set; }
         bool? HotSpotDebug { get; set; }
-        List<IHotSpot> HotSpots { get; }
+        List<IHotSpotDto> HotSpots { get; }
         string Id { get; }
         bool? KeyboardZoom { get; set; }
         int? MaxHfov { get; set; }
@@ -49,6 +49,6 @@ namespace Pano.Serialization.Model.Scenes
         int? Yaw { get; set; }
 
         void AddSceneHotSpot(IScene scene, int pitch = 0, int yaw = 0, int pitchBack = 0, int yawBack = 0);
-        bool AddHotSpot(IHotSpot spot);
+        bool AddHotSpot(IHotSpotDto spot);
     }
 }

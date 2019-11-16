@@ -17,7 +17,7 @@ namespace Pano.IO.Tests
         [TestMethod()]
         public void HotSpotSerializeTest()
         {
-            HotSpot spot = new SceneHotSpot("zyx", "idid");
+            HotSpotDto spot = new SceneHotSpotDto("zyx", "idid");
             spot.Text = "Hot Spot Title";
             spot.Pitch = 90;
             spot.Yaw = 10;
@@ -25,8 +25,8 @@ namespace Pano.IO.Tests
             var serializer = new JsonSerializer(new JsonConverter[] { new HotSpotJsonConverter(new JObjectParser()), new SceneJsonConverter(new JObjectParser()) });
             var json = serializer.Serialize(spot);
 
-            HotSpot spotDes = //JsonConvert.DeserializeObject<HotSpot>(json, new HotSpotJsonConverter());
-            serializer.Deserialize<HotSpot>(json);
+            HotSpotDto spotDes = //JsonConvert.DeserializeObject<HotSpotDto>(json, new HotSpotJsonConverter());
+            serializer.Deserialize<HotSpotDto>(json);
 
             Assert.AreEqual(spot, spotDes);
         }

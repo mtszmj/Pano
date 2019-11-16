@@ -12,11 +12,11 @@ namespace Pano.ViewModels.HotSpots
 {
     public class SceneHotSpotViewModel : ViewModelBaseExtended
     {
-        SceneHotSpot Model { get; set; }
+        SceneHotSpotDto Model { get; set; }
 
         ObservableCollection<string> Scenes { get; set; } = new ObservableCollection<string>() { "test1", "test2" };
 
-        public SceneHotSpotViewModel(SceneHotSpot model)
+        public SceneHotSpotViewModel(SceneHotSpotDto model)
         {
             Model = model;
         }

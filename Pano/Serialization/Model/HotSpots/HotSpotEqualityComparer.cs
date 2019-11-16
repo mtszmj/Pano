@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Pano.Serialization.Model.HotSpots
 {
-    public class HotSpotEqualityComparer : IEqualityComparer<IHotSpot>
+    public class HotSpotEqualityComparer : IEqualityComparer<IHotSpotDto>
     {
-        public bool Equals(IHotSpot x, IHotSpot y)
+        public bool Equals(IHotSpotDto x, IHotSpotDto y)
         {
             if (ReferenceEquals(x, y))
                 return true;
@@ -19,7 +19,7 @@ namespace Pano.Serialization.Model.HotSpots
             return x.Equals(y);
         }
 
-        public int GetHashCode(IHotSpot obj)
+        public int GetHashCode(IHotSpotDto obj)
         {
             if (ReferenceEquals(obj, null))
                 return 0;

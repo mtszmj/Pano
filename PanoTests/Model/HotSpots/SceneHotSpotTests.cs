@@ -15,7 +15,7 @@ namespace Pano.Model.Tests
         [TestMethod()]
         public void EqualsTest()
         {
-            SceneHotSpot spot1 = new SceneHotSpot("id", "sceneId")
+            SceneHotSpotDto spot1 = new SceneHotSpotDto("id", "sceneId")
             {
                 CssClass = "css",
                 Pitch = 1,
@@ -26,7 +26,7 @@ namespace Pano.Model.Tests
                 Yaw = 5
             };
 
-            SceneHotSpot spot2 = new SceneHotSpot("id", "sceneId")
+            SceneHotSpotDto spot2 = new SceneHotSpotDto("id", "sceneId")
             {
                 CssClass = "css",
                 Pitch = 1,
@@ -43,7 +43,7 @@ namespace Pano.Model.Tests
         [TestMethod()]
         public void EqualsTest1()
         {
-            SceneHotSpot spot1 = new SceneHotSpot("id", "sceneIddd")
+            SceneHotSpotDto spot1 = new SceneHotSpotDto("id", "sceneIddd")
             {
                 CssClass = "csscss",
                 Pitch = 10,
@@ -54,7 +54,7 @@ namespace Pano.Model.Tests
                 Yaw = 50
             };
 
-            SceneHotSpot spot2 = new SceneHotSpot("id", "sceneIddd")
+            SceneHotSpotDto spot2 = new SceneHotSpotDto("id", "sceneIddd")
             {
                 CssClass = "csscss",
                 Pitch = 10,
@@ -71,8 +71,8 @@ namespace Pano.Model.Tests
         [TestMethod()]
         public void EqualsTest2()
         {
-            SceneHotSpot spot1 = new SceneHotSpot("id", "sceneId");
-            SceneHotSpot spot2 = new SceneHotSpot("id", "sceneId");
+            SceneHotSpotDto spot1 = new SceneHotSpotDto("id", "sceneId");
+            SceneHotSpotDto spot2 = new SceneHotSpotDto("id", "sceneId");
 
             Assert.IsTrue(spot1 == spot2);
         }
@@ -80,8 +80,8 @@ namespace Pano.Model.Tests
         [TestMethod()]
         public void EqualsTest3()
         {
-            HotSpot spot1 = new SceneHotSpot("id", "sceneId");
-            SceneHotSpot spot2 = new SceneHotSpot("id", "sceneId");
+            HotSpotDto spot1 = new SceneHotSpotDto("id", "sceneId");
+            SceneHotSpotDto spot2 = new SceneHotSpotDto("id", "sceneId");
 
             Assert.IsTrue(spot1 == spot2);
         }
@@ -89,8 +89,8 @@ namespace Pano.Model.Tests
         [TestMethod()]
         public void NotEqualsTest()
         {
-            SceneHotSpot spot1 = new SceneHotSpot("id", "sceneId");
-            SceneHotSpot spot2 = new SceneHotSpot("id", "sceneId2");
+            SceneHotSpotDto spot1 = new SceneHotSpotDto("id", "sceneId");
+            SceneHotSpotDto spot2 = new SceneHotSpotDto("id", "sceneId2");
 
             Assert.IsTrue(spot1 != spot2);
         }
@@ -98,7 +98,7 @@ namespace Pano.Model.Tests
         [TestMethod()]
         public void NotEqualsTest1()
         {
-            SceneHotSpot spot1 = new SceneHotSpot("id", "sceneIddd")
+            SceneHotSpotDto spot1 = new SceneHotSpotDto("id", "sceneIddd")
             {
                 CssClass = "test1",
                 Pitch = 10,
@@ -109,7 +109,7 @@ namespace Pano.Model.Tests
                 Yaw = 50
             };
 
-            SceneHotSpot spot2 = new SceneHotSpot("id", "sceneIddd")
+            SceneHotSpotDto spot2 = new SceneHotSpotDto("id", "sceneIddd")
             {
                 CssClass = "test2",
                 Pitch = 10,

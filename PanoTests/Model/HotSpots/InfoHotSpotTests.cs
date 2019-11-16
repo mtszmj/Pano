@@ -15,7 +15,7 @@ namespace Pano.Model.Tests
         [TestMethod()]
         public void EqualsTest()
         {
-            InfoHotSpot spot1 = new InfoHotSpot("id")
+            InfoHotSpotDto spot1 = new InfoHotSpotDto("id")
             {
                 CssClass = "css",
                 Pitch = 1,
@@ -24,7 +24,7 @@ namespace Pano.Model.Tests
                 URL = "url"
             };
 
-            InfoHotSpot spot2 = new InfoHotSpot("id")
+            InfoHotSpotDto spot2 = new InfoHotSpotDto("id")
             {
                 CssClass = "css",
                 Pitch = 1,
@@ -39,7 +39,7 @@ namespace Pano.Model.Tests
         [TestMethod()]
         public void EqualsTest1()
         {
-            InfoHotSpot spot1 = new InfoHotSpot("id")
+            InfoHotSpotDto spot1 = new InfoHotSpotDto("id")
             {
                 CssClass = "csscss",
                 Pitch = 10,
@@ -48,7 +48,7 @@ namespace Pano.Model.Tests
                 URL = "url"
             };
 
-            InfoHotSpot spot2 = new InfoHotSpot("id")
+            InfoHotSpotDto spot2 = new InfoHotSpotDto("id")
             {
                 CssClass = "csscss",
                 Pitch = 10,
@@ -63,8 +63,8 @@ namespace Pano.Model.Tests
         [TestMethod()]
         public void EqualsTest2()
         {
-            InfoHotSpot spot1 = new InfoHotSpot("id");
-            InfoHotSpot spot2 = new InfoHotSpot("id");
+            InfoHotSpotDto spot1 = new InfoHotSpotDto("id");
+            InfoHotSpotDto spot2 = new InfoHotSpotDto("id");
 
             Assert.IsTrue(spot1 == spot2);
         }
@@ -72,8 +72,8 @@ namespace Pano.Model.Tests
         [TestMethod()]
         public void EqualsTest3()
         {
-            HotSpot spot1 = new InfoHotSpot("id");
-            InfoHotSpot spot2 = new InfoHotSpot("id");
+            HotSpotDto spot1 = new InfoHotSpotDto("id");
+            InfoHotSpotDto spot2 = new InfoHotSpotDto("id");
 
             Assert.IsTrue(spot1 == spot2);
         }
@@ -81,8 +81,8 @@ namespace Pano.Model.Tests
         [TestMethod()]
         public void NotEqualsTest()
         {
-            InfoHotSpot spot1 = new InfoHotSpot("id1");
-            InfoHotSpot spot2 = new InfoHotSpot("id2");
+            InfoHotSpotDto spot1 = new InfoHotSpotDto("id1");
+            InfoHotSpotDto spot2 = new InfoHotSpotDto("id2");
 
             Assert.IsTrue(spot1 != spot2);
         }
@@ -90,7 +90,7 @@ namespace Pano.Model.Tests
         [TestMethod()]
         public void NotEqualsTest1()
         {
-            InfoHotSpot spot1 = new InfoHotSpot("iddd")
+            InfoHotSpotDto spot1 = new InfoHotSpotDto("iddd")
             {
                 CssClass = "test1",
                 Pitch = 10,
@@ -99,7 +99,7 @@ namespace Pano.Model.Tests
                 URL = "url"
             };
 
-            InfoHotSpot spot2 = new InfoHotSpot("iddd")
+            InfoHotSpotDto spot2 = new InfoHotSpotDto("iddd")
             {
                 CssClass = "test2",
                 Pitch = 10,
