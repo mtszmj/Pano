@@ -25,13 +25,13 @@ namespace Pano.Service
         public string Label { get; set; }
         public string Description { get; set; }
         public int NumberOfButtons { get; set; }
-        public Func<TSelected, int?, TSelected> SelectionByButtonIndex { get; private set; }
+        public Action<TSelected, int?> SelectionByButtonIndex { get; private set; }
 
         private Window CurrentWindow { get; set; }
 
         public void ShowDialog(IList<string> buttons,
             IEnumerable<TSelected> listToSelectFrom,
-            Func<TSelected, int?, TSelected> selectionByButtonIndex,
+            Action<TSelected, int?> selectionByButtonIndex,
             string label)
         {
             if (buttons != null)

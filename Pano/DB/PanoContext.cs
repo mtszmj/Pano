@@ -80,7 +80,7 @@ namespace Pano.DB
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<SceneHotSpot>()
-                .HasRequired(h => h.TargetScene)
+                .HasOptional(h => h.TargetScene)
                 .WithMany()
                 .HasForeignKey(h => h.TargetSceneId)
                 .WillCascadeOnDelete(false);

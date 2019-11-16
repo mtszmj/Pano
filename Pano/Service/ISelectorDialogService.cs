@@ -20,7 +20,7 @@ namespace Pano.Service
 
         void ShowDialog(IList<string> buttons, 
             IEnumerable<TSelected> listToSelectFrom,
-            Func<TSelected, int?, TSelected> selectionByButtonIndex,
+            Action<TSelected, int?> selectionByButtonIndex,
             string label);
     }
 }

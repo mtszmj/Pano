@@ -106,6 +106,7 @@ namespace Pano.ViewModel.Pages
 
         public bool IsSceneHotSpot => (SelectedHotSpot is Model.Db.HotSpots.SceneHotSpot);
         public Model.Db.HotSpots.SceneHotSpot SceneHotSpot => SelectedHotSpot as Model.Db.HotSpots.SceneHotSpot;
+        public string HotSpotTargetSceneTitle => this.SceneHotSpot?.TargetScene?.Title;
 
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand BackCommand { get; set; }
@@ -185,16 +186,28 @@ namespace Pano.ViewModel.Pages
 
         private void SelectTargetScene()
         {
-            var buttons = new List<string> { null, "OK", "Anuluj", null };
-            var list = new List<string> {"test", "test2", "test3"};
+            var buttons = new List<string> { "Wyczyść", null, "OK", "Anuluj"};
             _selectorDialogService.ShowDialog(buttons, _project.Model.Tour.Scenes, SelectIndex, SelectedHotSpot.Text);
         }
 
-        private Model.Db.Scenes.Scene SelectIndex(Model.Db.Scenes.Scene scene, int? buttonIndex)
+        private void SelectIndex(Model.Db.Scenes.Scene scene, int? buttonIndex)
         {
-            var result = buttonIndex;
-            //TODO przepisac do hotspota
-            return scene;
+            if (!(SelectedHotSpot is Model.Db.HotSpots.SceneHotSpot spot))
+                return;
+
+            if(buttonIndex == 2 && scene != null)
+            {
+                spot.TargetScene = scene;
+                spot.TargetSceneId = scene.SceneId;
+            }
+
+            if (buttonIndex == 0)
+            {
+                spot.TargetScene = null;
+                spot.TargetSceneId = null;
+            }
+
+            RaisePropertyChanged(nameof(HotSpotTargetSceneTitle));
         }
 
     }

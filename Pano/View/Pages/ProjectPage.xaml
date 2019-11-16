@@ -297,7 +297,7 @@
                                     <GroupBox Header="Docelowa scena">
                                         <StackPanel Orientation="Horizontal">
                                             <Button Content="Ustaw scenę" Margin="5 0" Command="{Binding SelectTargetSceneCommand}"/>
-                                            <Label Content="{Binding SceneHotSpot.Text}"/>
+                                            <Label Content="{Binding HotSpotTargetSceneTitle}"/>
                                         </StackPanel>
                                     </GroupBox>
                                 </StackPanel>
