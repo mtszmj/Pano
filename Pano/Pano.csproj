@@ -180,9 +180,9 @@
     <Compile Include="Model\Db\Scenes\Equirectangular.cs" />
     <Compile Include="Model\Db\Scenes\IScene.cs" />
     <Compile Include="Model\Db\Scenes\Scene.cs" />
-    <Compile Include="Model\HotSpots\IHotSpot.cs" />
+    <Compile Include="Serialization\Model\HotSpots\IHotSpot.cs" />
     <Compile Include="Model\Project.cs" />
-    <Compile Include="Model\Scenes\IScene.cs" />
+    <Compile Include="Serialization\Model\Scenes\IScene.cs" />
     <Compile Include="Model\TourForDb.cs" />
     <Compile Include="Repository\DefaultSceneConfigRepository.cs" />
     <Compile Include="Repository\IDefaultSceneConfigRepository.cs" />
@@ -198,6 +198,7 @@
     <Compile Include="Repository\HotSpotRepository.cs" />
     <Compile Include="Repository\SceneRepository.cs" />
     <Compile Include="Repository\UnitOfWork.cs" />
+    <Compile Include="Serialization\Model\Tour.cs" />
     <Compile Include="Service\Design\DesignDialogService.cs" />
     <Compile Include="Service\Design\DesignProjectsService.cs" />
     <Compile Include="Service\Design\DesignSelectorDialogService.cs" />
@@ -280,7 +281,6 @@
     </Compile>
     <Compile Include="Factories\HotSpotFactory.cs" />
     <Compile Include="Factories\ScenesFactory.cs" />
-    <Compile Include="Factories\TourFactory.cs" />
     <Compile Include="IO\HotSpotJsonConverter.cs" />
     <Compile Include="IO\ISerializer.cs" />
     <Compile Include="IO\IRepository.cs" />
@@ -354,18 +354,17 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Scenes\Cubemap.cs" />
-    <Compile Include="Model\Scenes\DefaultScene.cs" />
+    <Compile Include="Serialization\Model\Scenes\Cubemap.cs" />
+    <Compile Include="Serialization\Model\Scenes\DefaultScene.cs" />
     <Compile Include="Model\Enums.cs" />
-    <Compile Include="Model\Scenes\Equirectangular.cs" />
-    <Compile Include="Model\HotSpots\HotSpot.cs" />
-    <Compile Include="Model\HotSpots\HotSpotEqualityComparer.cs" />
-    <Compile Include="Model\HotSpots\InfoHotSpot.cs" />
-    <Compile Include="Model\Scenes\Multires.cs" />
-    <Compile Include="Model\Scenes\Scene.cs" />
-    <Compile Include="Model\HotSpots\SceneHotSpot.cs" />
-    <Compile Include="Model\Scenes\ScenesEqualityComparer.cs" />
-    <Compile Include="Model\TourForSerialization.cs" />
+    <Compile Include="Serialization\Model\Scenes\Equirectangular.cs" />
+    <Compile Include="Serialization\Model\HotSpots\HotSpot.cs" />
+    <Compile Include="Serialization\Model\HotSpots\HotSpotEqualityComparer.cs" />
+    <Compile Include="Serialization\Model\HotSpots\InfoHotSpot.cs" />
+    <Compile Include="Serialization\Model\Scenes\Multires.cs" />
+    <Compile Include="Serialization\Model\Scenes\Scene.cs" />
+    <Compile Include="Serialization\Model\HotSpots\SceneHotSpot.cs" />
+    <Compile Include="Serialization\Model\Scenes\ScenesEqualityComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -437,7 +436,10 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Model\HotSpots\" />
+    <Folder Include="Model\Scenes\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Pano.Serialization.Model.HotSpots;
 
 namespace Pano.Model.Db
 {

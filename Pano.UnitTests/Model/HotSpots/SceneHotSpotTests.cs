@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Pano.Model;
+using Pano.Serialization.Model.HotSpots;
 
 namespace Pano.UnitTests.Model.HotSpots
 {

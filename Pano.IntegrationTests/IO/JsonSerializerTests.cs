@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Pano.Serialization.Model.HotSpots;
+using Pano.Serialization.Model.Scenes;
 using JsonSerializer = Pano.IO.JsonSerializer;
 
 namespace Pano.IntegrationTests.IO

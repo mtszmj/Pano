@@ -3,18 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Pano.Model;
+using Pano.Serialization.Model.Scenes;
 
-namespace Pano.Model
+namespace Pano.Serialization.Model
 {
-    public class TourForSerialization
+    public class Tour
     {
-        #region Fields
-
         private DefaultScene _DefaultScene;
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// The default property contains options that are used for each scene, but options specified 
@@ -27,7 +23,7 @@ namespace Pano.Model
             {
                 if (_DefaultScene == null)
                 {
-                    _DefaultScene = new DefaultScene {FirstSceneRef = FirstScene};
+                    _DefaultScene = new DefaultScene { FirstSceneRef = FirstScene };
                     return _DefaultScene;
                 }
 
@@ -48,10 +44,6 @@ namespace Pano.Model
         public SortedDictionary<string, Scene> Scenes { get; } = new SortedDictionary<string, Scene>();
 
         private Scene FirstScene => Scenes?.FirstOrDefault().Value;
-
-        #endregion
-
-        #region Methods
 
         public void AddScene(Scene scene)
         {
@@ -75,7 +67,7 @@ namespace Pano.Model
             }
         }
 
-        protected bool Equals(TourForSerialization other)
+        protected bool Equals(Tour other)
         {
             return Equals(_DefaultScene, other._DefaultScene) && Scenes.SequenceEqual(other.Scenes);
         }
@@ -91,9 +83,7 @@ namespace Pano.Model
             if (obj.GetType() != this.GetType())
                 return false;
 
-            return Equals((TourForSerialization) obj);
+            return Equals((Tour)obj);
         }
-
-        #endregion
     }
 }

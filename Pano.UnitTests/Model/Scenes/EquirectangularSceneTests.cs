@@ -3,6 +3,8 @@ using NUnit.Framework;
 using Pano.Model;
 using System;
 using System.Linq;
+using Pano.Serialization.Model.HotSpots;
+using Pano.Serialization.Model.Scenes;
 
 namespace Pano.UnitTests.Model.Scenes
 {

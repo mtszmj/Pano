@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Pano.Serialization.Model.HotSpots;
 
-namespace Pano.Model
+namespace Pano.Serialization.Model.Scenes
 {
     public abstract class Scene : IScene
     {
         private Lazy<string> _Guid { get; } = new Lazy<string>(() => Guid.NewGuid().ToString());
 
-        public string Id {
+        public string Id
+        {
             get
             {
                 if (Title == null)
@@ -272,7 +272,7 @@ namespace Pano.Model
         #region Methods
         public void AddSceneHotSpot(IScene scene, int pitch = 0, int yaw = 0, int pitchBack = 0, int yawBack = 0)
         {
-            if(scene == null)
+            if (scene == null)
             {
                 throw new ArgumentNullException(nameof(scene));
             }
@@ -352,7 +352,7 @@ namespace Pano.Model
                 && other.Strings.OrderBy(kvp => kvp.Key)
                                 .SequenceEqual(Strings.OrderBy(kvp => kvp.Key))
                 && other.HotSpots.OrderBy(x => x.Id).SequenceEqual(HotSpots.OrderBy(x => x.Id), HotSpot.GetDefaultEqualityComparer())
-                ;       
+                ;
         }
         public static bool operator ==(Scene left, Scene right)
         {

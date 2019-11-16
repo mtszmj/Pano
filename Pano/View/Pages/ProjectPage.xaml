@@ -30,6 +30,7 @@
               Height="30"
         >
             <MenuItem Header="Zapisz" Command="{Binding SaveCommand}"></MenuItem>
+            <MenuItem Header="Eksportuj projekt" Command="{Binding ExportCommand}"></MenuItem>
             <MenuItem Header="Tryb _Dewelopera" IsCheckable="True" IsChecked="{Binding IsInDeveloperModeStatic, Mode=TwoWay}"/>
             <MenuItem Header="Wróć" Command="{Binding BackCommand}"/>
         </Menu>

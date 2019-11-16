@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Pano.Serialization.Model.HotSpots;
 using Pano.ViewModel;
 
 namespace Pano.ViewModels.HotSpots

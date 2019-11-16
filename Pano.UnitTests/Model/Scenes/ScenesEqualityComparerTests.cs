@@ -1,7 +1,6 @@
 ﻿using Moq;
 using NUnit.Framework;
-using Pano.Model;
-using Pano.Model.Scenes;
+using Pano.Serialization.Model.Scenes;
 using System;
 using System.Collections.Generic;
 using System.Linq;

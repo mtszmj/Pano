@@ -1,8 +1,8 @@
-﻿using Pano.Model.HotSpots;
+﻿using Pano.Serialization.Model.HotSpots;
 using System;
 using System.Collections.Generic;
 
-namespace Pano.Model
+namespace Pano.Serialization.Model.HotSpots
 {
     /// <summary>
     /// This specifies an array of hot spots that can be links to other scenes, information, or external links.

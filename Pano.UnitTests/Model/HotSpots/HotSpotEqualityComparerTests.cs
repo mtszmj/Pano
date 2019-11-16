@@ -1,12 +1,12 @@
 ﻿using Moq;
 using NUnit.Framework;
-using Pano.Model;
-using Pano.Model.HotSpots;
+using Pano.Serialization.Model.HotSpots;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Pano.Serialization.Model.HotSpots;
 
 namespace Pano.UnitTests.Model.HotSpots
 {

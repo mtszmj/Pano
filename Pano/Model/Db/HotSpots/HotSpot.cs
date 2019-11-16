@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Pano.Model.HotSpots;
+using Pano.Serialization.Model.HotSpots;
 
 namespace Pano.Model.Db.HotSpots
 {

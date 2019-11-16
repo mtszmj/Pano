@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Pano.Model
+namespace Pano.Serialization.Model.HotSpots
 {
     public interface IHotSpot : IEquatable<IHotSpot>
     {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Pano.Serialization.Model.HotSpots;
 
 namespace Pano.Model.HotSpots.Tests
 {

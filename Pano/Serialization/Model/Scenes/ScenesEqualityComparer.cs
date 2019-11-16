@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pano.Model.Scenes
+namespace Pano.Serialization.Model.Scenes
 {
     public class ScenesEqualityComparer : IEqualityComparer<IScene>
     {

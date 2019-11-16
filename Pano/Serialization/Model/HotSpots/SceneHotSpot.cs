@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pano.Model
+namespace Pano.Serialization.Model.HotSpots
 {
     public class SceneHotSpot : HotSpot
     {

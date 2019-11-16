@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Pano.Serialization.Model.HotSpots;
 
-namespace Pano.Model
+namespace Pano.Serialization.Model.Scenes
 {
     public interface IScene : IEquatable<IScene>
     {

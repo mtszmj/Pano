@@ -42,6 +42,7 @@ namespace Pano.ViewModel.Pages
             _hotSpotFactory = hotSpotFactory ?? throw new ArgumentNullException(nameof(hotSpotFactory)); 
 
             SaveCommand = new RelayCommand(SaveProject);
+            ExportCommand = new RelayCommand(ExportProject, () => Project.Model != null);
             BackCommand = new RelayCommand(() => _navigationService.NavigateTo(ViewModelLocator.InitPageKey));
             AddSceneCommand = new RelayCommand(AddScene);
             DeleteSceneCommand = new RelayCommand(DeleteScene, () => SelectedScene != null);
@@ -109,6 +110,7 @@ namespace Pano.ViewModel.Pages
         public string HotSpotTargetSceneTitle => this.SceneHotSpot?.TargetScene?.Title;
 
         public RelayCommand SaveCommand { get; set; }
+        public RelayCommand ExportCommand { get; set; }
         public RelayCommand BackCommand { get; set; }
         public RelayCommand AddSceneCommand { get; set; }
         public RelayCommand DeleteSceneCommand { get; set; }
@@ -136,6 +138,11 @@ namespace Pano.ViewModel.Pages
         {
             var result = _projectsService.Save(this.Project.Model);
             Task.Run(() => _dialogService.ShowMessageBox($"Zapisano {result}", "Zapis"));
+        }
+
+        private void ExportProject()
+        {
+
         }
 
         private void AddScene()

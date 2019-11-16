@@ -4,8 +4,10 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using Pano.IO;
 using Pano.Model;
+using Pano.Serialization.Model;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Pano.Serialization.Model.Scenes;
 
 namespace Pano.Factories.Tests
 {
@@ -16,7 +18,7 @@ namespace Pano.Factories.Tests
         [TestMethod()]
         public void CreateDefaultProjectTest()
         {
-            var tour = new TourForSerialization();
+            var tour = new Tour();
 
             var salon = new Equirectangular()
             {
@@ -144,7 +146,7 @@ namespace Pano.Factories.Tests
 
             repository.Save(tour);
 
-            var tour2 = repository.Load<TourForSerialization>();
+            var tour2 = repository.Load<Tour>();
 
             foreach (var kvp in tour.Scenes)
             {
@@ -158,7 +160,7 @@ namespace Pano.Factories.Tests
         [TestMethod()]
         public void CreateDefaultProjectTest3()
         {
-            var tour = new TourForSerialization();
+            var tour = new Tour();
 
             var salon = new Equirectangular()
             {
@@ -186,7 +188,7 @@ namespace Pano.Factories.Tests
 
             repository.Save(tour);
 
-            var tour2 = repository.Load<TourForSerialization>();
+            var tour2 = repository.Load<Tour>();
 
             foreach (var kvp in tour.Scenes)
             {
@@ -207,7 +209,7 @@ namespace Pano.Factories.Tests
 
             repository.Save(tour);
 
-            var tour2 = repository.Load<TourForSerialization>();
+            var tour2 = repository.Load<Tour>();
             
             foreach (var kvp in tour.Scenes)
             {
@@ -223,9 +225,9 @@ namespace Pano.Factories.Tests
             Debug.Write(json);
         }
 
-        private TourForSerialization CreateDefaultProject()
+        private Tour CreateDefaultProject()
         {
-            var tour = new TourForSerialization();
+            var tour = new Tour();
 
             var salon = new Equirectangular()
             {
@@ -328,7 +330,7 @@ namespace Pano.Factories.Tests
             return tour;
         }
 
-        private TourForSerialization CreateProject2()
+        private Tour CreateProject2()
         {
             var scenes = new Dictionary<string, Scene>
             {
@@ -340,7 +342,7 @@ namespace Pano.Factories.Tests
             scenes["kuchnia"].AddSceneHotSpot(scenes["salon"], -17, -138, -14, -48);
             scenes["kuchnia"].AddSceneHotSpot(scenes["lazienka"], -17, 148, -15, 93);
 
-            var tour = new TourForSerialization();
+            var tour = new Tour();
             foreach (var kv in scenes)
             {
                 tour.AddScene(kv.Value);
