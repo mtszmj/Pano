@@ -30,6 +30,7 @@ using Pano.Service;
 using Pano.Service.Design;
 using Pano.View.Controls;
 using Pano.View.Pages;
+using Pano.View.Windows;
 using Pano.ViewModel.Controls;
 using Pano.ViewModel.Pages;
 using IScene = Pano.Model.Db.IScene;
@@ -85,6 +86,9 @@ namespace Pano.ViewModel
                 // Create design time view services and models
                 builder.RegisterType<DesignProjectsService>().As<IProjectsService>().SingleInstance();
                 builder.RegisterType<DialogService>().As<IDialogService>().SingleInstance();
+                builder.Register<ISelectorDialogService<Model.Db.Scenes.Scene>>(
+                    c => new DesignSelectorDialogService<Model.Db.Scenes.Scene>(typeof(SelectorDialogView), 4)
+                    );
                 builder.Register(c => nav).As<INavigationService>().SingleInstance();
 
                 // Blendable objects
@@ -105,6 +109,9 @@ namespace Pano.ViewModel
 
                 builder.RegisterType<ProjectsService>().As<IProjectsService>().SingleInstance();
                 builder.RegisterType<DialogService>().As<IDialogService>().SingleInstance();
+                builder.Register<ISelectorDialogService<Model.Db.Scenes.Scene>>(
+                    c => new SelectorDialogService<Model.Db.Scenes.Scene>(typeof(SelectorDialogView), 4)
+                );
                 builder.Register(c => nav).As<INavigationService>().SingleInstance();
 
                 // Factories
@@ -164,7 +171,8 @@ namespace Pano.ViewModel
 
         // Design time data
         public ProjectViewModel ProjectTestObject => _container.Resolve<IIndex<string, ProjectViewModel>>()[ProjectViewModelTestObjectKey];
-
+        public ISelectorDialogService<Model.Db.Scenes.Scene> SelectorDialogService => 
+            _container.Resolve<ISelectorDialogService<Model.Db.Scenes.Scene>>();
 
         public static void Cleanup()
         {

@@ -375,5 +375,10 @@ namespace Pano.Model.Db.Scenes
         {
             return !(left == right);
         }
+
+        public override string ToString()
+        {
+            return Title;
+        }
     }
 }

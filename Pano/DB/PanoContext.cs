@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Pano.Model.Db;
 using Pano.Model.Db.Helpers;
 using System.Collections.ObjectModel;
+using System.Data.Common;
 using Pano.Model;
 using Pano.Model.Db.Scenes;
 using Scene = Pano.Model.Db.Scenes.Scene;
@@ -25,7 +26,12 @@ namespace Pano.DB
         {
             SetInitializers();
         }
-        
+
+        public PanoContext(DbConnection connection) : base(connection, true)
+        {
+            SetInitializers();
+        }
+
         public DbSet<Project> Projects { get; set; }
         public DbSet<TourForDb> TourForDbs { get; set; }
         public DbSet<Model.Db.Scenes.DefaultSceneConfig> DefaultScenes { get; set; }
@@ -82,6 +88,9 @@ namespace Pano.DB
             modelBuilder.Entity<Image>()
                 .Ignore(x => x.BitmapImage)
                 .Ignore(x => x.DrawingImage);
+
+            modelBuilder.Properties<DateTime>()
+                .Configure(p => p.HasColumnType("datetime2"));
         }
     }
 }

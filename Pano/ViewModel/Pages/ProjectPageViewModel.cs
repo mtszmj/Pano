@@ -20,6 +20,7 @@ namespace Pano.ViewModel.Pages
     public class ProjectPageViewModel : ViewModelBaseExtended
     {
         private readonly IDialogService _dialogService;
+        private readonly ISelectorDialogService<Model.Db.Scenes.Scene> _selectorDialogService;
         private readonly INavigationService _navigationService;
         private readonly IProjectsService _projectsService;
         private readonly ISceneFactory _sceneFactory;
@@ -27,12 +28,14 @@ namespace Pano.ViewModel.Pages
         private ProjectViewModel _project;
 
         public ProjectPageViewModel(IDialogService dialogService, 
+                                    ISelectorDialogService<Model.Db.Scenes.Scene> selectorDialogService,
                                     INavigationService navigationService,
                                     IProjectsService projectsService,
                                     ISceneFactory sceneFactory,
                                     IHotSpotFactory hotSpotFactory)
         {
             _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
+            _selectorDialogService = selectorDialogService ?? throw new ArgumentNullException(nameof(selectorDialogService));
             _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
             _projectsService = projectsService ?? throw new ArgumentNullException(nameof(projectsService));
             _sceneFactory = sceneFactory ?? throw new ArgumentNullException(nameof(sceneFactory));
@@ -56,6 +59,7 @@ namespace Pano.ViewModel.Pages
             });
             RotateClockwiseCommand = new RelayCommand(RotateClockwise, SelectedScene?.Image != null);
             RotateCounterclockwiseCommand = new RelayCommand(RotateCounterclockwise, SelectedScene?.Image != null);
+            SelectTargetSceneCommand = new RelayCommand(SelectTargetScene, IsSceneHotSpot);
         }
 
         public ProjectViewModel Project
@@ -92,8 +96,16 @@ namespace Pano.ViewModel.Pages
         public Model.Db.HotSpots.HotSpot SelectedHotSpot
         {
             get => _selectedHotSpot;
-            set => Set(ref _selectedHotSpot, value);
+            set
+            {
+                Set(ref _selectedHotSpot, value);
+                RaisePropertyChanged(nameof(IsSceneHotSpot));
+                RaisePropertyChanged(nameof(SceneHotSpot));
+            }
         }
+
+        public bool IsSceneHotSpot => (SelectedHotSpot is Model.Db.HotSpots.SceneHotSpot);
+        public Model.Db.HotSpots.SceneHotSpot SceneHotSpot => SelectedHotSpot as Model.Db.HotSpots.SceneHotSpot;
 
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand BackCommand { get; set; }
@@ -104,6 +116,20 @@ namespace Pano.ViewModel.Pages
         public RelayCommand ChangeImageCommand { get; set; }
         public RelayCommand RotateClockwiseCommand { get; set; }
         public RelayCommand RotateCounterclockwiseCommand { get; set; }
+        public RelayCommand SelectTargetSceneCommand { get; private set; }
+
+        public override void InitializeView()
+        {
+            MessengerInstance.Send(
+                new PropertyChangedMessage<bool>(
+                    this,
+                    false,
+                    true,
+                    ViewModelLocator.NavigationVisibleToken
+                ),
+                ViewModelLocator.NavigationVisibleToken
+            );
+        }
 
         private void SaveProject()
         {
@@ -156,17 +182,20 @@ namespace Pano.ViewModel.Pages
             SelectedScene.Image.RotateImageCounterclockwise();
             SelectedScene.RaisePropertyChanged(nameof(BitmapImage));
         }
-        public override void InitializeView()
+
+        private void SelectTargetScene()
         {
-            MessengerInstance.Send(
-                new PropertyChangedMessage<bool>(
-                    this,
-                    false,
-                    true,
-                    ViewModelLocator.NavigationVisibleToken
-                    ),
-                ViewModelLocator.NavigationVisibleToken
-            );
+            var buttons = new List<string> { null, "OK", "Anuluj", null };
+            var list = new List<string> {"test", "test2", "test3"};
+            _selectorDialogService.ShowDialog(buttons, _project.Model.Tour.Scenes, SelectIndex, SelectedHotSpot.Text);
         }
+
+        private Model.Db.Scenes.Scene SelectIndex(Model.Db.Scenes.Scene scene, int? buttonIndex)
+        {
+            var result = buttonIndex;
+            //TODO przepisac do hotspota
+            return scene;
+        }
+
     }
 }

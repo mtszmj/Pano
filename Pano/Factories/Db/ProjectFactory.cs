@@ -31,5 +31,14 @@ namespace Pano.Factories.Db
 
             return project;
         }
+
+        public Project NewProject(string name, string description = "")
+        {
+            var project = NewProject();
+            project.Name = name;
+            project.Description = description;
+
+            return project;
+        }
     }
 }

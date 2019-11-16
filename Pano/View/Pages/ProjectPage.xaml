@@ -276,18 +276,32 @@
                             VerticalScrollBarVisibility="Auto" 
                             CanContentScroll="True"
                             IsEnabled="{Binding SelectedHotSpot, Converter={StaticResource NullToEnabledConverter}}">
-                            <StackPanel>
-                                <Label>Id:</Label>
-                                <TextBox Text="{Binding SelectedHotSpot.Id, Mode=OneWay}" IsEnabled="False"/>
-                                <Label>Tekst:</Label>
-                                <TextBox Text="{Binding SelectedHotSpot.Text, UpdateSourceTrigger=PropertyChanged}"/>
-                                <Label>Yaw:</Label>
-                                <TextBox Text="{Binding SelectedHotSpot.Yaw}"/>
-                                <Label>Pitch:</Label>
-                                <TextBox Text="{Binding SelectedHotSpot.Pitch}"/>
-                                <Label>Test:</Label>
-                                <RichTextBox Height="400"></RichTextBox>
-                            </StackPanel>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0">
+                                    <Label>Id:</Label>
+                                    <TextBox Text="{Binding SelectedHotSpot.Id, Mode=OneWay}" IsEnabled="False"/>
+                                    <Label>Tekst:</Label>
+                                    <TextBox Text="{Binding SelectedHotSpot.Text, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <Label>Yaw:</Label>
+                                    <TextBox Text="{Binding SelectedHotSpot.Yaw}"/>
+                                    <Label>Pitch:</Label>
+                                    <TextBox Text="{Binding SelectedHotSpot.Pitch}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" 
+                                            Visibility="{Binding IsSceneHotSpot, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <GroupBox Header="Docelowa scena">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Content="Ustaw scenę" Margin="5 0" Command="{Binding SelectTargetSceneCommand}"/>
+                                            <Label Content="{Binding SceneHotSpot.Text}"/>
+                                        </StackPanel>
+                                    </GroupBox>
+                                </StackPanel>
+                            </Grid>
                         </ScrollViewer>
                     </Grid>
                 </Border>

@@ -102,6 +102,7 @@
     <Compile Include="Factories\Db\ProjectFactory.cs" />
     <Compile Include="Factories\Db\SceneFactory.cs" />
     <Compile Include="Helpers\Converters\EnumToStringConverter.cs" />
+    <Compile Include="Helpers\Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Helpers\Converters\NullToEnabledConverter.cs" />
     <Compile Include="IO\IJObjectParser.cs" />
     <Compile Include="IO\JObjectParser.cs" />
@@ -160,6 +161,10 @@
     <Compile Include="Migrations\201911142118041_SetWillCascadeOnDeleteOnTourForDbTableToDefaultTableRelationship.designer.cs">
       <DependentUpon>201911142118041_SetWillCascadeOnDeleteOnTourForDbTableToDefaultTableRelationship.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911161154124_ChangeDateTimeColumnTypeFromDatetimeToDatetime2.cs" />
+    <Compile Include="Migrations\201911161154124_ChangeDateTimeColumnTypeFromDatetimeToDatetime2.designer.cs">
+      <DependentUpon>201911161154124_ChangeDateTimeColumnTypeFromDatetimeToDatetime2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Db\Helpers\DictionaryEntry.cs" />
     <Compile Include="Model\Db\Helpers\Image.cs" />
@@ -191,11 +196,14 @@
     <Compile Include="Repository\UnitOfWork.cs" />
     <Compile Include="Service\Design\DesignDialogService.cs" />
     <Compile Include="Service\Design\DesignProjectsService.cs" />
+    <Compile Include="Service\Design\DesignSelectorDialogService.cs" />
     <Compile Include="Service\DialogService.cs" />
     <Compile Include="Service\IInitializeService.cs" />
     <Compile Include="Service\IProjectsService.cs" />
+    <Compile Include="Service\ISelectorDialogService.cs" />
     <Compile Include="Service\NavigationService.cs" />
     <Compile Include="Service\ProjectsService.cs" />
+    <Compile Include="Service\SelectorDialogService.cs" />
     <Compile Include="Temporary\TempCube.cs" />
     <Compile Include="Temporary\TempEqui.cs" />
     <Compile Include="Temporary\TempJsonConverter.cs" />
@@ -254,6 +262,9 @@
     </Compile>
     <Compile Include="View\SceneHotSpotView.xaml.cs">
       <DependentUpon>SceneHotSpotView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\SelectorDialogView.xaml.cs">
+      <DependentUpon>SelectorDialogView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -333,6 +344,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Windows\SelectorDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Scenes\Cubemap.cs" />
@@ -398,6 +413,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911142118041_SetWillCascadeOnDeleteOnTourForDbTableToDefaultTableRelationship.resx">
       <DependentUpon>201911142118041_SetWillCascadeOnDeleteOnTourForDbTableToDefaultTableRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911161154124_ChangeDateTimeColumnTypeFromDatetimeToDatetime2.resx">
+      <DependentUpon>201911161154124_ChangeDateTimeColumnTypeFromDatetimeToDatetime2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Pano.DB;
+using Pano.Factories.Db;
 using Pano.IntegrationTests.Examples;
 using Pano.Model;
 using Pano.Repository;
@@ -19,12 +20,12 @@ namespace Pano.IntegrationTests.Repository
         [Test]
         public void AddProjectToDbTest()
         {
-            var connection = "connectionString=\"Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = PanoDBTests; Integrated Security = True; \"";
-            var context = new PanoContext(connection);
-            var repo = new ProjectRepository(context);
-
-            var project = new Project() {Name = "TestName"};
-            var service = new ProjectsService(repo);
+            var dbConnection = Effort.DbConnectionFactory.CreateTransient();
+            var context = new PanoContext(dbConnection);
+            var unitOfWork = new UnitOfWork(context);
+            var service = new ProjectsService(unitOfWork);
+            var projectFactory = new ProjectFactory();
+            var project = projectFactory.NewProject("TestProject", "TestDescription");
 
             service.Save(project);
 
