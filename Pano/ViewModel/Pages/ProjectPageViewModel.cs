@@ -42,7 +42,7 @@ namespace Pano.ViewModel.Pages
             _hotSpotFactory = hotSpotFactory ?? throw new ArgumentNullException(nameof(hotSpotFactory)); 
 
             SaveCommand = new RelayCommand(SaveProject);
-            ExportCommand = new RelayCommand(ExportProject, () => Project.Model != null);
+            ExportCommand = new RelayCommand(ExportProject, () => Project?.Model != null);
             BackCommand = new RelayCommand(() => _navigationService.NavigateTo(ViewModelLocator.InitPageKey));
             AddSceneCommand = new RelayCommand(AddScene);
             DeleteSceneCommand = new RelayCommand(DeleteScene, () => SelectedScene != null);
