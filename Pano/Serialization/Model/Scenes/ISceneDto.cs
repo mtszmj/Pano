@@ -4,7 +4,7 @@ using Pano.Serialization.Model.HotSpots;
 
 namespace Pano.Serialization.Model.Scenes
 {
-    public interface IScene : IEquatable<IScene>
+    public interface ISceneDto : IEquatable<ISceneDto>
     {
         string Author { get; set; }
         bool? AutoLoad { get; set; }
@@ -48,7 +48,7 @@ namespace Pano.Serialization.Model.Scenes
         PanoramaType Type { get; }
         int? Yaw { get; set; }
 
-        void AddSceneHotSpot(IScene scene, int pitch = 0, int yaw = 0, int pitchBack = 0, int yawBack = 0);
+        void AddSceneHotSpot(ISceneDto scene, int pitch = 0, int yaw = 0, int pitchBack = 0, int yawBack = 0);
         bool AddHotSpot(IHotSpotDto spot);
     }
 }

@@ -10,26 +10,26 @@ namespace Pano.Serialization.Model
 {
     public class Tour
     {
-        private DefaultScene _DefaultScene;
+        private DefaultSceneDto _DefaultScene;
 
         /// <summary>
         /// The default property contains options that are used for each scene, but options specified 
         /// for individual scenes override these options. The default property is required to have 
         /// a firstScene property that contains the scene ID for the first scene to be displayed.
         /// </summary>
-        public DefaultScene Default
+        public DefaultSceneDto Default
         {
             get
             {
                 if (_DefaultScene == null)
                 {
-                    _DefaultScene = new DefaultScene { FirstSceneRef = FirstScene };
+                    _DefaultScene = new DefaultSceneDto { FirstSceneDtoRef = FirstSceneDto };
                     return _DefaultScene;
                 }
 
-                if (_DefaultScene.FirstSceneRef == null || !Scenes.ContainsValue(_DefaultScene.FirstSceneRef))
+                if (_DefaultScene.FirstSceneDtoRef == null || !Scenes.ContainsValue(_DefaultScene.FirstSceneDtoRef))
                 {
-                    _DefaultScene.FirstSceneRef = FirstScene;
+                    _DefaultScene.FirstSceneDtoRef = FirstSceneDto;
                     return _DefaultScene;
                 }
 
@@ -41,29 +41,29 @@ namespace Pano.Serialization.Model
         /// The scenes property contains a dictionary of scenes, specified by scene IDs. The values 
         /// assigned to these IDs are specific to each scene.
         /// </summary>
-        public SortedDictionary<string, Scene> Scenes { get; } = new SortedDictionary<string, Scene>();
+        public SortedDictionary<string, SceneDto> Scenes { get; } = new SortedDictionary<string, SceneDto>();
 
-        private Scene FirstScene => Scenes?.FirstOrDefault().Value;
+        private SceneDto FirstSceneDto => Scenes?.FirstOrDefault().Value;
 
-        public void AddScene(Scene scene)
+        public void AddScene(SceneDto scene)
         {
             if (scene == null || Scenes.ContainsValue(scene))
                 return;
 
             Scenes.Add(scene.Id, scene);
 
-            if (Default.FirstSceneRef == null)
+            if (Default.FirstSceneDtoRef == null)
             {
-                Default.FirstSceneRef = scene;
+                Default.FirstSceneDtoRef = scene;
             }
         }
 
-        public void RemoveScene(Scene scene)
+        public void RemoveScene(SceneDto scene)
         {
             Scenes.Remove(scene.Id);
             if (Default == scene)
             {
-                Default.FirstSceneRef = null;
+                Default.FirstSceneDtoRef = null;
             }
         }
 

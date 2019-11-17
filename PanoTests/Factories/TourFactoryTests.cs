@@ -20,7 +20,7 @@ namespace Pano.Factories.Tests
         {
             var tour = new Tour();
 
-            var salon = new Equirectangular()
+            var salon = new EquirectangularDto()
             {
                 Title = "Salon",
                 Pitch = 0,
@@ -28,7 +28,7 @@ namespace Pano.Factories.Tests
                 Panorama = "spacer_p-kuchnia.jpg",
             };
 
-            var komorka = new Equirectangular()
+            var komorka = new EquirectangularDto()
             {
                 Title = "Komórka",
                 Pitch = 0,
@@ -36,7 +36,7 @@ namespace Pano.Factories.Tests
                 Panorama = "komorka-p.jpg",
             };
 
-            var lazienka = new Equirectangular()
+            var lazienka = new EquirectangularDto()
             {
                 Title = "Łazienka",
                 Pitch = 0,
@@ -45,7 +45,7 @@ namespace Pano.Factories.Tests
             };
 
 
-            var gabinet = new Equirectangular()
+            var gabinet = new EquirectangularDto()
             {
                 Title = "Gabinet",
                 Pitch = 0,
@@ -53,7 +53,7 @@ namespace Pano.Factories.Tests
                 Panorama = "panorama_p-gabinet.jpg",
             };
 
-            var sypialnia = new Equirectangular()
+            var sypialnia = new EquirectangularDto()
             {
                 Title = "Sypialnia",
                 Pitch = 0,
@@ -61,7 +61,7 @@ namespace Pano.Factories.Tests
                 Panorama = "panorama_p-sypialnia.jpg",
             };
 
-            var pokoj = new Equirectangular()
+            var pokoj = new EquirectangularDto()
             {
                 Title = "Pokój",
                 Pitch = 0,
@@ -69,7 +69,7 @@ namespace Pano.Factories.Tests
                 Panorama = "spacer_p-pokoj.jpg",
             };
 
-            var przedpokoj = new Equirectangular()
+            var przedpokoj = new EquirectangularDto()
             {
                 Title = "Przedpokój",
                 Pitch = 0,
@@ -77,7 +77,7 @@ namespace Pano.Factories.Tests
                 Panorama = "spacer_p-przedpokoj.jpg",
             };
 
-            var przedpokoj2 = new Equirectangular()
+            var przedpokoj2 = new EquirectangularDto()
             {
                 Title = "Przedpokój 2",
                 Pitch = 0,
@@ -85,7 +85,7 @@ namespace Pano.Factories.Tests
                 Panorama = "spacer_p-przedpokoj2.jpg",
             };
 
-            var wc = new Equirectangular()
+            var wc = new EquirectangularDto()
             {
                 Title = "WC",
                 Pitch = 0,
@@ -162,7 +162,7 @@ namespace Pano.Factories.Tests
         {
             var tour = new Tour();
 
-            var salon = new Equirectangular()
+            var salon = new EquirectangularDto()
             {
                 Title = "Zażółć gęślą jaźń",
                 Pitch = 0,
@@ -170,7 +170,7 @@ namespace Pano.Factories.Tests
                 Panorama = "spacer_p-kuchnia.jpg",
             };
 
-            var komorka = new Equirectangular()
+            var komorka = new EquirectangularDto()
             {
                 Title = "Komórka",
                 Pitch = 0,
@@ -229,7 +229,7 @@ namespace Pano.Factories.Tests
         {
             var tour = new Tour();
 
-            var salon = new Equirectangular()
+            var salon = new EquirectangularDto()
             {
                 Title = "Salon",
                 Pitch = 0,
@@ -237,7 +237,7 @@ namespace Pano.Factories.Tests
                 Panorama = "spacer_p-kuchnia.jpg",
             };
 
-            var komorka = new Equirectangular()
+            var komorka = new EquirectangularDto()
             {
                 Title = "Komórka",
                 Pitch = 0,
@@ -245,7 +245,7 @@ namespace Pano.Factories.Tests
                 Panorama = "komorka-p.jpg",
             };
 
-            var lazienka = new Equirectangular()
+            var lazienka = new EquirectangularDto()
             {
                 Title = "Łazienka",
                 Pitch = 0,
@@ -254,7 +254,7 @@ namespace Pano.Factories.Tests
             };
 
 
-            var gabinet = new Equirectangular()
+            var gabinet = new EquirectangularDto()
             {
                 Title = "Gabinet",
                 Pitch = 0,
@@ -262,7 +262,7 @@ namespace Pano.Factories.Tests
                 Panorama = "panorama_p-gabinet.jpg",
             };
 
-            var sypialnia = new Equirectangular()
+            var sypialnia = new EquirectangularDto()
             {
                 Title = "Sypialnia",
                 Pitch = 0,
@@ -270,7 +270,7 @@ namespace Pano.Factories.Tests
                 Panorama = "panorama_p-sypialnia.jpg",
             };
 
-            var pokoj = new Equirectangular()
+            var pokoj = new EquirectangularDto()
             {
                 Title = "Pokój",
                 Pitch = 0,
@@ -278,7 +278,7 @@ namespace Pano.Factories.Tests
                 Panorama = "spacer_p-pokoj.jpg",
             };
 
-            var przedpokoj = new Equirectangular()
+            var przedpokoj = new EquirectangularDto()
             {
                 Title = "Przedpokój",
                 Pitch = 0,
@@ -286,7 +286,7 @@ namespace Pano.Factories.Tests
                 Panorama = "spacer_p-przedpokoj.jpg",
             };
 
-            var przedpokoj2 = new Equirectangular()
+            var przedpokoj2 = new EquirectangularDto()
             {
                 Title = "Przedpokój 2",
                 Pitch = 0,
@@ -294,7 +294,7 @@ namespace Pano.Factories.Tests
                 Panorama = "spacer_p-przedpokoj2.jpg",
             };
 
-            var wc = new Equirectangular()
+            var wc = new EquirectangularDto()
             {
                 Title = "WC",
                 Pitch = 0,
@@ -332,11 +332,11 @@ namespace Pano.Factories.Tests
 
         private Tour CreateProject2()
         {
-            var scenes = new Dictionary<string, Scene>
+            var scenes = new Dictionary<string, SceneDto>
             {
-                ["salon"] = new Equirectangular { Title = "Salon", Panorama = "p2.jpg" },
-                ["kuchnia"] = new Equirectangular { Title = "Kuchnia", Panorama = "p1.jpg" },
-                ["lazienka"] = new Equirectangular { Title = "Łazienka", Panorama = "p3.jpg" }
+                ["salon"] = new EquirectangularDto { Title = "Salon", Panorama = "p2.jpg" },
+                ["kuchnia"] = new EquirectangularDto { Title = "Kuchnia", Panorama = "p1.jpg" },
+                ["lazienka"] = new EquirectangularDto { Title = "Łazienka", Panorama = "p3.jpg" }
             };
 
             scenes["kuchnia"].AddSceneHotSpot(scenes["salon"], -17, -138, -14, -48);

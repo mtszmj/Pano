@@ -41,8 +41,8 @@
     <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=8.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.8.1.1\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="CommonServiceLocator, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.2\lib\net47\CommonServiceLocator.dll</HintPath>
@@ -95,6 +95,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Automapper\HotSpotProfile.cs" />
+    <Compile Include="Automapper\SceneProfile.cs" />
     <Compile Include="DB\PanoContext.cs" />
     <Compile Include="DB\PanoDbInitializerDropCreateDatabaseIfModelChanges.cs" />
     <Compile Include="DB\PanoDbInitializerDropCreateDatabaseAlways.cs" />
@@ -186,7 +187,7 @@
     <Compile Include="Model\Db\Scenes\Scene.cs" />
     <Compile Include="Serialization\Model\HotSpots\IHotSpotDto.cs" />
     <Compile Include="Model\Project.cs" />
-    <Compile Include="Serialization\Model\Scenes\IScene.cs" />
+    <Compile Include="Serialization\Model\Scenes\ISceneDto.cs" />
     <Compile Include="Model\TourForDb.cs" />
     <Compile Include="Repository\DefaultSceneConfigRepository.cs" />
     <Compile Include="Repository\IDefaultSceneConfigRepository.cs" />
@@ -358,15 +359,15 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Serialization\Model\Scenes\Cubemap.cs" />
-    <Compile Include="Serialization\Model\Scenes\DefaultScene.cs" />
+    <Compile Include="Serialization\Model\Scenes\CubemapDto.cs" />
+    <Compile Include="Serialization\Model\Scenes\DefaultSceneDto.cs" />
     <Compile Include="Model\Enums.cs" />
-    <Compile Include="Serialization\Model\Scenes\Equirectangular.cs" />
+    <Compile Include="Serialization\Model\Scenes\EquirectangularDto.cs" />
     <Compile Include="Serialization\Model\HotSpots\HotSpotDto.cs" />
     <Compile Include="Serialization\Model\HotSpots\HotSpotEqualityComparer.cs" />
     <Compile Include="Serialization\Model\HotSpots\InfoHotSpotDto.cs" />
-    <Compile Include="Serialization\Model\Scenes\Multires.cs" />
-    <Compile Include="Serialization\Model\Scenes\Scene.cs" />
+    <Compile Include="Serialization\Model\Scenes\MultiresDto.cs" />
+    <Compile Include="Serialization\Model\Scenes\SceneDto.cs" />
     <Compile Include="Serialization\Model\HotSpots\SceneHotSpotDto.cs" />
     <Compile Include="Serialization\Model\Scenes\ScenesEqualityComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

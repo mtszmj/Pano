@@ -17,7 +17,7 @@ namespace Pano.UnitTests.Model.Scenes
         [Test]
         public void CompareScenes_ReferenceEquals()
         {
-            var sceneMock1 = new Mock<IScene>();
+            var sceneMock1 = new Mock<ISceneDto>();
 
             Assert.That(comparer.Equals(sceneMock1.Object, sceneMock1.Object), Is.True);
         }
@@ -31,7 +31,7 @@ namespace Pano.UnitTests.Model.Scenes
         [Test]
         public void CompareScenes_ConcreteIsNotEqualToNull()
         {
-            var mock = new Mock<IScene>();
+            var mock = new Mock<ISceneDto>();
 
             Assert.Multiple(() =>
             {
@@ -43,10 +43,10 @@ namespace Pano.UnitTests.Model.Scenes
         [Test]
         public void CompareScenes_AreEqual()
         {
-            var mock = new Mock<IScene>();
-            mock.Setup(x => x.Equals(It.IsAny<IScene>())).Returns(true);
+            var mock = new Mock<ISceneDto>();
+            mock.Setup(x => x.Equals(It.IsAny<ISceneDto>())).Returns(true);
 
-            var mock2 = new Mock<IScene>();
+            var mock2 = new Mock<ISceneDto>();
 
             Assert.That(comparer.Equals(mock.Object, mock2.Object), Is.True);
         }
@@ -54,10 +54,10 @@ namespace Pano.UnitTests.Model.Scenes
         [Test]
         public void CompareScenes_AreNotEqual()
         {
-            var mock = new Mock<IScene>();
-            mock.Setup(x => x.Equals(It.IsAny<IScene>())).Returns(false);
+            var mock = new Mock<ISceneDto>();
+            mock.Setup(x => x.Equals(It.IsAny<ISceneDto>())).Returns(false);
 
-            var mock2 = new Mock<IScene>();
+            var mock2 = new Mock<ISceneDto>();
 
             Assert.That(comparer.Equals(mock.Object, mock2.Object), Is.False);
         }
@@ -72,7 +72,7 @@ namespace Pano.UnitTests.Model.Scenes
         public void GetHashCode_InstanceNotNull_NotEqualToZero(
             [Values(Int32.MaxValue, Int32.MinValue)] int hash)
         {
-            var mock = new Mock<IScene>();
+            var mock = new Mock<ISceneDto>();
             mock.Setup(x => x.GetHashCode()).Returns(hash);
 
             Assert.That(comparer.GetHashCode(mock.Object), Is.Not.EqualTo(0));

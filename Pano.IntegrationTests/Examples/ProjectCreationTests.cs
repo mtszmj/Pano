@@ -33,7 +33,7 @@ namespace Pano.IntegrationTests.Examples
             {
                 var tour = new Tour();
 
-                var salon = new Equirectangular()
+                var salon = new EquirectangularDto()
                 {
                     Title = "Salon",
                     Pitch = 0,
@@ -41,7 +41,7 @@ namespace Pano.IntegrationTests.Examples
                     Panorama = "spacer_p-kuchnia.jpg",
                 };
 
-                var komorka = new Equirectangular()
+                var komorka = new EquirectangularDto()
                 {
                     Title = "Komórka",
                     Pitch = 0,
@@ -49,7 +49,7 @@ namespace Pano.IntegrationTests.Examples
                     Panorama = "komorka-p.jpg",
                 };
 
-                var lazienka = new Equirectangular()
+                var lazienka = new EquirectangularDto()
                 {
                     Title = "Łazienka",
                     Pitch = 0,
@@ -58,7 +58,7 @@ namespace Pano.IntegrationTests.Examples
                 };
 
 
-                var gabinet = new Equirectangular()
+                var gabinet = new EquirectangularDto()
                 {
                     Title = "Gabinet",
                     Pitch = 0,
@@ -66,7 +66,7 @@ namespace Pano.IntegrationTests.Examples
                     Panorama = "panorama_p-gabinet.jpg",
                 };
 
-                var sypialnia = new Equirectangular()
+                var sypialnia = new EquirectangularDto()
                 {
                     Title = "Sypialnia",
                     Pitch = 0,
@@ -74,7 +74,7 @@ namespace Pano.IntegrationTests.Examples
                     Panorama = "panorama_p-sypialnia.jpg",
                 };
 
-                var pokoj = new Equirectangular()
+                var pokoj = new EquirectangularDto()
                 {
                     Title = "Pokój",
                     Pitch = 0,
@@ -82,7 +82,7 @@ namespace Pano.IntegrationTests.Examples
                     Panorama = "spacer_p-pokoj.jpg",
                 };
 
-                var przedpokoj = new Equirectangular()
+                var przedpokoj = new EquirectangularDto()
                 {
                     Title = "Przedpokój",
                     Pitch = 0,
@@ -90,7 +90,7 @@ namespace Pano.IntegrationTests.Examples
                     Panorama = "spacer_p-przedpokoj.jpg",
                 };
 
-                var przedpokoj2 = new Equirectangular()
+                var przedpokoj2 = new EquirectangularDto()
                 {
                     Title = "Przedpokój 2",
                     Pitch = 0,
@@ -98,7 +98,7 @@ namespace Pano.IntegrationTests.Examples
                     Panorama = "spacer_p-przedpokoj2.jpg",
                 };
 
-                var wc = new Equirectangular()
+                var wc = new EquirectangularDto()
                 {
                     Title = "WC",
                     Pitch = 0,

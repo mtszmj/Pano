@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pano.Serialization.Model.Scenes
 {
-    public class Equirectangular : Scene
+    public class EquirectangularDto : SceneDto
     {
         public override PanoramaType Type => PanoramaType.Equirectangular;
 
@@ -50,12 +50,12 @@ namespace Pano.Serialization.Model.Scenes
         /// </summary>
         public float[] BackgroundColor { get; set; } = { 0, 0, 0 };
 
-        public override bool Equals(IScene other)
+        public override bool Equals(ISceneDto other)
         {
             if (!base.Equals(other))
                 return false;
 
-            if (!(other is Equirectangular scene))
+            if (!(other is EquirectangularDto scene))
                 return false;
 
             return Panorama == scene.Panorama

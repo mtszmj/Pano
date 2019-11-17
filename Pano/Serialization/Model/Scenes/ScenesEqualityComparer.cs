@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Pano.Serialization.Model.Scenes
 {
-    public class ScenesEqualityComparer : IEqualityComparer<IScene>
+    public class ScenesEqualityComparer : IEqualityComparer<ISceneDto>
     {
-        public bool Equals(IScene x, IScene y)
+        public bool Equals(ISceneDto x, ISceneDto y)
         {
             if (ReferenceEquals(x, y))
                 return true;
@@ -19,7 +19,7 @@ namespace Pano.Serialization.Model.Scenes
             return x.Equals(y);
         }
 
-        public int GetHashCode(IScene obj)
+        public int GetHashCode(ISceneDto obj)
         {
             if (ReferenceEquals(obj, null))
                 return 0;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pano.Serialization.Model.Scenes
 {
-    public class Cubemap : Scene
+    public class CubemapDto : SceneDto
     {
         public override PanoramaType Type => PanoramaType.Cubemap;
 
@@ -19,12 +19,12 @@ namespace Pano.Serialization.Model.Scenes
         /// </summary>
         string[] CubeMap { get; set; } = new string[6];
 
-        public override bool Equals(IScene other)
+        public override bool Equals(ISceneDto other)
         {
             if (!base.Equals(other))
                 return false;
 
-            if (!(other is Cubemap scene))
+            if (!(other is CubemapDto scene))
                 return false;
 
             return CubeMap.SequenceEqual(scene.CubeMap);

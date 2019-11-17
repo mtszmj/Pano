@@ -21,6 +21,17 @@ namespace Pano.Model.Db.Scenes
         /// </summary>
         public virtual PanoramaType Type { get; protected set; }
 
+        public string Id
+        {
+            get
+            {
+                if (Title == null)
+                    return Id.ToString();
+
+                return $"{SceneId}_{Title}";
+            }
+        }
+
         protected string _title;
 
         /// <summary>

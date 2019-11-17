@@ -8,12 +8,12 @@ using Pano.Model;
 
 namespace Pano.Serialization.Model.Scenes
 {
-    public class DefaultScene : Scene
+    public class DefaultSceneDto : SceneDto
     {
         [JsonIgnore] private string _firstScene = "";
         [JsonIgnore] private PanoramaType _type = PanoramaType.Unknown;
 
-        public DefaultScene()
+        public DefaultSceneDto()
         {
             Hfov = 100;
             AutoLoad = true;
@@ -21,30 +21,30 @@ namespace Pano.Serialization.Model.Scenes
             HotSpotDebug = true;
         }
 
-        [JsonIgnore] public Scene FirstSceneRef { get; set; }
+        [JsonIgnore] public SceneDto FirstSceneDtoRef { get; set; }
 
         public string FirstScene
         {
-            get => FirstSceneRef?.Id ?? _firstScene;
+            get => FirstSceneDtoRef?.Id ?? _firstScene;
             set
             {
-                if (FirstSceneRef == null)
+                if (FirstSceneDtoRef == null)
                     _firstScene = value;
             }
         }
 
         public override PanoramaType Type
         {
-            get => FirstSceneRef?.Type ?? _type;
+            get => FirstSceneDtoRef?.Type ?? _type;
             protected set => _type = value;
         }
 
-        public override bool Equals(IScene other)
+        public override bool Equals(ISceneDto other)
         {
             if (!base.Equals(other))
                 return false;
 
-            if (!(other is DefaultScene scene))
+            if (!(other is DefaultSceneDto scene))
                 return false;
 
             return FirstScene?.Equals(scene.FirstScene) ?? false;

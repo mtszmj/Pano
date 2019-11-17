@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 using AutoMapper;
 using NUnit.Framework;
 using Pano.Automapper;
+using Pano.Model.Db.Helpers;
 using Pano.Model.Db.HotSpots;
+using Pano.Model.Db.Scenes;
 using Pano.Serialization.Model.HotSpots;
+using Pano.Serialization.Model.Scenes;
 
 namespace Pano.IntegrationTests.Automapper
 {
@@ -61,8 +64,6 @@ namespace Pano.IntegrationTests.Automapper
                 Assert.That(dto.TargetYaw, Is.EqualTo(spot.TargetYaw));
                 Assert.That(dto.Type, Is.EqualTo(spot.Type));
             });
-
         }
-
     }
 }

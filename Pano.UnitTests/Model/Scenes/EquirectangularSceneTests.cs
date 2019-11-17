@@ -90,7 +90,7 @@ namespace Pano.UnitTests.Model.Scenes
                 spot2Mock.Setup(x => x.Equals(It.Is<IHotSpotDto>(spot => ReferenceEquals(spot, spot2Mock.Object)))).Returns(true);
 
                 // Arrange first scene
-                var scene = new Equirectangular()
+                var scene = new EquirectangularDto()
                 {
                     Title = Title,
                     Author = Author,
@@ -146,7 +146,7 @@ namespace Pano.UnitTests.Model.Scenes
                 scene.AddHotSpot(spot2Mock.Object);
 
                 // Arrange second scene
-                var scene2 = new Equirectangular()
+                var scene2 = new EquirectangularDto()
                 {
                     Title = Title,
                     Author = Author,
@@ -202,10 +202,10 @@ namespace Pano.UnitTests.Model.Scenes
                 scene2.AddHotSpot(spot1Mock.Object);
 
                 // Arrange Scenes for polimorphism           
-                Scene baseScene1 = scene;
-                Scene baseScene2 = scene2;
-                IScene iScene1 = scene;
-                IScene iScene2 = scene2;
+                SceneDto baseScene1 = scene;
+                SceneDto baseScene2 = scene2;
+                ISceneDto iScene1 = scene;
+                ISceneDto iScene2 = scene2;
 
                 // Act and Assert
                 Assert.Multiple(() =>
@@ -1165,7 +1165,7 @@ namespace Pano.UnitTests.Model.Scenes
                 spot2MockForComparison.Setup(x => x.Equals(It.Is<IHotSpotDto>(spot => ReferenceEquals(spot, spot2MockForComparison.Object)))).Returns(true);
 
                 // Arrange first scene
-                var scene = new Equirectangular()
+                var scene = new EquirectangularDto()
                 {
                     Title = Title,
                     Author = Author,
@@ -1221,7 +1221,7 @@ namespace Pano.UnitTests.Model.Scenes
                 scene.AddHotSpot(spot2Mock.Object);
 
                 // Arrange second scene
-                var scene2 = new Equirectangular()
+                var scene2 = new EquirectangularDto()
                 {
                     Title = TitleForComparison,
                     Author = AuthorForComparison,
@@ -1277,10 +1277,10 @@ namespace Pano.UnitTests.Model.Scenes
                 scene2.AddHotSpot(spot1MockForComparison.Object);
 
                 // Arrange Scenes for polimorphism           
-                Scene baseScene1 = scene;
-                Scene baseScene2 = scene2;
-                IScene iScene1 = scene;
-                IScene iScene2 = scene2;
+                SceneDto baseScene1 = scene;
+                SceneDto baseScene2 = scene2;
+                ISceneDto iScene1 = scene;
+                ISceneDto iScene2 = scene2;
 
                 // Act and Assert
                 Assert.Multiple(() =>
@@ -1299,7 +1299,7 @@ namespace Pano.UnitTests.Model.Scenes
         [Test]
         public void AddHotSpot_AdditionCorrect_ReturnTrue()
         {
-            var scene = new Equirectangular();
+            var scene = new EquirectangularDto();
             var result1 = scene.AddHotSpot(new InfoHotSpotDto("id"));
             var result2 = scene.AddHotSpot(new SceneHotSpotDto("id2", "sceneId"));
 
@@ -1314,7 +1314,7 @@ namespace Pano.UnitTests.Model.Scenes
         [Test]
         public void AddHotSpot_NullNotAdded_ReturnsFalse()
         {
-            var scene = new Equirectangular();
+            var scene = new EquirectangularDto();
             var result = scene.AddHotSpot(null);
 
             Assert.Multiple(() =>
@@ -1327,7 +1327,7 @@ namespace Pano.UnitTests.Model.Scenes
         [Test]
         public void AddHotSpot_AddTwiceTheSameHotSpot_AddedOnlyOnce()
         {
-            var scene = new Equirectangular();
+            var scene = new EquirectangularDto();
             var spot = new SceneHotSpotDto("id", "sceneId");
             scene.AddHotSpot(spot);
             var result = scene.AddHotSpot(spot);
@@ -1342,7 +1342,7 @@ namespace Pano.UnitTests.Model.Scenes
         [Test]
         public void AddSceneHotSpot_SceneIsNull_ThrowsException()
         {
-            var scene = new Equirectangular();
+            var scene = new EquirectangularDto();
 
             Assert.Throws<ArgumentNullException>(() => scene.AddSceneHotSpot(null));
         }
@@ -1350,12 +1350,12 @@ namespace Pano.UnitTests.Model.Scenes
         [TestCase("Scene1 Text", "Scene2 Text", "Scene1Text", "Scene2Text")]
         public void AddSceneHotSpot_CorrectAddition(string scene1Title, string scene2Title, string scene1Id, string scene2Id)
         {
-            var scene = new Equirectangular()
+            var scene = new EquirectangularDto()
             {
                 Title = scene1Title
             };
 
-            var scene2 = new Equirectangular()
+            var scene2 = new EquirectangularDto()
             {
                 Title = scene2Title
             };

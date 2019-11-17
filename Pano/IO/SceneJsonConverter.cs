@@ -23,7 +23,7 @@ namespace Pano.IO
 
         public override bool CanConvert(Type objectType)
         {
-            return typeof(IScene).IsAssignableFrom(objectType);
+            return typeof(ISceneDto).IsAssignableFrom(objectType);
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, Newtonsoft.Json.JsonSerializer serializer)
@@ -32,16 +32,16 @@ namespace Pano.IO
             var result = parser.TryParseEnum<PanoramaType>(jobject, TypePropertyName);
 
             if (IsOfDefaultSceneType(jobject))
-                return parser.CreateAndPopulateObject<DefaultScene>(reader, serializer);
+                return parser.CreateAndPopulateObject<DefaultSceneDto>(reader, serializer);
 
             if (result == PanoramaType.Equirectangular)
-                return parser.CreateAndPopulateObject<Equirectangular>(reader, serializer);
+                return parser.CreateAndPopulateObject<EquirectangularDto>(reader, serializer);
 
             if (result == PanoramaType.Multires)
-                return parser.CreateAndPopulateObject<Multires>(reader, serializer);
+                return parser.CreateAndPopulateObject<MultiresDto>(reader, serializer);
 
             if (result == PanoramaType.Cubemap)
-                return parser.CreateAndPopulateObject<Cubemap>(reader, serializer);
+                return parser.CreateAndPopulateObject<CubemapDto>(reader, serializer);
 
             throw new ArgumentException("Incorrect conversion");
         }

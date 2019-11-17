@@ -5,22 +5,25 @@ using Pano.Serialization.Model.HotSpots;
 
 namespace Pano.Serialization.Model.Scenes
 {
-    public abstract class Scene : IScene
+    public abstract class SceneDto : ISceneDto
     {
         private Lazy<string> _Guid { get; } = new Lazy<string>(() => Guid.NewGuid().ToString());
 
+        private string _id;
         public string Id
         {
             get
             {
+                if (_id != null)
+                    return _id;
+
                 if (Title == null)
                     return _Guid.Value.ToString();
 
                 return System.Text.RegularExpressions.Regex.Replace(Title, @"[^0-9a-zA-Z]+", "");
             }
+            set { _id = value; }
         }
-
-        #region Properties
 
         /// <summary>
         /// This specifies the panorama type. Can be equirectangular, cubemap, or multires. 
@@ -267,10 +270,7 @@ namespace Pano.Serialization.Model.Scenes
         /// </remarks>
         public bool? Dynamic { get; set; }
 
-        #endregion
-
-        #region Methods
-        public void AddSceneHotSpot(IScene scene, int pitch = 0, int yaw = 0, int pitchBack = 0, int yawBack = 0)
+        public void AddSceneHotSpot(ISceneDto scene, int pitch = 0, int yaw = 0, int pitchBack = 0, int yawBack = 0)
         {
             if (scene == null)
             {
@@ -303,7 +303,7 @@ namespace Pano.Serialization.Model.Scenes
             return true;
         }
 
-        public virtual bool Equals(IScene other)
+        public virtual bool Equals(ISceneDto other)
         {
             if (other == null)
                 return false;
@@ -354,7 +354,7 @@ namespace Pano.Serialization.Model.Scenes
                 && other.HotSpots.OrderBy(x => x.Id).SequenceEqual(HotSpots.OrderBy(x => x.Id), HotSpotDto.GetDefaultEqualityComparer())
                 ;
         }
-        public static bool operator ==(Scene left, Scene right)
+        public static bool operator ==(SceneDto left, SceneDto right)
         {
             if (left is null)
             {
@@ -364,10 +364,9 @@ namespace Pano.Serialization.Model.Scenes
             return (left.Equals(right));
         }
 
-        public static bool operator !=(Scene left, Scene right)
+        public static bool operator !=(SceneDto left, SceneDto right)
         {
             return !(left == right);
         }
-        #endregion
     }
 }

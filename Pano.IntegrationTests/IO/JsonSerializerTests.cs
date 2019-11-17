@@ -137,7 +137,7 @@ namespace Pano.IntegrationTests.IO
             string hotSpotId2
         )
         {
-            var sceneForSerialization = new Equirectangular()
+            var sceneForSerialization = new EquirectangularDto()
             {
                 Title = Title,
                 Author = Author,
@@ -193,7 +193,7 @@ namespace Pano.IntegrationTests.IO
             var serializer = JsonSerializer.Factory.DefaultInstance();
 //            var serializer = new JsonSerializer();
             var json = serializer.Serialize(sceneForSerialization);
-            var sceneAfterDeserialization = serializer.Deserialize<Equirectangular>(json);
+            var sceneAfterDeserialization = serializer.Deserialize<EquirectangularDto>(json);
             Assert.That(sceneForSerialization, Is.EqualTo(sceneAfterDeserialization));
 
             serializer = new JsonSerializer(
@@ -204,16 +204,16 @@ namespace Pano.IntegrationTests.IO
                 }
             );
             json = serializer.Serialize(sceneForSerialization);
-            sceneAfterDeserialization = serializer.Deserialize<Equirectangular>(json);
+            sceneAfterDeserialization = serializer.Deserialize<EquirectangularDto>(json);
             Assert.That(sceneForSerialization, Is.EqualTo(sceneAfterDeserialization));
 
 
-            Scene generalSceneForSerialization = sceneForSerialization;
+            SceneDto generalSceneForSerialization = sceneForSerialization;
 //            serializer = new JsonSerializer(new JsonConverter[]
 //                {new HotSpotJsonConverter(new JObjectParser()), new SceneJsonConverter(new JObjectParser())});
             serializer = JsonSerializer.Factory.DefaultInstance();
             json = serializer.Serialize(generalSceneForSerialization);
-            var generalSceneAfterDeserialization = serializer.Deserialize<Scene>(json);
+            var generalSceneAfterDeserialization = serializer.Deserialize<SceneDto>(json);
 
             Assert.That(generalSceneForSerialization, Is.EqualTo(generalSceneAfterDeserialization));
         }
@@ -239,7 +239,7 @@ namespace Pano.IntegrationTests.IO
             [Values("firstScene")] string FirstScene
         )
         {
-            var defaultSceneForSerialization = new DefaultScene()
+            var defaultSceneForSerialization = new DefaultSceneDto()
             {
                 Title = Title,
                 Author = Author,
@@ -261,7 +261,7 @@ namespace Pano.IntegrationTests.IO
 
             var serializer = JsonSerializer.Factory.DefaultInstance();
             var json = serializer.Serialize(defaultSceneForSerialization);
-            var defaultSceneAfterSerialization = serializer.Deserialize<DefaultScene>(json);
+            var defaultSceneAfterSerialization = serializer.Deserialize<DefaultSceneDto>(json);
 
             Assert.That(defaultSceneForSerialization, Is.EqualTo(defaultSceneAfterSerialization));
         }

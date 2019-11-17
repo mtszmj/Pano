@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace Pano.Serialization.Model.Scenes
 {
-    public class Multires : Scene
+    public class MultiresDto : SceneDto
     {
         public override PanoramaType Type => PanoramaType.Multires;
 
         public MultiResSubkeys MultiRes { get; } = new MultiResSubkeys();
         
-        public override bool Equals(IScene other)
+        public override bool Equals(ISceneDto other)
         {
             if (!base.Equals(other))
                 return false;
 
-            if (!(other is Multires scene))
+            if (!(other is MultiresDto scene))
                 return false;
 
             return MultiRes.Equals(scene.MultiRes);

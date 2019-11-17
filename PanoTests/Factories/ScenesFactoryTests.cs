@@ -36,7 +36,7 @@ namespace Pano.Factories.Tests
 
             };
 
-            var dict = new Dictionary<string, Scene>
+            var dict = new Dictionary<string, SceneDto>
             {
                 ["pierwsza"] = hotSpot,
                 ["druga"] = factory.CreateDefaultScene()
