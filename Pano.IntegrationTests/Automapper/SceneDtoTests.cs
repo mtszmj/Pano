@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using AutoMapper;
 using NUnit.Framework;
 using Pano.Automapper;
+using Pano.Model;
 using Pano.Model.Db.Helpers;
 using Pano.Model.Db.HotSpots;
 using Pano.Model.Db.Scenes;
+using Pano.Serialization.Model;
 using Pano.Serialization.Model.HotSpots;
 using Pano.Serialization.Model.Scenes;
 
@@ -28,6 +30,25 @@ namespace Pano.IntegrationTests.Automapper
             });
 
             Mapper = config.CreateMapper();
+        }
+
+        [Test]
+        public void DefaultSceneConfigTest()
+        {
+            var tour = new TourForDb();
+            var scene = new Equirectangular() {SceneId = 3, Title = "test scene title"};
+            tour.Scenes.Add(scene);
+
+            var defaultScene = new DefaultSceneConfig()
+            {
+                AutoLoad = true,
+                AutoRotate = 0.5f,
+                Hfov = 1,
+                Title = "title_test",
+                HotSpotDebug = true,
+                Id = 2,
+                FirstSceneId = 3
+            };
         }
 
         [Test]
@@ -129,7 +150,6 @@ namespace Pano.IntegrationTests.Automapper
                 Assert.That(dto.ShowZoomCtrl, Is.EqualTo(scene.ShowZoomCtrl));
 
             });
-
         }
 
     }
