@@ -22,6 +22,7 @@ namespace Pano.Automapper
                 ;
 
             CreateMap<DefaultSceneConfig, DefaultSceneDto>()
+                .ForMember(dst => dst.FirstSceneDtoRef, opt => opt.MapFrom(src => src.FirstScene));
                 ;
 
             CreateMap<IEnumerable<StringDictionaryEntry>, Dictionary<string, string>>()

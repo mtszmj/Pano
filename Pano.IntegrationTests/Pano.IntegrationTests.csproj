@@ -83,6 +83,7 @@
   <ItemGroup>
     <Compile Include="Automapper\SceneDtoTests.cs" />
     <Compile Include="Automapper\HotSpotDtoTests.cs" />
+    <Compile Include="Automapper\TourDtoTests.cs" />
     <Compile Include="Examples\ProjectCreationTests.cs" />
     <Compile Include="Examples\TempTest.cs" />
     <Compile Include="Helpers\BaseIntegrationFixture.cs" />

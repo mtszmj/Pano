@@ -247,7 +247,7 @@ namespace Pano.Serialization.Model.Scenes
         /// This specifies an array of hot spots that can be links to other scenes, 
         /// information, or external links. Each array element has the following properties.
         /// </summary>
-        public List<IHotSpotDto> HotSpots { get; } = new List<IHotSpotDto>();
+        public List<IHotSpotDto> HotSpots { get; set; } = new List<IHotSpotDto>();
 
         /// <summary>
         /// When true, the mouse pointer’s pitch and yaw are logged to the console when 

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
+using Pano.Model.Db.Scenes;
 
 namespace Pano.Model
 {
@@ -35,6 +36,9 @@ namespace Pano.Model
         /// assigned to these IDs are specific to each scene.
         /// </summary>
         public ObservableCollection<Db.Scenes.Scene> Scenes { get; set; } = new ObservableCollection<Db.Scenes.Scene>();
+
+        public SortedDictionary<string, Db.Scenes.Scene> ScenesDictionary =>
+            new SortedDictionary<string, Scene>(Scenes.ToDictionary(x => x.Id));
 
         // Navigation property
         public Project Project { get; set; }

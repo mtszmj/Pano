@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,23 @@ namespace Pano.Automapper
     {
         public HotSpotProfile()
         {
+            CreateMap<HotSpot, IHotSpotDto>()
+                .ConstructUsing((spot, context) =>
+                {
+                    switch (spot.Type)
+                    {
+                        case HotSpotType.Info:
+                            return new InfoHotSpotDto();
+                        case HotSpotType.Scene:
+                            return new SceneHotSpotDto();
+                        default:
+                            return null;
+                    }
+                })
+                ;
+
             CreateMap<HotSpot, HotSpotDto>()
+                .IncludeBase<HotSpot, IHotSpotDto>()
                 .ForSourceMember(src => src.Scene, opt => opt.DoNotValidate())
                 .ForSourceMember(src => src.SceneId, opt => opt.DoNotValidate())
                 ;
@@ -26,6 +43,8 @@ namespace Pano.Automapper
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .AfterMap((src, dest) => dest.SceneId = src.TargetSceneId?.ToString())
                 ;
+
+            CreateMap<ObservableCollection<HotSpot>, List<IHotSpot>>();
         }
     }
 }

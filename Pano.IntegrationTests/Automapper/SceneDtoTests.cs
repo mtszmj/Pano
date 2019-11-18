@@ -47,8 +47,22 @@ namespace Pano.IntegrationTests.Automapper
                 Title = "title_test",
                 HotSpotDebug = true,
                 Id = 2,
-                FirstSceneId = 3
+                FirstSceneId = 3,
+                Tour = tour
             };
+
+            var dto = Mapper.Map<DefaultSceneDto>(defaultScene);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(dto.AutoLoad, Is.EqualTo(defaultScene.AutoLoad));
+                Assert.That(dto.AutoRotate, Is.EqualTo(defaultScene.AutoRotate));
+                Assert.That(dto.Hfov, Is.EqualTo(defaultScene.Hfov));
+                Assert.That(dto.Title, Is.EqualTo(defaultScene.Title));
+                Assert.That(dto.HotSpotDebug, Is.EqualTo(defaultScene.HotSpotDebug));
+                Assert.That(dto.Id, Is.EqualTo(defaultScene.Id.ToString()));
+                Assert.That(dto.FirstScene, Is.EqualTo(scene.Id));
+            });
         }
 
         [Test]
@@ -110,6 +124,8 @@ namespace Pano.IntegrationTests.Automapper
                 }
             };
 
+            var spot = new SceneHotSpot() {Text = "test"};
+            scene.HotSpots.Add(spot);
             EquirectangularDto dto = new EquirectangularDto();
             Mapper.Map(scene, dto);
 

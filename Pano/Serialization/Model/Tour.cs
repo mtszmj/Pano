@@ -35,6 +35,7 @@ namespace Pano.Serialization.Model
 
                 return _DefaultScene;
             }
+            set => _DefaultScene = value;
         }
 
         /// <summary>
