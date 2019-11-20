@@ -41,10 +41,9 @@ namespace Pano.Automapper
             CreateMap<SceneHotSpot, SceneHotSpotDto>()
                 .IncludeBase<HotSpot, HotSpotDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .AfterMap((src, dest) => dest.SceneId = src.TargetSceneId?.ToString())
+                .AfterMap((src, dest) => dest.SceneId = src.TargetScene?.Id)
                 ;
 
-            CreateMap<ObservableCollection<HotSpot>, List<IHotSpot>>();
         }
     }
 }

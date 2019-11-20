@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -12,7 +13,9 @@ using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Win32;
 using Pano.Factories.Db;
+using Pano.IO;
 using Pano.Model;
+using Pano.Serialization.Model;
 using Pano.Service;
 
 namespace Pano.ViewModel.Pages
@@ -21,43 +24,43 @@ namespace Pano.ViewModel.Pages
     {
         private readonly IDialogService _dialogService;
         private readonly ISelectorDialogService<Model.Db.Scenes.Scene> _selectorDialogService;
+        private readonly IFileDialogService _fileDialogService;
         private readonly INavigationService _navigationService;
         private readonly IProjectsService _projectsService;
         private readonly ISceneFactory _sceneFactory;
         private readonly IHotSpotFactory _hotSpotFactory;
+        private readonly ISerializationMapper _mapper;
+        private readonly IStorage _storage;
         private ProjectViewModel _project;
 
         public ProjectPageViewModel(IDialogService dialogService, 
                                     ISelectorDialogService<Model.Db.Scenes.Scene> selectorDialogService,
+                                    IFileDialogService fileDialogService,
                                     INavigationService navigationService,
                                     IProjectsService projectsService,
                                     ISceneFactory sceneFactory,
-                                    IHotSpotFactory hotSpotFactory)
+                                    IHotSpotFactory hotSpotFactory,
+                                    ISerializationMapper mapper,
+                                    IStorage storage)
         {
             _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
             _selectorDialogService = selectorDialogService ?? throw new ArgumentNullException(nameof(selectorDialogService));
+            _fileDialogService = fileDialogService ?? throw new ArgumentNullException(nameof(fileDialogService));
             _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
             _projectsService = projectsService ?? throw new ArgumentNullException(nameof(projectsService));
             _sceneFactory = sceneFactory ?? throw new ArgumentNullException(nameof(sceneFactory));
-            _hotSpotFactory = hotSpotFactory ?? throw new ArgumentNullException(nameof(hotSpotFactory)); 
+            _hotSpotFactory = hotSpotFactory ?? throw new ArgumentNullException(nameof(hotSpotFactory));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _storage = storage ?? throw new ArgumentNullException(nameof(storage));
 
             SaveCommand = new RelayCommand(SaveProject);
-            ExportCommand = new RelayCommand(ExportProject, () => Project?.Model != null);
+            ExportCommand = new RelayCommand(ExportProject, () => Project?.Model?.Tour != null);
             BackCommand = new RelayCommand(() => _navigationService.NavigateTo(ViewModelLocator.InitPageKey));
             AddSceneCommand = new RelayCommand(AddScene);
             DeleteSceneCommand = new RelayCommand(DeleteScene, () => SelectedScene != null);
             AddHotSpotCommand = new RelayCommand(AddHotSpot, () => SelectedScene != null);
             DeleteHotSpotCommand = new RelayCommand(DeleteHotSpot, () => SelectedHotSpot != null);
-            ChangeImageCommand = new RelayCommand(() =>
-            {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg";
-                if (openFileDialog.ShowDialog() == true)
-                {
-                    var path = openFileDialog.FileName;
-                    SelectedScene.SetImage(path);
-                }
-            });
+            ChangeImageCommand = new RelayCommand(ChangeImage);
             RotateClockwiseCommand = new RelayCommand(RotateClockwise, SelectedScene?.Image != null);
             RotateCounterclockwiseCommand = new RelayCommand(RotateCounterclockwise, SelectedScene?.Image != null);
             SelectTargetSceneCommand = new RelayCommand(SelectTargetScene, IsSceneHotSpot);
@@ -102,6 +105,7 @@ namespace Pano.ViewModel.Pages
                 Set(ref _selectedHotSpot, value);
                 RaisePropertyChanged(nameof(IsSceneHotSpot));
                 RaisePropertyChanged(nameof(SceneHotSpot));
+                RaisePropertyChanged(nameof(HotSpotTargetSceneTitle));
             }
         }
 
@@ -142,6 +146,16 @@ namespace Pano.ViewModel.Pages
 
         private void ExportProject()
         {
+            var path = _fileDialogService.SaveFileDialog();
+
+            if (path)
+            {
+                SaveProject();
+
+                var tour = _mapper.Map<TourForDb, Tour>(Project.Model.Tour);
+                _storage.Path = path.Value;
+                _storage.Save(tour);
+            }
 
         }
 
@@ -176,6 +190,17 @@ namespace Pano.ViewModel.Pages
             {
                 _projectsService.RemoveHotSpot(SelectedHotSpot);
                 SelectedScene.DeleteHotSpot(SelectedHotSpot);
+            }
+        }
+
+        private void ChangeImage()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                var path = openFileDialog.FileName;
+                SelectedScene.SetImage(path);
             }
         }
 

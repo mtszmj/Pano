@@ -142,11 +142,11 @@ namespace Pano.Factories.Tests
         {
             var tour = CreateDefaultProject();
             ISerializer serializer = new Pano.IO.JsonSerializer(new JsonConverter[] { new HotSpotJsonConverter(new JObjectParser()), new SceneJsonConverter(new JObjectParser()) });
-            IRepository repository = new MemoryRepository(serializer);
+            IStorage storage = new MemoryStorage(serializer);
 
-            repository.Save(tour);
+            storage.Save(tour);
 
-            var tour2 = repository.Load<Tour>();
+            var tour2 = storage.Load<Tour>();
 
             foreach (var kvp in tour.Scenes)
             {
@@ -184,11 +184,11 @@ namespace Pano.Factories.Tests
 
 
             ISerializer serializer = new Pano.IO.JsonSerializer(new JsonConverter[] { new HotSpotJsonConverter(new JObjectParser()), new SceneJsonConverter(new JObjectParser()) });
-            IRepository repository = new MemoryRepository(serializer);
+            IStorage storage = new MemoryStorage(serializer);
 
-            repository.Save(tour);
+            storage.Save(tour);
 
-            var tour2 = repository.Load<Tour>();
+            var tour2 = storage.Load<Tour>();
 
             foreach (var kvp in tour.Scenes)
             {
@@ -205,11 +205,11 @@ namespace Pano.Factories.Tests
             var tour = CreateProject2();
 
             ISerializer serializer = new Pano.IO.JsonSerializer(new JsonConverter[] { new HotSpotJsonConverter(new JObjectParser()), new SceneJsonConverter(new JObjectParser()) });
-            IRepository repository = new MemoryRepository(serializer);
+            IStorage storage = new MemoryStorage(serializer);
 
-            repository.Save(tour);
+            storage.Save(tour);
 
-            var tour2 = repository.Load<Tour>();
+            var tour2 = storage.Load<Tour>();
             
             foreach (var kvp in tour.Scenes)
             {

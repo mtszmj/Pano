@@ -110,6 +110,7 @@
     <Compile Include="Helpers\Converters\EnumToStringConverter.cs" />
     <Compile Include="Helpers\Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Helpers\Converters\NullToEnabledConverter.cs" />
+    <Compile Include="Helpers\Option.cs" />
     <Compile Include="IO\IJObjectParser.cs" />
     <Compile Include="IO\JObjectParser.cs" />
     <Compile Include="MainWindow2.xaml.cs">
@@ -206,15 +207,20 @@
     <Compile Include="Repository\UnitOfWork.cs" />
     <Compile Include="Serialization\Model\Tour.cs" />
     <Compile Include="Service\Design\DesignDialogService.cs" />
+    <Compile Include="Service\Design\DesignFileDialogService.cs" />
     <Compile Include="Service\Design\DesignProjectsService.cs" />
     <Compile Include="Service\Design\DesignSelectorDialogService.cs" />
     <Compile Include="Service\DialogService.cs" />
+    <Compile Include="Service\FileDialogService.cs" />
+    <Compile Include="Service\IFileDialogService.cs" />
     <Compile Include="Service\IInitializeService.cs" />
     <Compile Include="Service\IProjectsService.cs" />
     <Compile Include="Service\ISelectorDialogService.cs" />
+    <Compile Include="Service\ISerializationMapper.cs" />
     <Compile Include="Service\NavigationService.cs" />
     <Compile Include="Service\ProjectsService.cs" />
     <Compile Include="Service\SelectorDialogService.cs" />
+    <Compile Include="Service\SerializationMapper.cs" />
     <Compile Include="Temporary\TempCube.cs" />
     <Compile Include="Temporary\TempEqui.cs" />
     <Compile Include="Temporary\TempJsonConverter.cs" />
@@ -289,10 +295,10 @@
     <Compile Include="Factories\ScenesFactory.cs" />
     <Compile Include="IO\HotSpotJsonConverter.cs" />
     <Compile Include="IO\ISerializer.cs" />
-    <Compile Include="IO\IRepository.cs" />
+    <Compile Include="IO\IStorage.cs" />
     <Compile Include="IO\JsonSerializer.cs" />
-    <Compile Include="IO\FileRepository.cs" />
-    <Compile Include="IO\MemoryRepository.cs" />
+    <Compile Include="IO\FileStorage.cs" />
+    <Compile Include="IO\MemoryStorage.cs" />
     <Compile Include="IO\SceneJsonConverter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

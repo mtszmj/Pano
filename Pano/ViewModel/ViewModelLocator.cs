@@ -24,6 +24,7 @@ using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using Pano.DB;
 using Pano.Factories.Db;
+using Pano.IO;
 using Pano.Model;
 using Pano.Repository;
 using Pano.Service;
@@ -89,6 +90,7 @@ namespace Pano.ViewModel
                 builder.Register<ISelectorDialogService<Model.Db.Scenes.Scene>>(
                     c => new DesignSelectorDialogService<Model.Db.Scenes.Scene>(typeof(SelectorDialogView), 4)
                     );
+                builder.RegisterType<DesignFileDialogService>().As<IFileDialogService>();
                 builder.Register(c => nav).As<INavigationService>().SingleInstance();
 
                 // Blendable objects
@@ -112,15 +114,19 @@ namespace Pano.ViewModel
                 builder.Register<ISelectorDialogService<Model.Db.Scenes.Scene>>(
                     c => new SelectorDialogService<Model.Db.Scenes.Scene>(typeof(SelectorDialogView), 4)
                 );
+                builder.RegisterType<FileDialogService>().As<IFileDialogService>();
                 builder.Register(c => nav).As<INavigationService>().SingleInstance();
-
+                builder.RegisterType<ProjectsService>().As<IProjectsService>().SingleInstance();
+                
                 // Factories
                 builder.RegisterType<ProjectFactory>().As<IProjectFactory>();
                 builder.RegisterType<SceneFactory>().As<ISceneFactory>();
                 builder.RegisterType<HotSpotFactory>().As<IHotSpotFactory>();
             }
 
-
+            builder.RegisterType<SerializationMapper>().As<ISerializationMapper>();
+            builder.Register<ISerializer>(x => JsonSerializer.Factory.DefaultInstance());
+            builder.RegisterType<FileStorage>().As<IStorage>();
 
 
             // View Models
@@ -136,16 +142,6 @@ namespace Pano.ViewModel
             builder.RegisterType<ProjectPageViewModel>();
 
             _container = builder.Build();
-
-
-            //using (var ctx = new PanoContext())
-            //{
-            //    var project = new Project() { Name = "EF6 Test" };
-            //    ctx.Projects.Add(project);
-            //    ctx.SaveChanges();
-            //}
-
-
         }
 
         // Locator instance
@@ -159,7 +155,6 @@ namespace Pano.ViewModel
         public InitPageViewModel InitPage => _container.Resolve<InitPageViewModel>();
         public NewProjectPageViewModel NewProjectPage => _container.Resolve<NewProjectPageViewModel>();
         public OpenProjectsPageViewModel OpenProjectsPage => _container.Resolve<OpenProjectsPageViewModel>();
-
 
         // Controls
         public NavigationViewModel Navigation => _container.Resolve<NavigationViewModel>();

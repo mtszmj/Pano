@@ -93,6 +93,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\CreateTestDatabaseAttribute.cs" />
     <Compile Include="Repository\ProjectRepositoryTests.cs" />
+    <Compile Include="Service\SerializationMapperTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

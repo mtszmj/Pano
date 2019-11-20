@@ -7,15 +7,17 @@ using System.Threading.Tasks;
 
 namespace Pano.IO
 {
-    public class MemoryRepository : IRepository
+    public class MemoryStorage : IStorage
     {
         private readonly ISerializer _Serializer;
         private readonly MemoryStream _Stream = new MemoryStream();
 
-        public MemoryRepository(ISerializer serializer)
+        public MemoryStorage(ISerializer serializer)
         {
             _Serializer = serializer;
         }
+
+        public string Path { get; set; }
 
         public T Load<T>()
         {

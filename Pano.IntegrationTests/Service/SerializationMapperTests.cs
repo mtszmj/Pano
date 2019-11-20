@@ -4,37 +4,21 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AutoMapper;
 using NUnit.Framework;
-using Pano.Automapper;
 using Pano.Factories.Db;
 using Pano.Model;
 using Pano.Model.Db.Scenes;
 using Pano.Serialization.Model;
 using Pano.Serialization.Model.HotSpots;
-using Pano.Serialization.Model.Scenes;
+using Pano.Service;
 
-namespace Pano.IntegrationTests.Automapper
+namespace Pano.IntegrationTests.Service
 {
     [TestFixture]
-    public class TourDtoTests
+    public class SerializationMapperTests
     {
-        private IMapper Mapper;
-        [OneTimeSetUp]
-        public void Initialize()
-        {
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<HotSpotProfile>();
-                cfg.AddProfile<SceneProfile>();
-                cfg.AddProfile<TourProfile>();
-            });
-
-            Mapper = config.CreateMapper();
-        }
-
         [Test]
-        public void TourTest()
+        public void MapTourTest()
         {
             var sceneFactory = new SceneFactory();
             var sc1 = sceneFactory.NewEquirectangularScene("title 1");
@@ -55,7 +39,7 @@ namespace Pano.IntegrationTests.Automapper
             sc1.HotSpots.Add(spot1);
             sc2.HotSpots.Add(spot2);
 
-            var config = new DefaultSceneConfig() {Title = "default_config"};
+            var config = new DefaultSceneConfig() { Title = "default_config" };
 
             var tour = new TourForDb
             {
@@ -65,10 +49,8 @@ namespace Pano.IntegrationTests.Automapper
                 Scenes = new ObservableCollection<Scene>() { sc1, sc2 }
             };
 
-            //Tour dto = new Tour();
-
-            //Mapper.Map(tour, dto);
-            var dto = Mapper.Map<Tour>(tour);
+            var mapper = new SerializationMapper();
+            var dto = mapper.Map<TourForDb, Tour>(tour);
             var sceneDto1 = dto.Scenes.FirstOrDefault(x => x.Value.Title == "title 1").Value;
             var spotDto1 = sceneDto1.HotSpots.FirstOrDefault() as SceneHotSpotDto;
 

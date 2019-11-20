@@ -53,7 +53,7 @@ namespace Pano.IntegrationTests.Automapper
 
             Assert.Multiple(() =>
             {
-                Assert.That(dto.SceneId, Is.EqualTo(spot.TargetSceneId.ToString()));
+                Assert.That(dto.SceneId, Is.EqualTo(spot.TargetScene?.Id?.ToString()));
                 Assert.That(dto.Pitch, Is.EqualTo(spot.Pitch));
                 Assert.That(dto.Yaw, Is.EqualTo(spot.Yaw));
                 Assert.That(dto.Text, Is.EqualTo(spot.Text));
