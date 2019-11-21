@@ -17,6 +17,7 @@ using Pano.IO;
 using Pano.Model;
 using Pano.Serialization.Model;
 using Pano.Service;
+using Pano.ViewModel.Controls;
 
 namespace Pano.ViewModel.Pages
 {
@@ -93,8 +94,11 @@ namespace Pano.ViewModel.Pages
 
                 _selectedScene = value;
                 RaisePropertyChanged();
+                RaisePropertyChanged(nameof(SelectedSceneViewModel));
             }
         }
+
+        public SceneImageViewModel SelectedSceneViewModel => new SceneImageViewModel(SelectedScene);
 
         private Model.Db.HotSpots.HotSpot _selectedHotSpot;
         public Model.Db.HotSpots.HotSpot SelectedHotSpot
@@ -146,6 +150,10 @@ namespace Pano.ViewModel.Pages
 
         private void ExportProject()
         {
+            _fileDialogService.ClearFilters();
+            _fileDialogService.AddFilter("Wszystkie pliki", "*");
+            _fileDialogService.AddFilter("Json", "json");
+            _fileDialogService.AddFilter("Txt", "txt");
             var path = _fileDialogService.SaveFileDialog();
 
             if (path)

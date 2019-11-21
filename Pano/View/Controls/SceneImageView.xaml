@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="Pano.View.Controls.SceneImageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Pano.View.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="400">
+    <Grid Margin="3">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="150"/>
+        </Grid.RowDefinitions>
+        
+        <ItemsControl ItemsSource="{Binding Drawings}"
+                      Width="{Binding ElementName=ImageControl, Path=Width}"
+                      Height="{Binding ElementName=ImageControl, Path=Height}"
+                      Background="Transparent"
+                      PreviewMouseLeftButtonDown="UIElement_OnMouseDown"
+                      PreviewMouseMove="UIElement_OnPreviewMouseMove"
+                      PreviewMouseLeftButtonUp="UIElement_OnMouseUp"
+                      >
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas
+                        />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Left" Value="{Binding Path=X}" />
+                    <Setter Property="Canvas.Top" Value="{Binding Path=Y}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                    <Ellipse
+                          MinWidth="15"
+                          MinHeight="15"
+                          MaxWidth="30"
+                          MaxHeight="30"
+                          Width="{Binding Radius}"
+                          Height="{Binding Radius}"
+                          Fill="Gray"
+                          Stroke="WhiteSmoke"
+                          StrokeThickness="2"
+                    />
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <Label Content="{Binding Test}"></Label>
+        <Image x:Name="ImageControl"
+               Source="{Binding SelectedScene.BitmapImage}"
+               HorizontalAlignment="Stretch" 
+               MaxHeight="300"
+        />
+    </Grid>
+</UserControl>

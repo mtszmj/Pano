@@ -9,6 +9,16 @@ namespace Pano.Service.Design
 {
     public class DesignFileDialogService : IFileDialogService
     {
+        public void ClearFilters()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddFilter(string name, string extension)
+        {
+            throw new NotImplementedException();
+        }
+
         public Option<string> OpenFileDialog()
         {
             throw new NotImplementedException();

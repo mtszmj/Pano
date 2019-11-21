@@ -228,6 +228,7 @@
     <Compile Include="ViewModels\HotSpots\SceneHotSpotViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\Controls\ProjectNewViewModel.cs" />
+    <Compile Include="ViewModel\Controls\SceneImageViewModel.cs" />
     <Compile Include="ViewModel\Pages\InitPageViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\Controls\NavigationViewModel.cs" />
@@ -249,6 +250,9 @@
     </Compile>
     <Compile Include="View\Controls\ProjectOpenDetailsView.xaml.cs">
       <DependentUpon>ProjectOpenDetailsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\SceneImageView.xaml.cs">
+      <DependentUpon>SceneImageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Pages\InitPage.xaml.cs">
       <DependentUpon>InitPage.xaml</DependentUpon>
@@ -317,6 +321,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controls\ProjectOpenDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\SceneImageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -9,6 +9,8 @@ namespace Pano.Service
 {
     public interface IFileDialogService
     {
+        void ClearFilters();
+        void AddFilter(string name, string extension);
         Option<string> OpenFileDialog();
         Option<string> SaveFileDialog();
     }

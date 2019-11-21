@@ -165,11 +165,9 @@
                                Content="{Binding SelectedScene.Title}"
                                MinHeight="28"/>
 
-                        <Image Grid.Row="2" Source="{Binding SelectedScene.BitmapImage}"
-                               Grid.ColumnSpan="2"
-                               HorizontalAlignment="Stretch" Margin="3"
-                               MaxHeight="300"/>
-
+                        <controls:SceneImageView DataContext="{Binding SelectedSceneViewModel}"
+                                                 Grid.Row="2" 
+                                                 Grid.ColumnSpan="2"/>
                         <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto" Padding="5"
                                       IsEnabled="{Binding SelectedScene, Converter={StaticResource NullToEnabledConverter}}" Grid.ColumnSpan="2" Margin="0,0,0.2,0.4">
                             <StackPanel>
