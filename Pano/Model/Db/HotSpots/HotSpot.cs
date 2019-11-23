@@ -3,23 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GalaSoft.MvvmLight;
 using Pano.Serialization.Model.HotSpots;
 
 namespace Pano.Model.Db.HotSpots
 {
-    public abstract class HotSpot : IHotSpot
+    public abstract class HotSpot : ObservableObject, IHotSpot
     {
+        protected int _pitch;
+        protected int _yaw;
+        protected string _text;
+
         protected HotSpot() { }
 
         /// <summary>
         /// Specifies the pitch portion of the hot spot’s location, in degrees.
         /// </summary>
-        public int Pitch { get; set; }
+        public int Pitch { get => _pitch; set => Set(ref _pitch, value); }
 
         /// <summary>
         /// Specifies the yaw portion of the hot spot’s location, in degrees.
         /// </summary>
-        public int Yaw { get; set; }
+        public int Yaw { get => _yaw; set => Set(ref _yaw, value); }
 
         /// <summary>
         /// Specifies the type of the hot spot. Can be scene for scene links or info for information 
@@ -30,7 +35,7 @@ namespace Pano.Model.Db.HotSpots
         /// <summary>
         /// This specifies the text that is displayed when the user hovers over the hot spot.
         /// </summary>
-        public string Text { get; set; }
+        public string Text { get => _text; set => Set(ref _text, value); }
 
         /// <summary>
         /// Specifies hot spot ID, for use with API’s removeHotSpot function.

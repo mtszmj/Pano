@@ -4,18 +4,26 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Pano.View.Controls"
+             xmlns:controls="clr-namespace:Pano.ViewModel.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="250" d:DesignWidth="400">
+             d:DesignHeight="200" d:DesignWidth="300"
+             SizeChanged="SceneImageView_OnSizeChanged">
     <Grid Margin="3">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="150"/>
         </Grid.RowDefinitions>
-        
-        <ItemsControl ItemsSource="{Binding Drawings}"
+
+        <Image x:Name="ImageControl"
+               Source="{Binding SelectedScene.BitmapImage}"
+               VerticalAlignment="Center"
+               MaxHeight="300"
+        />
+        <ItemsControl x:Name="SpotsItemsControl"
+                      ItemsSource="{Binding Drawings}"
                       Width="{Binding ElementName=ImageControl, Path=Width}"
                       Height="{Binding ElementName=ImageControl, Path=Height}"
-                      Background="Transparent"
+                      MaxHeight="300"
+                      Background="#22ff0000"
                       PreviewMouseLeftButtonDown="UIElement_OnMouseDown"
                       PreviewMouseMove="UIElement_OnPreviewMouseMove"
                       PreviewMouseLeftButtonUp="UIElement_OnMouseUp"
@@ -33,7 +41,7 @@
                 </Style>
             </ItemsControl.ItemContainerStyle>
             <ItemsControl.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate DataType="{x:Type controls:SceneImageViewModel+Circle}">
                     <StackPanel>
                     <Ellipse
                           MinWidth="15"
@@ -43,18 +51,14 @@
                           Width="{Binding Radius}"
                           Height="{Binding Radius}"
                           Fill="Gray"
-                          Stroke="WhiteSmoke"
+                          Stroke="{Binding IsSelected, Converter={StaticResource CircleIsSelectedToBrushConverter}}"
                           StrokeThickness="2"
-                    />
+                    ><Ellipse.ToolTip>
+                        <TextBlock Text="{Binding HotSpot.Text}"/>
+                    </Ellipse.ToolTip></Ellipse>
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <Label Content="{Binding Test}"></Label>
-        <Image x:Name="ImageControl"
-               Source="{Binding SelectedScene.BitmapImage}"
-               HorizontalAlignment="Stretch" 
-               MaxHeight="300"
-        />
     </Grid>
 </UserControl>

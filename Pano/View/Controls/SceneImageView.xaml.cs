@@ -21,7 +21,7 @@ namespace Pano.View.Controls
     /// </summary>
     public partial class SceneImageView : UserControl
     {
-        Nullable<Point> dragStart = null;
+        Point? dragStart = null;
         private SceneImageViewModel.Circle SelectedCircle { get; set; }
         public SceneImageView()
         {
@@ -32,11 +32,11 @@ namespace Pano.View.Controls
         {
             var element = (UIElement)sender;
             dragStart = e.GetPosition(element);
+            Mouse.OverrideCursor = Cursors.Hand;
             element.CaptureMouse();
 
             if(DataContext is SceneImageViewModel vm)
             { 
-                vm.Test = dragStart?.ToString();
                 SelectedCircle = vm.Drawings
                     .FirstOrDefault(circle =>
                         Math.Sqrt(
@@ -44,6 +44,8 @@ namespace Pano.View.Controls
                             + Math.Pow(dragStart.Value.Y - circle.Y, 2)
                         ) < circle.Radius
                     );
+
+                vm.SelectedHotSpot = SelectedCircle?.HotSpot;
             }
         }
 
@@ -52,6 +54,7 @@ namespace Pano.View.Controls
             var element = (UIElement)sender;
             dragStart = null;
             SelectedCircle = null;
+            Mouse.OverrideCursor = Cursors.Arrow;
             element.ReleaseMouseCapture();
         }
 
@@ -59,11 +62,29 @@ namespace Pano.View.Controls
         {
             var element = (UIElement)sender;
             var position = e.GetPosition(element);
-            if(SelectedCircle != null)
+            if(SelectedCircle != null && DataContext is SceneImageViewModel vm)
             {
-                SelectedCircle.X = (int)position.X;
-                SelectedCircle.Y = (int)position.Y;
+                var posX = (int) position.X;
+                var posY = (int) position.Y;
+
+                if(posX > vm.MinX && posX < vm.MaxX)
+                    SelectedCircle.X = (int)position.X;
+
+                if(posY > vm.MinY && posY < vm.MaxY)
+                    SelectedCircle.Y = (int)position.Y;
             }
+        }
+
+        private void SceneImageView_OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (DataContext is SceneImageViewModel vm)
+            {
+                vm.ImageActualHeight = (int) ImageControl.ActualHeight;
+                vm.ImageActualWidth = (int) ImageControl.ActualWidth;
+                vm.RowActualHeight = (int) SpotsItemsControl.ActualHeight;
+                vm.RowActualWidth = (int) SpotsItemsControl.ActualWidth;
+                vm.Update();
+            } 
         }
     }
 }

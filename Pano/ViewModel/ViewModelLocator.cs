@@ -64,6 +64,8 @@ namespace Pano.ViewModel
         public const string ProjectToOpenToken = "_project_to_open_token";
         public const string ProjectToCreateToken = "_project_to_create_token";
         public const string CommandRequeryToken = "_command_requery_token";
+        public const string SelectedHotSpotChangedFromListToken = "_selected_hotspot_changed_from_list_token";
+        public const string SelectedHotSpotChangedFromImageToken = "_selected_hotspot_changed_from_image_token";
 
         private static IContainer _container;
 

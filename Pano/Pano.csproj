@@ -107,6 +107,7 @@
     <Compile Include="Factories\Db\ISceneFactory.cs" />
     <Compile Include="Factories\Db\ProjectFactory.cs" />
     <Compile Include="Factories\Db\SceneFactory.cs" />
+    <Compile Include="Helpers\Converters\CircleIsSelectedToBrushConverter.cs" />
     <Compile Include="Helpers\Converters\EnumToStringConverter.cs" />
     <Compile Include="Helpers\Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Helpers\Converters\NullToEnabledConverter.cs" />

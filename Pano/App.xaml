@@ -9,6 +9,7 @@
       <converters:EnumToStringConverter x:Key="EnumToStringConverter" />
       <converters:NullToEnabledConverter x:Key="NullToEnabledConverter" />
       <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+      <converters:CircleIsSelectedToBrushConverter x:Key="CircleIsSelectedToBrushConverter" />
 
             <Style x:Key="DeveloperStyle">
           <Setter Property="Control.BorderThickness" Value="1px"/>

@@ -15,6 +15,7 @@ using Microsoft.Win32;
 using Pano.Factories.Db;
 using Pano.IO;
 using Pano.Model;
+using Pano.Model.Db.HotSpots;
 using Pano.Serialization.Model;
 using Pano.Service;
 using Pano.ViewModel.Controls;
@@ -65,6 +66,12 @@ namespace Pano.ViewModel.Pages
             RotateClockwiseCommand = new RelayCommand(RotateClockwise, SelectedScene?.Image != null);
             RotateCounterclockwiseCommand = new RelayCommand(RotateCounterclockwise, SelectedScene?.Image != null);
             SelectTargetSceneCommand = new RelayCommand(SelectTargetScene, IsSceneHotSpot);
+
+            Messenger.Default.Register<PropertyChangedMessage<HotSpot>>(
+                this,
+                ViewModelLocator.SelectedHotSpotChangedFromImageToken,
+                message => SelectedHotSpot = message.NewValue
+            );
         }
 
         public ProjectViewModel Project
@@ -106,6 +113,10 @@ namespace Pano.ViewModel.Pages
             get => _selectedHotSpot;
             set
             {
+
+                var msg = new PropertyChangedMessage<HotSpot>(this, _selectedHotSpot, value, nameof(SelectedHotSpot));
+                MessengerInstance.Send(msg, ViewModelLocator.SelectedHotSpotChangedFromListToken);
+
                 Set(ref _selectedHotSpot, value);
                 RaisePropertyChanged(nameof(IsSceneHotSpot));
                 RaisePropertyChanged(nameof(SceneHotSpot));
