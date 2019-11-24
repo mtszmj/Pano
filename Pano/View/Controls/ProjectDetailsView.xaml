@@ -4,47 +4,49 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Pano.View.Controls"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              d:DesignStyle="{StaticResource DesignTimeBackgroundStyle}"
              d:DataContext="{Binding ProjectTestObject, Source={StaticResource Locator}}"
              >
     <StackPanel>
-        
-        <Label
-            Content="{Binding VmName}"
-            Visibility="{Binding IsInDeveloperModeVisibility}"
-            Style="{StaticResource DeveloperStyle}"
-            />
         <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0">Nazwa projektu:</Label>
-        <Label Grid.Row="1">Opis projektu:</Label>
-        <Label Grid.Row="2">Data utworzenia:</Label>
-        <Label Grid.Row="3">Data modyfikacji:</Label>
-        <Label Grid.Row="4" Visibility="{Binding IsInDeveloperModeVisibility}"
-               Style="{StaticResource DeveloperStyle}">ProjectId:</Label>
+            <TextBlock Grid.Row="0" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="3 3 15 3" VerticalAlignment="Center">Nazwa projektu:</TextBlock>
+            <TextBlock Grid.Row="1" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="3 3 15 3" VerticalAlignment="Center">Opis projektu:</TextBlock>
+            <TextBlock Grid.Row="2" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="3 3 15 3" VerticalAlignment="Center">Data utworzenia:</TextBlock>
+            <TextBlock Grid.Row="3" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="3 3 15 3" VerticalAlignment="Center">Data modyfikacji:</TextBlock>
 
+            <TextBlock Grid.Row="0" Grid.Column="1"  Margin="3 6 3 6"
+                     Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                     Text="{Binding Model.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            />
+            <TextBlock Grid.Row="1" Grid.Column="1"  Margin="3 6 3 6"
+                       Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                     Text="{Binding Model.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                       TextWrapping="Wrap"
+                       />
+            <TextBlock Grid.Row="2" Grid.Column="1"  Margin="3 6 3 6"
+                       Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                     Text="{Binding Model.DateOfCreation, Mode=OneWay}" 
+            />
+            <TextBlock Grid.Row="3" Grid.Column="1"  Margin="3 6 3 6"
+                       Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                     Text="{Binding Model.DateOfLastModification}"
+            />
+        </Grid>
 
-        <Label Grid.Row="0" Grid.Column="1" Content="{Binding Model.Name}" />
-        <Label Grid.Row="1" Grid.Column="1" Content="{Binding Model.Description}" />
-        <Label Grid.Row="2" Grid.Column="1" Content="{Binding Model.DateOfCreation}"/>
-        <Label Grid.Row="3" Grid.Column="1" Content="{Binding Model.DateOfLastModification}"/>
-        <Label Grid.Row="4" Grid.Column="1" Content="{Binding Model.ProjectId}"
-               Visibility="{Binding IsInDeveloperModeVisibility}"
-               Style="{StaticResource DeveloperStyle}"/>
-    </Grid>
-     
     </StackPanel>
 </UserControl>

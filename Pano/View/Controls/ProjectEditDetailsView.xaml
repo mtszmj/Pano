@@ -4,21 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Pano.View.Controls"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              d:DesignStyle="{StaticResource DesignTimeBackgroundStyle}"
              d:DataContext="{Binding ProjectTestObject, Source={StaticResource Locator}}"
              >
     <StackPanel>
-
-        <Label
-            Content="{Binding VmName}"
-            Visibility="{Binding IsInDeveloperModeVisibility}"
-            Style="{StaticResource DeveloperStyle}"
-        />
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -29,29 +23,27 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Row="0" Style="{StaticResource MarginStyle}">Nazwa projektu:</Label>
-            <Label Grid.Row="1" Style="{StaticResource MarginStyle}">Opis projektu:</Label>
-            <Label Grid.Row="2" Visibility="{Binding IsInDeveloperModeVisibility}"
-                   Style="{StaticResource DeveloperStyle}">Data utworzenia:</Label>
-            <Label Grid.Row="3"        
-                   Visibility="{Binding IsInDeveloperModeVisibility}"
-                   Style="{StaticResource DeveloperStyle}">Data modyfikacji:</Label>
-            <Label Grid.Row="4" 
-                   Visibility="{Binding IsInDeveloperModeVisibility}"
-                   Style="{StaticResource DeveloperStyle}">ProjectId:</Label>
+            <TextBlock Grid.Row="0" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="3 3 10 3" VerticalAlignment="Center">Nazwa projektu:</TextBlock>
+            <TextBlock Grid.Row="1" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="3 3 10 3" VerticalAlignment="Center">Opis projektu:</TextBlock>
+            <TextBlock Grid.Row="2" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="3 3 10 3" VerticalAlignment="Center">Data utworzenia:</TextBlock>
+            <TextBlock Grid.Row="3" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="3 3 10 3" VerticalAlignment="Center">Data modyfikacji:</TextBlock>
 
-
-            <TextBox Grid.Row="0" Grid.Column="1" VerticalContentAlignment="Center" Text="{Binding Model.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MarginStyle}"/>
-            <TextBox Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center" Text="{Binding Model.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MarginStyle}"/>
-            <Label Grid.Row="2" Grid.Column="1" Content="{Binding Model.DateOfCreation}" 
-                   Visibility="{Binding IsInDeveloperModeVisibility}"
-                   Style="{StaticResource DeveloperStyle}"/>
-            <Label Grid.Row="3" Grid.Column="1" Content="{Binding Model.DateOfLastModification}"
-                   Visibility="{Binding IsInDeveloperModeVisibility}"
-                   Style="{StaticResource DeveloperStyle}"/>
-            <Label Grid.Row="4" Grid.Column="1" Content="{Binding Model.ProjectId}" Margin="0 0 0 1"
-                   Visibility="{Binding IsInDeveloperModeVisibility}"
-                   Style="{StaticResource DeveloperStyle}"/>
+            <TextBox Grid.Row="0" Grid.Column="1" FontSize="15"  Margin="3"
+                materialDesign:HintAssist.Hint=""
+                Text="{Binding Model.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
+            <TextBox Grid.Row="1" Grid.Column="1" FontSize="15" Margin="3" 
+                materialDesign:HintAssist.Hint=""
+                Text="{Binding Model.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Grid.Row="2" Grid.Column="1" FontSize="15"  Margin="3"
+                    IsEnabled="False"
+                    Text="{Binding Model.DateOfCreation, Mode=OneWay}" 
+                    />
+            <TextBox Grid.Row="3" Grid.Column="1" FontSize="15"  Margin="3"
+                     IsEnabled="False"
+                     Text="{Binding Model.DateOfLastModification}"
+                     />
+            
         </Grid>
     </StackPanel>
 </UserControl>

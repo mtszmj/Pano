@@ -10,12 +10,20 @@
       d:DesignStyle="{StaticResource DesignTimeBackgroundStyle}"
       Title="OpenOpenProjectsPagePage"
       DataContext="{Binding OpenProjectsPage, Source={StaticResource Locator}}"
+      
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="13"
+      TextOptions.TextFormattingMode="Ideal"
+      TextOptions.TextRenderingMode="Auto"
+      Background="{DynamicResource MaterialDesignPaper}"
+      FontFamily="{DynamicResource MaterialDesignFont}"
 >
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="2*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -26,7 +34,7 @@
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
             <Button Content="Wstecz" Margin="5" MinHeight="20" MinWidth="80" Command="{Binding BackCommand}"/>
         </StackPanel>
-        <control:ProjectsListView Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Margin="5"/>
-        <control:ProjectOpenDetailsView Grid.Row="1" Grid.Column="1" Margin="0 5 5 5"/>
+        <control:ProjectsListView Grid.Row="1" Grid.Column="0" Margin="5"/>
+        <control:ProjectOpenDetailsView Grid.Row="1" Grid.Column="1" Margin="5" VerticalAlignment="Stretch"/>
     </Grid>
 </Page>
