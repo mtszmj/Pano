@@ -198,9 +198,9 @@
                                 <Label>Hfov:</Label>
                                 <TextBox Text="{Binding SelectedScene.Hfov}"></TextBox>
 
-                                <GroupBox Header="Hot Spot">
+                                <GroupBox Header="Hot Spot" Margin="0 0 30 0">
                                     <StackPanel>
-                                    <ListView Margin="0 5 0 0" 
+                                        <ListView Margin="0 5 0 0" MaxHeight="150"
                               ItemsSource="{Binding SelectedScene.HotSpots}"
                               SelectedItem="{Binding SelectedHotSpot}"
                               MinHeight="100">

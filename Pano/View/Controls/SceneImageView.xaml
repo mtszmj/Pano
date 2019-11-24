@@ -7,7 +7,9 @@
              xmlns:controls="clr-namespace:Pano.ViewModel.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="300"
-             SizeChanged="SceneImageView_OnSizeChanged">
+             SizeChanged="SceneImageView_OnSizeChanged"
+             DataContextChanged="SceneImageView_OnDataContextChanged"
+             >
     <Grid Margin="3">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -27,6 +29,7 @@
                       PreviewMouseLeftButtonDown="UIElement_OnMouseDown"
                       PreviewMouseMove="UIElement_OnPreviewMouseMove"
                       PreviewMouseLeftButtonUp="UIElement_OnMouseUp"
+                      PreviewMouseDoubleClick="UIElement_OnPreviewMouseDoubleClick"
                       >
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>

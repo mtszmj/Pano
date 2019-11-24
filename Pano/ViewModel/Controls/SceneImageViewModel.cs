@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -11,14 +12,13 @@ namespace Pano.ViewModel.Controls
 {
     public class SceneImageViewModel : ViewModelBaseExtended
     {
-
         public const int MinYaw = -180;
         public const int MaxYaw = 180;
         public const int MinPitch = 90;
         public const int MaxPitch = -90;
 
-        private bool PropertyChangedIsBeingHandledMutex = false;
-        private bool MessageReceivedMutex = false;
+        private bool _propertyChangedIsBeingHandledMutex = false;
+        private bool _messageReceivedMutex = false;
         private Scene _scene;
         private HotSpot _selectedHotSpot;
 
@@ -30,9 +30,29 @@ namespace Pano.ViewModel.Controls
                 ViewModelLocator.SelectedHotSpotChangedFromListToken,
                 message =>
                 {
-                    MessageReceivedMutex = true;
+                    _messageReceivedMutex = true;
                     SelectedHotSpot = message.NewValue;
                 });
+
+            if(scene?.HotSpots != null)
+                scene.HotSpots.CollectionChanged += (sender, args) =>
+                {
+                    if (args.Action == NotifyCollectionChangedAction.Add)
+                    {
+                        foreach (HotSpot spot in args.NewItems)
+                        {
+                            spot.PropertyChanged += SpotOnPropertyChanged;
+                        }
+                    }
+                    else if (args.Action == NotifyCollectionChangedAction.Remove)
+                    {
+                        foreach (HotSpot spot in args.OldItems)
+                        {
+                            spot.PropertyChanged -= SpotOnPropertyChanged;
+                        }
+                    }
+                    Update();
+                };
         }
 
         public Scene SelectedScene
@@ -79,7 +99,7 @@ namespace Pano.ViewModel.Controls
                 if (circle != null)
                     circle.IsSelected = true;
 
-                if(!MessageReceivedMutex)
+                if(!_messageReceivedMutex)
                 { 
                     MessengerInstance.Send(
                         new PropertyChangedMessage<HotSpot>(this, _selectedHotSpot, value, nameof(SelectedHotSpot)),
@@ -87,12 +107,11 @@ namespace Pano.ViewModel.Controls
                 }
                 Set(ref _selectedHotSpot, value);
 
-                MessageReceivedMutex = false;
+                _messageReceivedMutex = false;
             }
         }
 
         public ObservableCollection<Circle> Drawings { get; set; } = new ObservableCollection<Circle>();
-
         public int ImageActualWidth { get; set; }
         public int ImageActualHeight { get; set; }
         public int RowActualWidth { get; set; }
@@ -101,7 +120,16 @@ namespace Pano.ViewModel.Controls
         public int MaxX => ImageActualWidth + ((RowActualWidth - ImageActualWidth) / 2) - (Circle.DefaultRadius / 2);
         public int MinY => (RowActualHeight - ImageActualHeight) / 2 - (Circle.DefaultRadius / 2);
         public int MaxY => ImageActualHeight + ((RowActualHeight - ImageActualHeight) / 2) - (Circle.DefaultRadius / 2);
-
+        public Circle SelectCircleByXAndY(int x, int y)
+        {
+            return Drawings
+                .FirstOrDefault(circle =>
+                    Math.Sqrt(
+                        Math.Pow(x - circle.X, 2)
+                        + Math.Pow(y - circle.Y, 2)
+                    ) < circle.Radius
+                );
+        }
 
         public void Update()
         {
@@ -118,39 +146,58 @@ namespace Pano.ViewModel.Controls
             }
         }
 
+        public void AddHotSpot(int x, int y)
+        {
+            CalculateXYToYawPitch(x, y, out int yaw, out int pitch);
+            if (yaw < MinYaw || yaw > MaxYaw || pitch < MaxPitch || pitch > MinPitch)
+                return;
+            var tuple = (scene: SelectedScene, yaw: yaw, pitch: pitch);
+            MessengerInstance.Send(
+                new PropertyChangedMessage<(Scene scene, int yaw, int pitch)>(tuple, tuple, "AddHotSpot"), 
+                ViewModelLocator.AddHotSpotFromImageToken
+            );
+        }
+
+        public void DeleteHotSpot(HotSpot spot)
+        {
+            if(spot != null)
+                MessengerInstance.Send(
+                    new PropertyChangedMessage<HotSpot>(spot, spot, "DeleteHotSpot"), 
+                    ViewModelLocator.DeleteHotSpotFromImageToken
+                );
+        }
+
         private void CircleOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if(sender is Circle circle && PropertyChangedIsBeingHandledMutex == false)
+            if(sender is Circle circle && _propertyChangedIsBeingHandledMutex == false)
             {
                 try
                 {
-                    PropertyChangedIsBeingHandledMutex = true;
+                    _propertyChangedIsBeingHandledMutex = true;
                     if (circle.HotSpot != null
                         && (e.PropertyName == nameof(Circle.X) || e.PropertyName == nameof(Circle.Y)))
                     {
-                        CalculateXYToYawPitch(circle, out int yaw, out int pitch);
+                        CalculateXYToYawPitch(circle.X, circle.Y, out int yaw, out int pitch);
                         circle.HotSpot.Yaw = yaw;
                         circle.HotSpot.Pitch = pitch;
                     }
                 }
                 finally
                 {
-                    PropertyChangedIsBeingHandledMutex = false;
+                    _propertyChangedIsBeingHandledMutex = false;
                 }
             }
         }
 
-
-
         private void SpotOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (sender is HotSpot spot
-                && PropertyChangedIsBeingHandledMutex == false
+                && _propertyChangedIsBeingHandledMutex == false
                 && (e.PropertyName == nameof(HotSpot.Yaw) || e.PropertyName == nameof(HotSpot.Pitch)))
             {
                 try
                 {
-                    PropertyChangedIsBeingHandledMutex = true;
+                    _propertyChangedIsBeingHandledMutex = true;
                     var circle = Drawings.FirstOrDefault(x => x.HotSpot == spot);
                     if (circle != null)
                     {
@@ -161,27 +208,27 @@ namespace Pano.ViewModel.Controls
                 }
                 finally
                 {
-                    PropertyChangedIsBeingHandledMutex = false;
+                    _propertyChangedIsBeingHandledMutex = false;
                 }
-
             }
         }
 
         private void CalculateYawPitchToXY(HotSpot spot, out int x, out int y)
         {
-            x = (int) ((spot.Yaw - MinYaw) * ImageActualWidth) / (MaxYaw - MinYaw) + ((RowActualWidth - ImageActualWidth) / 2) - (Circle.DefaultRadius / 2);
-            y = (int) ((spot.Pitch - MinPitch) * ImageActualHeight) / (MaxPitch - MinPitch) + ((RowActualHeight - ImageActualHeight) / 2) - (Circle.DefaultRadius / 2);
+            x = (int) ((spot.Yaw - MinYaw) * ImageActualWidth) / (MaxYaw - MinYaw) 
+                + ((RowActualWidth - ImageActualWidth) / 2) - (Circle.DefaultRadius / 2);
+            y = (int) ((spot.Pitch - MinPitch) * ImageActualHeight) / (MaxPitch - MinPitch) 
+                + ((RowActualHeight - ImageActualHeight) / 2) - (Circle.DefaultRadius / 2);
         }
 
-        private void CalculateXYToYawPitch(Circle circle, out int yaw, out int pitch)
+        private void CalculateXYToYawPitch(int x, int y, out int yaw, out int pitch)
         {
-            yaw = (circle.X - ((RowActualWidth - ImageActualWidth) / 2) + (Circle.DefaultRadius / 2)) *
+            yaw = (x - ((RowActualWidth - ImageActualWidth) / 2) + (Circle.DefaultRadius / 2)) *
                   (MaxYaw - MinYaw) / ImageActualWidth + MinYaw;
 
-            pitch = (circle.Y - ((RowActualHeight - ImageActualHeight) / 2) + (Circle.DefaultRadius / 2)) *
+            pitch = (y - ((RowActualHeight - ImageActualHeight) / 2) + (Circle.DefaultRadius / 2)) *
                     (MaxPitch - MinPitch) / ImageActualHeight + MinPitch;
         }
-
 
         public class Circle : ViewModelBaseExtended
         {
@@ -190,7 +237,7 @@ namespace Pano.ViewModel.Controls
             private int _x;
             private int _y;
             private bool _isSelected;
-            private WeakReference<HotSpot> _hotSpot = new WeakReference<HotSpot>(null);
+            private readonly WeakReference<HotSpot> _hotSpot = new WeakReference<HotSpot>(null);
             
             public int X
             {
@@ -204,10 +251,7 @@ namespace Pano.ViewModel.Controls
                 set => Set(ref _y, value);
             }
 
-            public int Radius
-            {
-                get => DefaultRadius;
-            }
+            public int Radius=> DefaultRadius;
 
             public bool IsSelected
             {

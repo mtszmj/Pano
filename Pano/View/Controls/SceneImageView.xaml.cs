@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Pano.Migrations;
 using Pano.ViewModel.Controls;
 
 namespace Pano.View.Controls
@@ -32,20 +33,16 @@ namespace Pano.View.Controls
         {
             var element = (UIElement)sender;
             dragStart = e.GetPosition(element);
-            Mouse.OverrideCursor = Cursors.Hand;
             element.CaptureMouse();
 
             if(DataContext is SceneImageViewModel vm)
-            { 
-                SelectedCircle = vm.Drawings
-                    .FirstOrDefault(circle =>
-                        Math.Sqrt(
-                            Math.Pow(dragStart.Value.X - circle.X, 2)
-                            + Math.Pow(dragStart.Value.Y - circle.Y, 2)
-                        ) < circle.Radius
-                    );
-
-                vm.SelectedHotSpot = SelectedCircle?.HotSpot;
+            {
+                SelectedCircle = vm.SelectCircleByXAndY((int)dragStart.Value.X, (int)dragStart.Value.Y);
+                if(SelectedCircle != null)
+                { 
+                    Mouse.OverrideCursor = Cursors.Hand;
+                    vm.SelectedHotSpot = SelectedCircle?.HotSpot;
+                }
             }
         }
 
@@ -54,7 +51,7 @@ namespace Pano.View.Controls
             var element = (UIElement)sender;
             dragStart = null;
             SelectedCircle = null;
-            Mouse.OverrideCursor = Cursors.Arrow;
+            Mouse.OverrideCursor = null;
             element.ReleaseMouseCapture();
         }
 
@@ -85,6 +82,45 @@ namespace Pano.View.Controls
                 vm.RowActualWidth = (int) SpotsItemsControl.ActualWidth;
                 vm.Update();
             } 
+        }
+
+        private void UIElement_OnPreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Mouse.OverrideCursor = null;
+            if (!(DataContext is SceneImageViewModel vm))
+                return;
+
+            vm.ImageActualHeight = (int)ImageControl.ActualHeight;
+            vm.ImageActualWidth = (int)ImageControl.ActualWidth;
+            vm.RowActualHeight = (int)SpotsItemsControl.ActualHeight;
+            vm.RowActualWidth = (int)SpotsItemsControl.ActualWidth;
+
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                var element = (UIElement)sender;
+                var position = e.GetPosition(element);
+                vm.AddHotSpot((int)position.X, (int)position.Y);
+            }
+            else if (e.ChangedButton == MouseButton.Right)
+            {
+                var element = (UIElement)sender;
+                var position = e.GetPosition(element);
+                var selectedCircle = vm?.SelectCircleByXAndY((int) position.X, (int) position.Y);
+                vm.DeleteHotSpot(selectedCircle?.HotSpot);
+            }
+
+        }
+
+        private void SceneImageView_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (DataContext is SceneImageViewModel vm)
+            {
+                vm.ImageActualHeight = (int) ImageControl.ActualHeight;
+                vm.ImageActualWidth = (int) ImageControl.ActualWidth;
+                vm.RowActualHeight = (int) SpotsItemsControl.ActualHeight;
+                vm.RowActualWidth = (int) SpotsItemsControl.ActualWidth;
+                vm.Update();
+            }
         }
     }
 }

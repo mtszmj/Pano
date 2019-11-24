@@ -16,6 +16,7 @@ using Pano.Factories.Db;
 using Pano.IO;
 using Pano.Model;
 using Pano.Model.Db.HotSpots;
+using Pano.Model.Db.Scenes;
 using Pano.Serialization.Model;
 using Pano.Service;
 using Pano.ViewModel.Controls;
@@ -57,7 +58,7 @@ namespace Pano.ViewModel.Pages
 
             SaveCommand = new RelayCommand(SaveProject);
             ExportCommand = new RelayCommand(ExportProject, () => Project?.Model?.Tour != null);
-            BackCommand = new RelayCommand(() => _navigationService.NavigateTo(ViewModelLocator.InitPageKey));
+            BackCommand = new RelayCommand(GoBack);
             AddSceneCommand = new RelayCommand(AddScene);
             DeleteSceneCommand = new RelayCommand(DeleteScene, () => SelectedScene != null);
             AddHotSpotCommand = new RelayCommand(AddHotSpot, () => SelectedScene != null);
@@ -71,6 +72,25 @@ namespace Pano.ViewModel.Pages
                 this,
                 ViewModelLocator.SelectedHotSpotChangedFromImageToken,
                 message => SelectedHotSpot = message.NewValue
+            );
+
+            Messenger.Default.Register<PropertyChangedMessage<(Scene scene, int yaw, int pitch)>>(
+                this,
+                ViewModelLocator.AddHotSpotFromImageToken,
+                message =>
+                {
+                    SelectedScene = message.NewValue.scene;
+                    AddHotSpot(message.NewValue.yaw, message.NewValue.pitch);
+                });
+
+            Messenger.Default.Register<PropertyChangedMessage<HotSpot>>(
+                this,
+                ViewModelLocator.DeleteHotSpotFromImageToken,
+                message =>
+                {
+                    SelectedHotSpot = message.NewValue;
+                    DeleteHotSpot();
+                }
             );
         }
 
@@ -101,11 +121,23 @@ namespace Pano.ViewModel.Pages
 
                 _selectedScene = value;
                 RaisePropertyChanged();
-                RaisePropertyChanged(nameof(SelectedSceneViewModel));
+
+                SelectedSceneViewModel = new SceneImageViewModel(_selectedScene);
+                //RaisePropertyChanged(nameof(SelectedSceneViewModel));
             }
         }
 
-        public SceneImageViewModel SelectedSceneViewModel => new SceneImageViewModel(SelectedScene);
+        private SceneImageViewModel _selectedSceneImageViewModel;
+
+        public SceneImageViewModel SelectedSceneViewModel
+        {
+            get => _selectedSceneImageViewModel;
+            set
+            {
+                _selectedSceneImageViewModel?.Cleanup();
+                Set(ref _selectedSceneImageViewModel, value);
+            }
+        }
 
         private Model.Db.HotSpots.HotSpot _selectedHotSpot;
         public Model.Db.HotSpots.HotSpot SelectedHotSpot
@@ -178,10 +210,17 @@ namespace Pano.ViewModel.Pages
 
         }
 
+        private void GoBack()
+        {
+            Cleanup();
+            _navigationService.NavigateTo(ViewModelLocator.InitPageKey);
+        }
+
         private void AddScene()
         {
             var scene = _sceneFactory.NewEquirectangularScene($"Scene {Scenes.Count + 1}");
             _project.Model.Tour.AddScene(scene);
+            SelectedScene = scene;
         }
 
         private void DeleteScene()
@@ -194,13 +233,24 @@ namespace Pano.ViewModel.Pages
             }
         }
 
-        private void AddHotSpot()
+        private void AddHotSpot() => AddHotSpot(0, 0);
+        private void AddHotSpot(int yaw, int pitch)
         {
             if(SelectedScene == null)
                 throw new InvalidOperationException();
 
-            var spot = _hotSpotFactory.NewSceneHotSpot(SelectedScene, SelectedScene); // TODO wybor targetScene
+            var spot = _hotSpotFactory.NewSceneHotSpot(SelectedScene, null);
+            spot.Text = $"HotSpot {SelectedScene.HotSpots.Count + 1}";
+            spot.Yaw = yaw;
+            spot.Pitch = pitch;
             SelectedScene.AddHotSpot(spot);
+            SelectedHotSpot = spot;
+            SelectTargetSceneWhenCreatingHotSpot();
+
+            if (SelectedHotSpot is SceneHotSpot shs && shs.TargetScene != null)
+            {
+                shs.Text = shs.TargetScene.Title;
+            }
         }
 
         private void DeleteHotSpot()
@@ -238,7 +288,23 @@ namespace Pano.ViewModel.Pages
         private void SelectTargetScene()
         {
             var buttons = new List<string> { "Wyczyść", null, "OK", "Anuluj"};
-            _selectorDialogService.ShowDialog(buttons, _project.Model.Tour.Scenes, SelectIndex, SelectedHotSpot.Text);
+            _selectorDialogService.ShowDialog(
+                buttons, 
+                _project.Model.Tour.Scenes.Except(new[] {SelectedScene}), 
+                SelectIndex, 
+                SelectedHotSpot.Text
+                );
+        }
+
+        private void SelectTargetSceneWhenCreatingHotSpot()
+        {
+            var buttons = new List<string> { null, null, "OK", "Anuluj" };
+            _selectorDialogService.ShowDialog(
+                buttons,
+                _project.Model.Tour.Scenes.Except(new[] { SelectedScene }),
+                SelectIndex,
+                SelectedHotSpot.Text
+            );
         }
 
         private void SelectIndex(Model.Db.Scenes.Scene scene, int? buttonIndex)

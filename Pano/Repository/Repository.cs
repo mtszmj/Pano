@@ -52,6 +52,9 @@ namespace Pano.Repository
 
         public virtual void Remove(TEntity entity)
         {
+            if (Context.Entry(entity).State == EntityState.Detached)
+                return;
+
             DbSet.Remove(entity);
         }
 

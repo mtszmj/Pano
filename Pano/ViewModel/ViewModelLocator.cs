@@ -66,6 +66,8 @@ namespace Pano.ViewModel
         public const string CommandRequeryToken = "_command_requery_token";
         public const string SelectedHotSpotChangedFromListToken = "_selected_hotspot_changed_from_list_token";
         public const string SelectedHotSpotChangedFromImageToken = "_selected_hotspot_changed_from_image_token";
+        public const string AddHotSpotFromImageToken = "_add_hotspot_from_image_token";
+        public const string DeleteHotSpotFromImageToken = "_delete_hotspot_from_image_token";
 
         private static IContainer _container;
 
