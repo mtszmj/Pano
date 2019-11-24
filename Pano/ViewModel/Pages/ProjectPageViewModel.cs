@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.Imaging;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
@@ -35,6 +37,7 @@ namespace Pano.ViewModel.Pages
         private readonly ISerializationMapper _mapper;
         private readonly IStorage _storage;
         private ProjectViewModel _project;
+        private readonly string[] AllowedExtensions = new[] { ".jpg", ".png" };
 
         public ProjectPageViewModel(IDialogService dialogService, 
                                     ISelectorDialogService<Model.Db.Scenes.Scene> selectorDialogService,
@@ -67,6 +70,11 @@ namespace Pano.ViewModel.Pages
             RotateClockwiseCommand = new RelayCommand(RotateClockwise, SelectedScene?.Image != null);
             RotateCounterclockwiseCommand = new RelayCommand(RotateCounterclockwise, SelectedScene?.Image != null);
             SelectTargetSceneCommand = new RelayCommand(SelectTargetScene, IsSceneHotSpot);
+            HandleDragEnterCommand = new RelayCommand<DragEventArgs>(HandleDragEnter);
+            HandleDropCommand = new RelayCommand<DragEventArgs>(HandleDrop);
+            HandleDragLeaveCommand = new RelayCommand<DragEventArgs>(HandleDragLeave);
+            HandleDragOverCommand = new RelayCommand<DragEventArgs>(HandleDragOver);
+
 
             Messenger.Default.Register<PropertyChangedMessage<HotSpot>>(
                 this,
@@ -140,6 +148,7 @@ namespace Pano.ViewModel.Pages
         }
 
         private Model.Db.HotSpots.HotSpot _selectedHotSpot;
+
         public Model.Db.HotSpots.HotSpot SelectedHotSpot
         {
             get => _selectedHotSpot;
@@ -160,6 +169,13 @@ namespace Pano.ViewModel.Pages
         public Model.Db.HotSpots.SceneHotSpot SceneHotSpot => SelectedHotSpot as Model.Db.HotSpots.SceneHotSpot;
         public string HotSpotTargetSceneTitle => this.SceneHotSpot?.TargetScene?.Title;
 
+        private bool _isRequiredFileIncludedInDragDrop;
+        public bool IsRequiredFileIncludedInDragDrop
+        {
+            get => _isRequiredFileIncludedInDragDrop;
+            set => Set(ref _isRequiredFileIncludedInDragDrop, value);
+        }
+
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand ExportCommand { get; set; }
         public RelayCommand BackCommand { get; set; }
@@ -171,6 +187,10 @@ namespace Pano.ViewModel.Pages
         public RelayCommand RotateClockwiseCommand { get; set; }
         public RelayCommand RotateCounterclockwiseCommand { get; set; }
         public RelayCommand SelectTargetSceneCommand { get; private set; }
+        public RelayCommand<DragEventArgs> HandleDragEnterCommand { get; private set; }
+        public RelayCommand<DragEventArgs> HandleDropCommand { get; private set; }
+        public RelayCommand<DragEventArgs> HandleDragLeaveCommand { get; private set; }
+        public RelayCommand<DragEventArgs> HandleDragOverCommand { get; private set; }
 
         public override void InitializeView()
         {
@@ -218,9 +238,15 @@ namespace Pano.ViewModel.Pages
 
         private void AddScene()
         {
-            var scene = _sceneFactory.NewEquirectangularScene($"Scene {Scenes.Count + 1}");
+            AddScene($"Scene {Scenes.Count + 1}");
+        }
+
+        private Scene AddScene(string title)
+        {
+            var scene = _sceneFactory.NewEquirectangularScene(title);
             _project.Model.Tour.AddScene(scene);
             SelectedScene = scene;
+            return scene;
         }
 
         private void DeleteScene()
@@ -327,5 +353,65 @@ namespace Pano.ViewModel.Pages
             RaisePropertyChanged(nameof(HotSpotTargetSceneTitle));
         }
 
+        private void HandleDragEnter(DragEventArgs args)
+        {
+            var paths = (string[])args.Data.GetData(DataFormats.FileDrop);
+
+            if (paths != null)
+            {
+                var files = EnumerateFilesWithCorrectExtension(paths);
+
+                IsRequiredFileIncludedInDragDrop = files.Any();
+
+                args.Handled = true;
+                args.Effects = DragDropEffects.Copy;
+            }
+        }
+
+        private void HandleDrop(DragEventArgs args)
+        {
+            var paths = (string[])args.Data.GetData(DataFormats.FileDrop);
+
+            if (paths != null)
+            {
+                var files = EnumerateFilesWithCorrectExtension(paths);
+
+                if (files.Any())
+                {
+                    foreach (var file in files)
+                    {
+                        var name = Path.GetFileNameWithoutExtension(file);
+                        var scene = AddScene(name);
+                        scene.SetImage(file);
+                    }
+                }
+            }
+
+            IsRequiredFileIncludedInDragDrop = false;
+        }
+
+        private void HandleDragLeave(DragEventArgs args)
+        {
+            IsRequiredFileIncludedInDragDrop = false;
+        }
+
+        private void HandleDragOver(DragEventArgs args)
+        {
+            args.Handled = true;
+            args.Effects = IsRequiredFileIncludedInDragDrop ? DragDropEffects.Copy : DragDropEffects.None;
+        }
+
+        private IEnumerable<string> EnumerateFilesWithCorrectExtension(string[] paths)
+        {
+            var directories = paths.Where(x => Directory.Exists(x));
+
+            var filesFromDirectories = directories
+                .SelectMany(x => Directory.EnumerateFiles(x, "*.*", SearchOption.AllDirectories))
+                .Where(x => AllowedExtensions.Any(ext => x.ToLower().EndsWith(ext)));
+            var files = paths
+                .Where(x => AllowedExtensions.Any(ext => x.ToLower().EndsWith(ext)))
+                .Concat(filesFromDirectories);
+            return files;
+        }
     }
 }

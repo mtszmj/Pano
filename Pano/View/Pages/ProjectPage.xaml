@@ -6,6 +6,8 @@
       xmlns:local="clr-namespace:Pano.View.Pages"
       xmlns:controls="clr-namespace:Pano.View.Controls"
       xmlns:converters="clr-namespace:Pano.Helpers.Converters"
+      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+      xmlns:command="http://www.galasoft.ch/mvvmlight"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="1000"
       d:DesignStyle="{StaticResource DesignTimeBackgroundStyle}"
@@ -48,12 +50,31 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Border Grid.Row="0" Grid.Column="0" BorderThickness="1" BorderBrush="Gray" Padding="0">
-                    <Grid>
+                    <Grid AllowDrop="True">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="DragEnter">
+                                <command:EventToCommand Command="{Binding HandleDragEnterCommand, Mode=OneWay}"
+                                                        PassEventArgsToCommand="True"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="Drop">
+                                <command:EventToCommand Command="{Binding HandleDropCommand, Mode=OneWay}"
+                                                        PassEventArgsToCommand="True" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="DragLeave">
+                                <command:EventToCommand Command="{Binding HandleDragLeaveCommand, Mode=OneWay}"
+                                                        PassEventArgsToCommand="True"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="DragOver">
+                                <command:EventToCommand Command="{Binding HandleDragOverCommand, Mode=OneWay}"
+                                                        PassEventArgsToCommand="True"/>
+                            </i:EventTrigger>
+
+                        </i:Interaction.Triggers>
                         <Label Grid.Row="0"
                                HorizontalContentAlignment="Center" 
                                FontWeight="Bold" 
@@ -66,6 +87,7 @@
                                 Content="Dodaj"
                                 MinHeight="25"
                                 Command="{Binding AddSceneCommand}"/>
+                        
                         <ListView Grid.Row="1" Padding="0"
                             ItemsSource="{Binding Scenes}" SelectedItem="{Binding SelectedScene}"
                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
@@ -132,6 +154,11 @@
                             </ListBox.ContextMenu>
 
                         </ListView>
+                        <Border  Grid.Row="1" BorderBrush="Black" BorderThickness="1" Background="#80000000" Visibility="{Binding IsRequiredFileIncludedInDragDrop, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid>
+                                <TextBlock Margin="0" TextWrapping="Wrap" Text="Upuść tutaj" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Bold" Foreground="#7EFFFFFF"/>
+                            </Grid>
+                        </Border>
                     </Grid>
 
                 </Border>
