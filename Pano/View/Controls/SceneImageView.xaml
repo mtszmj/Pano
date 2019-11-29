@@ -25,7 +25,7 @@
                       Width="{Binding ElementName=ImageControl, Path=Width}"
                       Height="{Binding ElementName=ImageControl, Path=Height}"
                       MaxHeight="300"
-                      Background="#22ff0000"
+                      Background="Transparent"
                       PreviewMouseLeftButtonDown="UIElement_OnMouseDown"
                       PreviewMouseMove="UIElement_OnPreviewMouseMove"
                       PreviewMouseLeftButtonUp="UIElement_OnMouseUp"

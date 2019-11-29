@@ -46,43 +46,77 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="25"/>
             </Grid.RowDefinitions>
-            <Menu Grid.Row="0" 
-              HorizontalAlignment="Stretch" 
-              VerticalAlignment="Top"
-              Height="30"
-        >
-                <MenuItem Header="Zapisz" Command="{Binding SaveCommand}"></MenuItem>
-                <MenuItem Header="Eksportuj projekt" Command="{Binding ExportCommand}"></MenuItem>
-                <MenuItem Header="Tryb _Dewelopera" IsCheckable="True" IsChecked="{Binding IsInDeveloperModeStatic, Mode=TwoWay}"/>
-                <MenuItem Header="Wróć" Command="{Binding BackCommand}"/>
-                <Button
-                    Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
-                    CommandParameter="{x:Static Dock.Left}"
-                    Margin="4">
-                    <materialDesign:PackIcon
-                        Kind="ArrowLeft" />
-                </Button>
-            </Menu>
-            <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="Gray">
-                <materialDesign:ColorZone
+            <materialDesign:ColorZone
+                    materialDesign:ShadowAssist.ShadowDepth="Depth2"
                     Mode="PrimaryMid"
-                    Padding="2">
+                    Grid.Row="0"
+                    Padding="2"
+                    Margin="-1 0 -1 5">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" MinWidth="140"/>
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width="*" MinWidth="140"/>
+                    </Grid.ColumnDefinitions>
+                    <Button
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            Foreground="{StaticResource SecondaryAccentForegroundBrush}"
+                            HorizontalAlignment="Left"
+                            Grid.Column="0"
+                            Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+                            CommandParameter="{x:Static Dock.Left}"
+                            Margin="4"
+                            ToolTip="Szczegóły">
+                        <materialDesign:PackIcon
+                                Kind="HamburgerMenu"
+                                />
+                    </Button>
                     <StackPanel
+                            Grid.Column="1"
                         Orientation="Vertical"
                         HorizontalAlignment="Center"
                         >
                         <TextBlock Text="{Binding Project.Model.Name}" Style="{StaticResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Center"/>
                         <TextBlock Text="{Binding Project.Model.Description}" Style="{StaticResource MaterialDesignCaptionTextBlock}" HorizontalAlignment="Center"/>
                     </StackPanel>
-                </materialDesign:ColorZone>
+                    <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Right">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                    Foreground="{StaticResource SecondaryAccentForegroundBrush}"
+                                    Command="{Binding BackCommand}"
+                                    ToolTip="Wróć"
+                            >
+                            <materialDesign:PackIcon
+                                    Kind="UndoVariant"
+                                />
+                        </Button>
+                        <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                    Foreground="{StaticResource SecondaryAccentForegroundBrush}"
+                                    Command="{Binding SaveCommand}"
+                                    ToolTip="Zapisz"
+                            >
+                            <materialDesign:PackIcon
+                                    Kind="ContentSaveEdit"
+                                />
+                        </Button>
+                        <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                    Foreground="{StaticResource SecondaryAccentForegroundBrush}"
+                                    Command="{Binding ExportCommand}"
+                                    ToolTip="Eksportuj projekt"
+                            >
+                            <materialDesign:PackIcon
+                                    Kind="FileExport"
+                                />
+                        </Button>
+
+                    </StackPanel>
+
+                </Grid>
+            </materialDesign:ColorZone>
 
 
-            </Border>
-            <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="Gray">
+            <Border Grid.Row="1" BorderThickness="0" BorderBrush="Gray">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -92,7 +126,28 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <GroupBox Header="Lista Scen" materialDesign:ShadowAssist.ShadowDepth="Depth1" Grid.Row="0" Grid.Column="0">
+                    <GroupBox Header="Lista Scen" materialDesign:ShadowAssist.ShadowDepth="Depth2" Grid.Row="0" Grid.Column="0"
+                              Margin="2"
+                              >
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel
+                                    Orientation="Horizontal">
+                                    <materialDesign:PackIcon
+                                        Kind="ImageMultiple"
+                                        Height="24"
+                                        Width="24"
+                                        VerticalAlignment="Center" />
+                                    <TextBlock
+                                        Margin="8,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                        Text="{Binding}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
+
+
                         <Grid AllowDrop="True">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
@@ -208,39 +263,46 @@
 
                     </GroupBox>
 
-                    <Border Grid.Row="0" Grid.Column="1" BorderThickness="1" BorderBrush="Gray" MaxHeight="1024">
+                    <GroupBox materialDesign:ShadowAssist.ShadowDepth="Depth2" Grid.Row="0" Grid.Column="1" 
+                              Margin="2" Header="{Binding SelectedScene.Title}">
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel
+                                    Orientation="Horizontal">
+                                    <materialDesign:PackIcon
+                                        Kind="ImageArea"
+                                        Height="24"
+                                        Width="24"
+                                        VerticalAlignment="Center" />
+                                    <TextBlock
+                                        Margin="8,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                        Text="Scena:" />
+                                    <TextBlock
+                                        Margin="8,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                        Text="{Binding}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
                         <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Label Grid.Row="0"
-                            HorizontalContentAlignment="Center" 
-                            FontWeight="Bold" 
-                            BorderThickness="1" 
-                            BorderBrush="Gray" 
-                            Background="LightGray" Grid.ColumnSpan="2" Margin="0,0,0,0"
-                            Content="Scena"
-                            MinHeight="28"/>
+                            <TextBlock Grid.Row="0" Grid.Column="0"
+                                   Style="{DynamicResource MaterialDesignButtonTextBlock}"
+                                   Text="{Binding SelectedScene.Title}"
+                                   TextAlignment="Center"
+                                   MinHeight="28"/>
 
-                            <Label Grid.Row="1"
-                               HorizontalContentAlignment="Center" 
-                               FontWeight="Normal" 
-                               BorderThickness="1 0 1 1" 
-                               BorderBrush="Gray" 
-                               Background="#E3E3E3" Grid.ColumnSpan="2" Margin="0"
-                               Content="{Binding SelectedScene.Title}"
-                               MinHeight="28"/>
 
                             <controls:SceneImageView DataContext="{Binding SelectedSceneViewModel}"
-                                                 Grid.Row="2" 
-                                                 Grid.ColumnSpan="2"/>
+                                                 Grid.Row="1" 
+                                                 />
                             <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto" Padding="5"
                                       IsEnabled="{Binding SelectedScene, Converter={StaticResource NullToEnabledConverter}}" Grid.ColumnSpan="2" Margin="0,0,0.2,0.4">
                                 <StackPanel>
@@ -251,27 +313,66 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <Button Grid.Column="0" Command="{Binding RotateCounterclockwiseCommand}">
-                                            <materialDesign:PackIcon Kind="Undo" />
+                                            <materialDesign:PackIcon Kind="RotateLeftVariant" RenderTransformOrigin="0.5, 0.5">
+                                                <materialDesign:PackIcon.RenderTransform>
+                                                    <RotateTransform Angle="-90"></RotateTransform>
+                                                </materialDesign:PackIcon.RenderTransform>
+                                            </materialDesign:PackIcon>
                                         </Button>
                                         <Button Grid.Column="1" Content="Ustaw zdjęcie" Command="{Binding ChangeImageCommand}"
                                             Margin="5 0"/>
                                         <Button Grid.Column="2" Command="{Binding RotateClockwiseCommand}">
-                                            <materialDesign:PackIcon Kind="Redo" />
+                                            <materialDesign:PackIcon Kind="RotateRightVariant" RenderTransformOrigin="0.5, 0.5">
+                                                <materialDesign:PackIcon.RenderTransform>
+                                                    <RotateTransform Angle="90"></RotateTransform>
+                                                </materialDesign:PackIcon.RenderTransform>
+                                            </materialDesign:PackIcon>
                                         </Button>
                                     </Grid>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
 
-                                    <Label>Tytuł:</Label>
-                                    <TextBox Text="{Binding SelectedScene.Title, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                                    <Label>Autor:</Label>
-                                    <TextBox Text="{Binding SelectedScene.Author}"></TextBox>
-                                    <Label>Yaw:</Label>
-                                    <TextBox Text="{Binding SelectedScene.Yaw}"></TextBox>
-                                    <Label>Pitch:</Label>
-                                    <TextBox Text="{Binding SelectedScene.Pitch}"></TextBox>
-                                    <Label>Hfov:</Label>
-                                    <TextBox Text="{Binding SelectedScene.Hfov}"></TextBox>
 
-                                    <GroupBox Header="Hot Spot" Margin="0 0 30 0">
+
+                                        <Label Grid.Row="0" Grid.Column="0">Tytuł:</Label>
+                                        <TextBox Grid.Row="0" Grid.Column="1" 
+                                             Text="{Binding SelectedScene.Title, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                        <Label Grid.Row="1" Grid.Column="0">Autor:</Label>
+                                        <TextBox Grid.Row="1" Grid.Column="1" 
+                                             Text="{Binding SelectedScene.Author, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                        <Label Grid.Row="2" Grid.Column="0">Yaw:</Label>
+                                        <TextBox Grid.Row="2" Grid.Column="1" 
+                                             Text="{Binding SelectedScene.Yaw}"/>
+
+                                        <Label Grid.Row="3" Grid.Column="0">Pitch:</Label>
+                                        <TextBox Grid.Row="3" Grid.Column="1" 
+                                             Text="{Binding SelectedScene.Pitch}"/>
+
+                                        <Label Grid.Row="4" Grid.Column="0">Hfov:</Label>
+                                        <TextBox Grid.Row="4" Grid.Column="1" 
+                                            Text="{Binding SelectedScene.Hfov}"></TextBox>
+
+                                    </Grid>
+
+                                    <GroupBox Header="Hot Spot" Margin="10">
                                         <StackPanel>
                                             <ListView Margin="0 5 0 0" MaxHeight="150"
                               ItemsSource="{Binding SelectedScene.HotSpots}"
@@ -312,15 +413,55 @@
                                                     </ContextMenu>
                                                 </ListView.ContextMenu>
                                             </ListView>
-                                            <Button Content="Dodaj" Command="{Binding AddHotSpotCommand}"/>
+                                            <Button
+                                                Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
+                                                Command="{Binding AddHotSpotCommand}"
+                                                VerticalAlignment="Bottom"
+                                                HorizontalAlignment="Right"
+                                                Grid.Row="1"
+                                                Margin="5 5 0 -5">
+                                                <materialDesign:PackIcon
+                                                    Kind="Plus"
+                                                    Height="22"
+                                                    Width="22" />
+                                            </Button>
                                         </StackPanel>
                                     </GroupBox>
+
+
+
                                 </StackPanel>
                             </ScrollViewer>
                         </Grid>
+                    </GroupBox>
 
-                    </Border>
-                    <GroupBox Header="Hot spot" materialDesign:ShadowAssist.ShadowDepth="Depth1" Grid.Row="0" Grid.Column="2">
+
+                    <GroupBox Header="{Binding SelectedHotSpot.Text}" materialDesign:ShadowAssist.ShadowDepth="Depth2" Grid.Row="0" Grid.Column="2"
+                              Margin="2">
+
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel
+                                    Orientation="Horizontal">
+                                    <materialDesign:PackIcon
+                                        Kind="MapMarkerRadius"
+                                        Height="24"
+                                        Width="24"
+                                        VerticalAlignment="Center" />
+                                    <TextBlock
+                                        Margin="8,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                        Text="HotSpot:" />
+                                    <TextBlock
+                                        Margin="8,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                        Text="{Binding}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
+
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -377,7 +518,7 @@
                                     <StackPanel Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2"
 
                                             Visibility="{Binding IsSceneHotSpot, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                        <GroupBox Header="Docelowa scena">
+                                        <GroupBox Header="Docelowa scena" Margin="10">
                                             <StackPanel Orientation="Horizontal">
                                                 <Button Content="Ustaw scenę" Margin="5 0" Command="{Binding SelectTargetSceneCommand}"/>
                                                 <Label Content="{Binding HotSpotTargetSceneTitle}"/>

@@ -1,65 +1,41 @@
-﻿using Pano.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Pano.ViewModel;
 
 namespace Pano
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainWindow2.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow2 : Window
     {
-        private const DragDropEffects EffectOk = DragDropEffects.Copy;
-        private const DragDropEffects EffectNok = DragDropEffects.None;
-
-        private MainWindowViewModel ViewModel;
-
-        public MainWindow()
+        public MainWindow2()
         {
             InitializeComponent();
 
-            DataContext = ViewModel = new MainWindowViewModel();
+            if (DataContext is MainViewModel vm)
+            {
+                vm.MainFrame = GlobalMainFrame;
+            }
+            else throw new ApplicationException("No main view model found.");
         }
 
-        private DragDropEffects CurrentEffect() => ViewModel.IsRequiredFileIncludedInDragDrop ? EffectOk : EffectNok;
-
-        private void Grid_DragEnter(object sender, DragEventArgs e)
+        //Disable keyboard shortcuts
+        private void GlobalMainFrame_OnNavigating(object sender, NavigatingCancelEventArgs e)
         {
-            ViewModel.DragEnter(e);
-
-            e.Handled = true;
-            e.Effects = CurrentEffect();
+            if (e.NavigationMode == NavigationMode.Back
+                || e.NavigationMode == NavigationMode.Forward)
+            {
+                e.Cancel = true;
+            }
         }
 
-        private void Grid_Drop(object sender, DragEventArgs e)
+        private void GlobalMainFrame_LoadCompleted(object sender, NavigationEventArgs e)
         {
-            ViewModel.DragDrop(e);
-        }
-
-        private void Grid_DragLeave(object sender, DragEventArgs e)
-        {
-            ViewModel.DragLeave();
-        }
-
-        private void MainGrid_DragOver(object sender, DragEventArgs e)
-        {
-            ViewModel.DragOver();
-
-            e.Handled = true;
-            e.Effects = CurrentEffect();
+            var vm = DataContext as MainViewModel;
+            vm.SendMessageWithCurrentPageTitle(GlobalMainFrame.Content as Page);
         }
     }
 }

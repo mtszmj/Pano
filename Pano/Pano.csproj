@@ -121,13 +121,15 @@
     <Compile Include="Factories\Db\SceneFactory.cs" />
     <Compile Include="Helpers\Converters\CircleIsSelectedToBrushConverter.cs" />
     <Compile Include="Helpers\Converters\EnumToStringConverter.cs" />
+    <Compile Include="Helpers\Converters\HotSpotTextConverter.cs" />
     <Compile Include="Helpers\Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Helpers\Converters\NullToEnabledConverter.cs" />
+    <Compile Include="Helpers\Converters\SceneTitleConverter.cs" />
     <Compile Include="Helpers\Option.cs" />
     <Compile Include="IO\IJObjectParser.cs" />
     <Compile Include="IO\JObjectParser.cs" />
-    <Compile Include="MainWindow2.xaml.cs">
-      <DependentUpon>MainWindow2.xaml</DependentUpon>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201910252050297_InitialModel.cs" />
     <Compile Include="Migrations\201910252050297_InitialModel.designer.cs">
@@ -238,8 +240,6 @@
     <Compile Include="Temporary\TempEqui.cs" />
     <Compile Include="Temporary\TempJsonConverter.cs" />
     <Compile Include="Temporary\TempScene.cs" />
-    <Compile Include="ViewModels\HotSpots\SceneHotSpotViewModel.cs" />
-    <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\Controls\ProjectNewViewModel.cs" />
     <Compile Include="ViewModel\Controls\SceneImageViewModel.cs" />
     <Compile Include="ViewModel\Pages\InitPageViewModel.cs" />
@@ -294,16 +294,9 @@
     <Compile Include="View\Controls\ProjectSummaryView.xaml.cs">
       <DependentUpon>ProjectSummaryView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\SceneHotSpotView.xaml.cs">
-      <DependentUpon>SceneHotSpotView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Windows\SelectorDialogView.xaml.cs">
       <DependentUpon>SelectorDialogView.xaml</DependentUpon>
     </Compile>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -317,11 +310,7 @@
     <Compile Include="IO\FileStorage.cs" />
     <Compile Include="IO\MemoryStorage.cs" />
     <Compile Include="IO\SceneJsonConverter.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="MainWindow2.xaml">
+    <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -374,10 +363,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controls\ProjectSummaryView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\SceneHotSpotView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
