@@ -1,6 +1,6 @@
 # Pano
 Project for creating specific json files for a website
-
+![](/Pano/Readme/gif01.gif)
 ![Create or open project](/Pano/Readme/pano01.png?raw=true "Create or open project")
 ![Create project](/Pano/Readme/pano02.png?raw=true "Create project")
 ![New project](/Pano/Readme/pano03.png?raw=true "New project")
