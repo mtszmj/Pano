@@ -119,6 +119,7 @@
     <Compile Include="Factories\Db\ISceneFactory.cs" />
     <Compile Include="Factories\Db\ProjectFactory.cs" />
     <Compile Include="Factories\Db\SceneFactory.cs" />
+    <Compile Include="Helpers\BusyText.cs" />
     <Compile Include="Helpers\Converters\CircleIsSelectedToBrushConverter.cs" />
     <Compile Include="Helpers\Converters\EnumToStringConverter.cs" />
     <Compile Include="Helpers\Converters\HotSpotTextConverter.cs" />
@@ -221,12 +222,14 @@
     <Compile Include="Repository\SceneRepository.cs" />
     <Compile Include="Repository\UnitOfWork.cs" />
     <Compile Include="Serialization\Model\Tour.cs" />
+    <Compile Include="Service\BusyIndicatorService.cs" />
     <Compile Include="Service\Design\DesignDialogService.cs" />
     <Compile Include="Service\Design\DesignFileDialogService.cs" />
     <Compile Include="Service\Design\DesignProjectsService.cs" />
     <Compile Include="Service\Design\DesignSelectorDialogService.cs" />
     <Compile Include="Service\DialogService.cs" />
     <Compile Include="Service\FileDialogService.cs" />
+    <Compile Include="Service\IBusyIndicatorService.cs" />
     <Compile Include="Service\IFileDialogService.cs" />
     <Compile Include="Service\IInitializeService.cs" />
     <Compile Include="Service\IProjectsService.cs" />
@@ -240,6 +243,7 @@
     <Compile Include="Temporary\TempEqui.cs" />
     <Compile Include="Temporary\TempJsonConverter.cs" />
     <Compile Include="Temporary\TempScene.cs" />
+    <Compile Include="ViewModel\Controls\BusyViewModel.cs" />
     <Compile Include="ViewModel\Controls\ProjectNewViewModel.cs" />
     <Compile Include="ViewModel\Controls\SceneImageViewModel.cs" />
     <Compile Include="ViewModel\Pages\InitPageViewModel.cs" />
@@ -255,6 +259,9 @@
     <Compile Include="ViewModel\ProjectViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBaseExtended.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\Controls\BusyView.xaml.cs">
+      <DependentUpon>BusyView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Controls\ProjectEditDetailsView.xaml.cs">
       <DependentUpon>ProjectEditDetailsView.xaml</DependentUpon>
     </Compile>
@@ -311,6 +318,10 @@
     <Compile Include="IO\MemoryStorage.cs" />
     <Compile Include="IO\SceneJsonConverter.cs" />
     <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\BusyView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -8,6 +8,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
+using Pano.Helpers;
 using Pano.Model;
 using Pano.Service;
 
@@ -16,14 +17,17 @@ namespace Pano.ViewModel.Controls
     public class ProjectsListViewModel : ViewModelBaseExtended
     {
         private IProjectsService _projectsService;
-        public IDialogService _dialogService { get; set; }
+        private IDialogService _dialogService;
+        private string _exceptionMessage = string.Empty;
+        private bool WasError => _exceptionMessage != string.Empty;
+
         public ProjectsListViewModel(IProjectsService projectService,
             IDialogService dialogService)
         {
             _projectsService = projectService;
             _dialogService = dialogService;
 
-            LoadProjectsCommand = new RelayCommand(LoadCommand);
+            LoadProjectsCommand = new RelayCommand(async () => await LoadCommand());
 
             DeleteProjectCommand = new RelayCommand(DeleteCommand, SelectedProject != null);
         }
@@ -50,19 +54,52 @@ namespace Pano.ViewModel.Controls
             }
         }
 
-        private void LoadCommand()
+        private async Task LoadCommand()
         {
-            _projectsService.GetProjects(GetProjectsCompleted);
+            MessengerInstance.Send(
+                new PropertyChangedMessage<BusyText>(null, new BusyText {State = true, Text = "Ładuję projekty..."}, "IsBusy"),
+                ViewModelLocator.IsBusyLoadingProjects);
+            try
+            {
+                await Task.Run(() => _projectsService.GetProjects(GetProjectsCompleted));
+
+                if (!WasError)
+                {
+                    MessengerInstance.Send(
+                        new PropertyChangedMessage<BusyText>(null, 
+                            new BusyText { State = false, Text = "Wczytano projekty."} ,
+                            "HasFinished"),
+                        ViewModelLocator.HasFinishedLoadingProjects);
+                }
+                else
+                {
+                    MessengerInstance.Send(
+                        new PropertyChangedMessage<BusyText>(null, 
+                            new BusyText() {State = false, Text = _exceptionMessage }, 
+                            "HasFinished"),
+                        ViewModelLocator.HasFinishedLoadingProjects);
+                }
+            }
+            finally
+            {
+                MessengerInstance.Send(
+                    new PropertyChangedMessage<BusyText>(null, 
+                        new BusyText() { State = false },
+                        "IsBusy"),
+                    ViewModelLocator.IsBusyLoadingProjects);
+            }
         }
 
         private async void GetProjectsCompleted(IList<Project> result, Exception exception)
         {
             if (exception != null)
             {
+                _exceptionMessage = $"Wystąpił wyjątek\n{exception.Message}";
                 await _dialogService.ShowError(exception, "Exception", "OK", null);
                 return;
             }
 
+            _exceptionMessage = string.Empty;
             Projects = new ObservableCollection<ProjectViewModel>();
             foreach (var project in result)
             {
@@ -70,7 +107,7 @@ namespace Pano.ViewModel.Controls
             }
 
             RaisePropertyChanged(nameof(Projects));
-            await _dialogService.ShowMessage("Wczytano projekty", "Info");
+            //await _dialogService.ShowMessage("Wczytano projekty", "Info");
         }
 
         private void DeleteCommand()

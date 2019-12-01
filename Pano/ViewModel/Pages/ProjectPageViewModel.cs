@@ -15,6 +15,7 @@ using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Win32;
 using Pano.Factories.Db;
+using Pano.Helpers;
 using Pano.IO;
 using Pano.Model;
 using Pano.Model.Db.HotSpots;
@@ -27,6 +28,7 @@ namespace Pano.ViewModel.Pages
 {
     public class ProjectPageViewModel : ViewModelBaseExtended
     {
+        private readonly string[] AllowedExtensions = new[] { ".jpg", ".png" };
         private readonly IDialogService _dialogService;
         private readonly ISelectorDialogService<Model.Db.Scenes.Scene> _selectorDialogService;
         private readonly IFileDialogService _fileDialogService;
@@ -36,10 +38,18 @@ namespace Pano.ViewModel.Pages
         private readonly IHotSpotFactory _hotSpotFactory;
         private readonly ISerializationMapper _mapper;
         private readonly IStorage _storage;
+        private readonly IBusyIndicatorService _busyIndicatorService;
         private ProjectViewModel _project;
-        private readonly string[] AllowedExtensions = new[] { ".jpg", ".png" };
+        private Model.Db.Scenes.Scene _selectedScene;
+        private SceneImageViewModel _selectedSceneImageViewModel;
+        private Model.Db.HotSpots.HotSpot _selectedHotSpot;
+        private bool _isRequiredFileIncludedInDragDrop;
+        private bool _isBusy;
+        private string _isBusyText;
+        private bool _hasFinished;
+        private string _hasFinishedText;
 
-        public ProjectPageViewModel(IDialogService dialogService, 
+        public ProjectPageViewModel(IDialogService dialogService,
                                     ISelectorDialogService<Model.Db.Scenes.Scene> selectorDialogService,
                                     IFileDialogService fileDialogService,
                                     INavigationService navigationService,
@@ -47,7 +57,8 @@ namespace Pano.ViewModel.Pages
                                     ISceneFactory sceneFactory,
                                     IHotSpotFactory hotSpotFactory,
                                     ISerializationMapper mapper,
-                                    IStorage storage)
+                                    IStorage storage,
+                                    Func<string,IBusyIndicatorService> busyIndicatorService)
         {
             _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
             _selectorDialogService = selectorDialogService ?? throw new ArgumentNullException(nameof(selectorDialogService));
@@ -58,6 +69,7 @@ namespace Pano.ViewModel.Pages
             _hotSpotFactory = hotSpotFactory ?? throw new ArgumentNullException(nameof(hotSpotFactory));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _storage = storage ?? throw new ArgumentNullException(nameof(storage));
+            _busyIndicatorService = busyIndicatorService("ProjectPageViewBusy");
 
             SaveCommand = new RelayCommand(SaveProject);
             ExportCommand = new RelayCommand(ExportProject, () => Project?.Model?.Tour != null);
@@ -118,7 +130,6 @@ namespace Pano.ViewModel.Pages
 
         public ObservableCollection<Model.Db.Scenes.Scene> Scenes => Project?.Model?.Tour?.Scenes;
 
-        private Model.Db.Scenes.Scene _selectedScene;
         public Model.Db.Scenes.Scene SelectedScene
         {
             get => _selectedScene;
@@ -135,8 +146,6 @@ namespace Pano.ViewModel.Pages
             }
         }
 
-        private SceneImageViewModel _selectedSceneImageViewModel;
-
         public SceneImageViewModel SelectedSceneViewModel
         {
             get => _selectedSceneImageViewModel;
@@ -146,8 +155,6 @@ namespace Pano.ViewModel.Pages
                 Set(ref _selectedSceneImageViewModel, value);
             }
         }
-
-        private Model.Db.HotSpots.HotSpot _selectedHotSpot;
 
         public Model.Db.HotSpots.HotSpot SelectedHotSpot
         {
@@ -169,11 +176,34 @@ namespace Pano.ViewModel.Pages
         public Model.Db.HotSpots.SceneHotSpot SceneHotSpot => SelectedHotSpot as Model.Db.HotSpots.SceneHotSpot;
         public string HotSpotTargetSceneTitle => this.SceneHotSpot?.TargetScene?.Title;
 
-        private bool _isRequiredFileIncludedInDragDrop;
         public bool IsRequiredFileIncludedInDragDrop
         {
             get => _isRequiredFileIncludedInDragDrop;
             set => Set(ref _isRequiredFileIncludedInDragDrop, value);
+        }
+
+        public bool IsBusy
+        {
+            get => _isBusy;
+            set => Set(ref _isBusy, value);
+        }
+
+        public string IsBusyText
+        {
+            get => _isBusyText;
+            set => Set(ref _isBusyText, value);
+        }
+
+        public bool HasFinished
+        {
+            get => _hasFinished;
+            set => Set(ref _hasFinished, value);
+        }
+
+        public string HasFinishedText
+        {
+            get => _hasFinishedText;
+            set => Set(ref _hasFinishedText, value);
         }
 
         public RelayCommand SaveCommand { get; set; }
@@ -205,10 +235,12 @@ namespace Pano.ViewModel.Pages
             );
         }
 
-        private void SaveProject()
+        private async void SaveProject()
         {
-            var result = _projectsService.Save(this.Project.Model);
-            Task.Run(() => _dialogService.ShowMessageBox($"Zapisano {result}", "Zapis"));
+            _busyIndicatorService.SetBusy("Trwa zapis...");
+            var result = await Task.Run(async () => _projectsService.Save(this.Project.Model));
+            _busyIndicatorService.ResetBusy();
+            _busyIndicatorService.SetSnackbar($"Projekt zapisany ({result} zmian)");
         }
 
         private void ExportProject()
@@ -262,7 +294,7 @@ namespace Pano.ViewModel.Pages
         private void AddHotSpot() => AddHotSpot(0, 0);
         private void AddHotSpot(int yaw, int pitch)
         {
-            if(SelectedScene == null)
+            if (SelectedScene == null)
                 throw new InvalidOperationException();
 
             var spot = _hotSpotFactory.NewSceneHotSpot(SelectedScene, null);
@@ -281,7 +313,7 @@ namespace Pano.ViewModel.Pages
 
         private void DeleteHotSpot()
         {
-            if(SelectedHotSpot != null)
+            if (SelectedHotSpot != null)
             {
                 _projectsService.RemoveHotSpot(SelectedHotSpot);
                 SelectedScene.DeleteHotSpot(SelectedHotSpot);
@@ -299,25 +331,32 @@ namespace Pano.ViewModel.Pages
             }
         }
 
-        private void RotateClockwise()
+        private async void RotateClockwise()
         {
-            SelectedScene.Image.RotateImageClockwise();
+            _busyIndicatorService.SetBusy("Obracam...");
+            await Task.Run(() =>
+                SelectedScene.Image.RotateImageClockwise()
+            );
             SelectedScene.RaisePropertyChanged(nameof(BitmapImage));
+            _busyIndicatorService.ResetBusy();
+
         }
 
-        private void RotateCounterclockwise()
+        private async void RotateCounterclockwise()
         {
-            SelectedScene.Image.RotateImageCounterclockwise();
+            _busyIndicatorService.SetBusy("Obracam...");
+            await Task.Run(() => SelectedScene.Image.RotateImageCounterclockwise());
             SelectedScene.RaisePropertyChanged(nameof(BitmapImage));
+            _busyIndicatorService.ResetBusy();
         }
 
         private void SelectTargetScene()
         {
-            var buttons = new List<string> { "Wyczyść", null, "OK", "Anuluj"};
+            var buttons = new List<string> { "Wyczyść", null, "OK", "Anuluj" };
             _selectorDialogService.ShowDialog(
-                buttons, 
-                _project.Model.Tour.Scenes.Except(new[] {SelectedScene}), 
-                SelectIndex, 
+                buttons,
+                _project.Model.Tour.Scenes.Except(new[] { SelectedScene }),
+                SelectIndex,
                 SelectedHotSpot.Text
                 );
         }
@@ -338,7 +377,7 @@ namespace Pano.ViewModel.Pages
             if (!(SelectedHotSpot is Model.Db.HotSpots.SceneHotSpot spot))
                 return;
 
-            if(buttonIndex == 2 && scene != null)
+            if (buttonIndex == 2 && scene != null)
             {
                 spot.TargetScene = scene;
                 spot.TargetSceneId = scene.SceneId;
@@ -368,23 +407,39 @@ namespace Pano.ViewModel.Pages
             }
         }
 
-        private void HandleDrop(DragEventArgs args)
+        private async void HandleDrop(DragEventArgs args)
         {
             var paths = (string[])args.Data.GetData(DataFormats.FileDrop);
 
             if (paths != null)
             {
+                _busyIndicatorService.SetBusy("Ładuję zdjęcia");
+                IsRequiredFileIncludedInDragDrop = false;
                 var files = EnumerateFilesWithCorrectExtension(paths);
 
-                if (files.Any())
+                var result = await Task.Run(() =>
                 {
-                    foreach (var file in files)
+                    var scenes = new List<Scene>();
+                    if (files.Any())
                     {
-                        var name = Path.GetFileNameWithoutExtension(file);
-                        var scene = AddScene(name);
-                        scene.SetImage(file);
+                        foreach (var file in files)
+                        {
+                            var name = Path.GetFileNameWithoutExtension(file);
+                            var scene = _sceneFactory.NewEquirectangularScene(name);
+                            scenes.Add(scene);
+                            scene.SetImage(file);
+                        }
                     }
+
+                    return scenes;
+                });
+                foreach (var scene in result)
+                {
+                    _project.Model.Tour.AddScene(scene);
                 }
+                SelectedScene = result.Last();
+                _busyIndicatorService.ResetBusy();
+                _busyIndicatorService.SetSnackbar($"Załadowano: {result.Count} zdjęć.");
             }
 
             IsRequiredFileIncludedInDragDrop = false;

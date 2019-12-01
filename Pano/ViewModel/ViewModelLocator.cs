@@ -68,6 +68,10 @@ namespace Pano.ViewModel
         public const string SelectedHotSpotChangedFromImageToken = "_selected_hotspot_changed_from_image_token";
         public const string AddHotSpotFromImageToken = "_add_hotspot_from_image_token";
         public const string DeleteHotSpotFromImageToken = "_delete_hotspot_from_image_token";
+        public const string IsBusyLoadingProjects = "_is_busy_loading_projects_token";
+        public const string HasFinishedLoadingProjects = "_has_finished_loading_projects_token";
+        public const string IsBusyToken = "_project_page_busy_token";
+        public const string HasSnackbarToken = "_project_page_snackbar_token";
 
         private static IContainer _container;
 
@@ -118,6 +122,7 @@ namespace Pano.ViewModel
                 builder.Register<ISelectorDialogService<Model.Db.Scenes.Scene>>(
                     c => new SelectorDialogService<Model.Db.Scenes.Scene>(typeof(SelectorDialogView), 4)
                 );
+                builder.RegisterType<BusyIndicatorService>().As<IBusyIndicatorService>();
                 builder.RegisterType<FileDialogService>().As<IFileDialogService>();
                 builder.Register(c => nav).As<INavigationService>().SingleInstance();
                 builder.RegisterType<ProjectsService>().As<IProjectsService>().SingleInstance();
@@ -144,6 +149,7 @@ namespace Pano.ViewModel
             builder.RegisterType<ProjectOpenDetailsViewModel>();
             builder.RegisterType<ProjectNewViewModel>();
             builder.RegisterType<ProjectPageViewModel>();
+            builder.RegisterType<BusyViewModel>().InstancePerDependency();
 
             _container = builder.Build();
         }
@@ -167,6 +173,7 @@ namespace Pano.ViewModel
         public ProjectOpenDetailsViewModel ProjectOpenDetails => _container.Resolve<ProjectOpenDetailsViewModel>();
         public ProjectNewViewModel ProjectNew => _container.Resolve<ProjectNewViewModel>();
         public ProjectPageViewModel ProjectPage => _container.Resolve<ProjectPageViewModel>();
+        public BusyViewModel Busy => _container.Resolve<BusyViewModel>();
 
         // Design time data
         public ProjectViewModel ProjectTestObject => _container.Resolve<IIndex<string, ProjectViewModel>>()[ProjectViewModelTestObjectKey];

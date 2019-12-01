@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
+using Pano.Helpers;
 using Pano.Service;
 
 namespace Pano.ViewModel.Controls
@@ -19,10 +21,22 @@ namespace Pano.ViewModel.Controls
             _projectsService = projectsService ?? throw new ArgumentNullException(nameof(projectsService));
 
             OpenSelectedProjectCommand = new RelayCommand(
-                () =>
+                async () =>
                 {
-                    var project = _projectsService.GetProject(SelectedProject.Model.ProjectId);
+                    MessengerInstance.Send(
+                        new PropertyChangedMessage<BusyText>(null, new BusyText { State = true, Text = "Otwieram projekt..." }, "IsBusy"),
+                        ViewModelLocator.IsBusyLoadingProjects);
+
+                    var project = await Task.Run(() =>
+                    {
+                        return _projectsService.GetProject(SelectedProject.Model.ProjectId);
+                    });
+
                     _navigationService.NavigateTo(ViewModelLocator.ProjectMainKey, new ProjectViewModel(project));
+
+                    MessengerInstance.Send(
+                        new PropertyChangedMessage<BusyText>(null, new BusyText { State = false }, "IsBusy"),
+                        ViewModelLocator.IsBusyLoadingProjects);
                 },
                 () => SelectedProject?.Model != null);
 
