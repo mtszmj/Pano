@@ -40,11 +40,7 @@ namespace Pano.ViewModel
         public Project Model { get; }
         public Visibility ModifiedToday => Model.DateOfLastModification > DateTime.Today ? Visibility.Visible : Visibility.Collapsed;
 
-        public void AddScene(Scene scene)
-        {
-            scene.Tour = Model.Tour;
-            Model.Tour.Scenes.Add(scene);
-        }
+
 
         public static class Factory
         {

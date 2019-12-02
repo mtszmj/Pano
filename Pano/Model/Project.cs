@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
+using Pano.Model.Db.Scenes;
 
 namespace Pano.Model
 {
@@ -59,6 +60,14 @@ namespace Pano.Model
         {
             get => _tour;
             set => Set(ref _tour, value);
+        }
+
+        public void SetDefaultProject(Scene scene)
+        {
+            var previous = Tour.Default.FirstScene;
+            Tour.Default.FirstScene = scene ?? throw new ArgumentNullException(nameof(scene));
+            scene.RaisePropertyChanged(nameof(Scene.IsDefaultScene));
+            previous?.RaisePropertyChanged(nameof(Scene.IsDefaultScene));
         }
     }
 }

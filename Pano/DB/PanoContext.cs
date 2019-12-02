@@ -63,6 +63,11 @@ namespace Pano.DB
                 .WithRequiredPrincipal(d => d.Tour)
                 .WillCascadeOnDelete(true);
 
+            modelBuilder.Entity<DefaultSceneConfig>()
+                .HasOptional(x => x.FirstScene)
+                .WithMany()
+                .HasForeignKey(dsc => dsc.FirstSceneId);
+
             modelBuilder.Entity<Scene>()
                 .HasMany(s => s.Strings)
                 .WithRequired(sde => sde.Scene)

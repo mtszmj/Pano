@@ -56,6 +56,10 @@ namespace Pano.Model
 
             scene.Tour = this;
             Scenes.Add(scene);
+            if (_defaultSceneConfig.FirstScene == null)
+            {
+                _defaultSceneConfig.FirstScene = scene;
+            }
         }
 
         public void DeleteScene(Model.Db.Scenes.Scene scene)

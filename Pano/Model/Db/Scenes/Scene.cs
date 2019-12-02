@@ -280,6 +280,7 @@ namespace Pano.Model.Db.Scenes
         public abstract Helpers.Image Image { get; }
         public ObservableCollection<Image> Images { get; set; }= new ObservableCollection<Image>();
 
+        public virtual bool IsDefaultScene => Tour.Default.FirstScene == this;
         public abstract BitmapImage BitmapImage { get; }
         public abstract void SetImage(string pathToImage);
 

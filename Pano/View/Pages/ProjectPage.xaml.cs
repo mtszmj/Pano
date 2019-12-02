@@ -43,5 +43,11 @@ namespace Pano.View.Pages
         {
             vm?.InitializeView();
         }
+
+        private void RatingBar_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<int> e)
+        {
+            var obj = sender;
+            var test = e;
+        }
     }
 }

@@ -87,6 +87,12 @@ namespace Pano.ViewModel.Pages
             HandleDragLeaveCommand = new RelayCommand<DragEventArgs>(HandleDragLeave);
             HandleDragOverCommand = new RelayCommand<DragEventArgs>(HandleDragOver);
 
+            SetDefaultProjectCommand = new RelayCommand<object>(obj =>
+            {
+                var scene = obj as Scene;
+                Project.Model.SetDefaultProject(scene);
+            });
+
 
             Messenger.Default.Register<PropertyChangedMessage<HotSpot>>(
                 this,
@@ -221,6 +227,7 @@ namespace Pano.ViewModel.Pages
         public RelayCommand<DragEventArgs> HandleDropCommand { get; private set; }
         public RelayCommand<DragEventArgs> HandleDragLeaveCommand { get; private set; }
         public RelayCommand<DragEventArgs> HandleDragOverCommand { get; private set; }
+        public RelayCommand<object> SetDefaultProjectCommand { get; private set; }
 
         public override void InitializeView()
         {
@@ -246,9 +253,9 @@ namespace Pano.ViewModel.Pages
         private void ExportProject()
         {
             _fileDialogService.ClearFilters();
-            _fileDialogService.AddFilter("Wszystkie pliki", "*");
             _fileDialogService.AddFilter("Json", "json");
             _fileDialogService.AddFilter("Txt", "txt");
+            _fileDialogService.AddFilter("Wszystkie pliki", "*");
             var path = _fileDialogService.SaveFileDialog();
 
             if (path)

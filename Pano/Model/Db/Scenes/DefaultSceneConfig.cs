@@ -20,7 +20,7 @@ namespace Pano.Model.Db.Scenes
         public TourForDb Tour { get; set; }
 
         public int? FirstSceneId { get; set; }
-        public Scene FirstScene => Tour?.Scenes.FirstOrDefault(s => s.SceneId == FirstSceneId);
+        public virtual Scene FirstScene { get; set; }
         
         public int? Hfov { get; set; }
         public bool? AutoLoad { get; set; }

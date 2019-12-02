@@ -48,7 +48,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            
+
             <materialDesign:ColorZone
                     materialDesign:ShadowAssist.ShadowDepth="Depth2"
                     Mode="PrimaryMid"
@@ -184,50 +184,91 @@
                                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                         <Setter Property="Padding" Value="0"/>
                                         <Setter Property="Margin" Value="0"/>
-                                        <Style.Triggers>
-
-                                            <MultiTrigger>
-                                                <MultiTrigger.Conditions>
-                                                    <Condition Property="IsSelected" Value="true" />
-                                                    <Condition Property="Selector.IsSelectionActive" Value="true" />
-                                                </MultiTrigger.Conditions>
-                                                <Setter Property="Foreground" Value="Yellow" />
-                                                <Setter Property="Background" Value="Yellow" />
-                                            </MultiTrigger>
-                                            <MultiTrigger>
-                                                <MultiTrigger.Conditions>
-                                                    <Condition Property="IsSelected" Value="true" />
-                                                    <Condition Property="Selector.IsSelectionActive" Value="false" />
-                                                </MultiTrigger.Conditions>
-                                                <Setter Property="Foreground" Value="ForestGreen" />
-                                                <Setter Property="Background" Value="ForestGreen" />
-                                            </MultiTrigger>
-                                        </Style.Triggers>
+                                        
                                     </Style>
                                 </ListView.ItemContainerStyle>
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <Border BorderThickness="1">
+                                        <Border BorderThickness="1 0 1 1" BorderBrush="LightGray" Margin="0 -1">
                                             <Grid HorizontalAlignment="Stretch">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition></RowDefinition>
                                                     <RowDefinition></RowDefinition>
                                                 </Grid.RowDefinitions>
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition></ColumnDefinition>
-                                                    <ColumnDefinition></ColumnDefinition>
-                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="Auto"/>
+
                                                 </Grid.ColumnDefinitions>
+                                                <materialDesign:PackIcon Kind="StarRate"
+                                                                         Grid.Row="0"
+                                                                         Grid.Column="3"
+                                                                         Grid.RowSpan="2"
+                                                                         VerticalAlignment="Center"
+                                                                         HorizontalAlignment="Center"
+                                                                         Margin="8"
+                                                                         Width="30"
+                                                                         Height="30"
+                                                                         Cursor="Hand"
+                                                >
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                                            <command:EventToCommand  
+                                                                Command="{Binding RelativeSource={RelativeSource AncestorType=Page, Mode=FindAncestor}, 
+                                                                            Path=DataContext.SetDefaultProjectCommand, Mode=OneWay }"
+                                                                CommandParameter="{Binding}"
+                                                            />
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </materialDesign:PackIcon>
+                                                <materialDesign:PackIcon Kind="StarRate"
+                                                    Grid.Row="0"
+                                                    Grid.Column="3"
+                                                    Grid.RowSpan="2"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Center"
+                                                    Margin="8"
+                                                    Width="30"
+                                                    Height="30"
+                                                    Foreground="{StaticResource PrimaryHueMidBrush}"
+                                                    Cursor="Hand"
+                                                    Visibility="{Binding IsDefaultScene, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                    />
+                                                <materialDesign:RatingBar
+                                                    Grid.Row="0"
+                                                    Grid.Column="4"
+                                                    Grid.RowSpan="2"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Center"
+                                                    Max="1"
+                                                    Value="{Binding IsDefaultScene, Converter={StaticResource BooleanToIntConverter}}"
+                                                    Margin="8"
+                                                    >
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                                            <command:EventToCommand  
+                                                                Command="{Binding RelativeSource={RelativeSource AncestorType=Page, Mode=FindAncestor}, 
+                                                                            Path=DataContext.SetDefaultProjectCommand, Mode=OneWay }"
+                                                                CommandParameter="{Binding}"
+                                                                />
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </materialDesign:RatingBar>
                                                 <Label
-                                                Grid.ColumnSpan="2"
-                                                Content="{Binding Title}"
-                                                FontSize="14"
-                                                VerticalAlignment="Center"/>
+                                                    Grid.Column="0"
+                                                    Grid.ColumnSpan="2"
+                                                    Content="{Binding Title}"
+                                                    FontSize="14"
+                                                    VerticalAlignment="Center"/>
                                                 <Label
-                                                Grid.Row="1"
-                                                Content="{Binding Type, Converter={StaticResource EnumToStringConverter}}"
-                                                FontSize="10"
-                                                VerticalAlignment="Center"/>
+                                                    Grid.Row="1"
+                                                    Grid.Column="0"
+                                                    Content="{Binding Type, Converter={StaticResource EnumToStringConverter}}"
+                                                    FontSize="10"
+                                                    VerticalAlignment="Center"/>
                                                 <Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Source="{Binding BitmapImage}"
                                                    MaxWidth="100" MaxHeight="50" HorizontalAlignment="Right" Margin="2"/>
                                             </Grid>

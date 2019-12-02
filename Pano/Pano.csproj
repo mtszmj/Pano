@@ -120,6 +120,7 @@
     <Compile Include="Factories\Db\ProjectFactory.cs" />
     <Compile Include="Factories\Db\SceneFactory.cs" />
     <Compile Include="Helpers\BusyText.cs" />
+    <Compile Include="Helpers\Converters\BooleanToIntConverter.cs" />
     <Compile Include="Helpers\Converters\CircleIsSelectedToBrushConverter.cs" />
     <Compile Include="Helpers\Converters\EnumToStringConverter.cs" />
     <Compile Include="Helpers\Converters\HotSpotTextConverter.cs" />
@@ -191,6 +192,10 @@
     <Compile Include="Migrations\201911161627452_ChangeColumnTargetSceneIdFromRequiredToOptionalInSceneHotSpotTable.cs" />
     <Compile Include="Migrations\201911161627452_ChangeColumnTargetSceneIdFromRequiredToOptionalInSceneHotSpotTable.designer.cs">
       <DependentUpon>201911161627452_ChangeColumnTargetSceneIdFromRequiredToOptionalInSceneHotSpotTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912021944484_AddReferenceToSceneInDefaultSceneConfig.cs" />
+    <Compile Include="Migrations\201912021944484_AddReferenceToSceneInDefaultSceneConfig.designer.cs">
+      <DependentUpon>201912021944484_AddReferenceToSceneInDefaultSceneConfig.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Db\Helpers\DictionaryEntry.cs" />
@@ -451,6 +456,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911161627452_ChangeColumnTargetSceneIdFromRequiredToOptionalInSceneHotSpotTable.resx">
       <DependentUpon>201911161627452_ChangeColumnTargetSceneIdFromRequiredToOptionalInSceneHotSpotTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912021944484_AddReferenceToSceneInDefaultSceneConfig.resx">
+      <DependentUpon>201912021944484_AddReferenceToSceneInDefaultSceneConfig.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
