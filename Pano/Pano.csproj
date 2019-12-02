@@ -511,6 +511,9 @@
   <ItemGroup>
     <Resource Include="Readme\gif01.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Readme\pano00.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -38,6 +38,7 @@
                     Style="{DynamicResource MaterialDesignOutlinedButton}">
                     X
                 </Button>
+                <TextBlock Text="Projekt:" Style="{StaticResource MaterialDesignTitleTextBlock}" Margin="3 10"/>
                 <controls:ProjectEditDetailsView DataContext="{Binding Project}" MinWidth="300"/>
 
             </StackPanel>
@@ -200,8 +201,6 @@
                                                     <ColumnDefinition Width="*"/>
                                                     <ColumnDefinition Width="Auto"/>
                                                     <ColumnDefinition Width="Auto"/>
-                                                    <ColumnDefinition Width="Auto"/>
-
                                                 </Grid.ColumnDefinitions>
                                                 <materialDesign:PackIcon Kind="StarRate"
                                                                          Grid.Row="0"
@@ -237,26 +236,6 @@
                                                     Cursor="Hand"
                                                     Visibility="{Binding IsDefaultScene, Converter={StaticResource BooleanToVisibilityConverter}}"
                                                     />
-                                                <materialDesign:RatingBar
-                                                    Grid.Row="0"
-                                                    Grid.Column="4"
-                                                    Grid.RowSpan="2"
-                                                    VerticalAlignment="Center"
-                                                    HorizontalAlignment="Center"
-                                                    Max="1"
-                                                    Value="{Binding IsDefaultScene, Converter={StaticResource BooleanToIntConverter}}"
-                                                    Margin="8"
-                                                    >
-                                                    <i:Interaction.Triggers>
-                                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                                            <command:EventToCommand  
-                                                                Command="{Binding RelativeSource={RelativeSource AncestorType=Page, Mode=FindAncestor}, 
-                                                                            Path=DataContext.SetDefaultProjectCommand, Mode=OneWay }"
-                                                                CommandParameter="{Binding}"
-                                                                />
-                                                        </i:EventTrigger>
-                                                    </i:Interaction.Triggers>
-                                                </materialDesign:RatingBar>
                                                 <Label
                                                     Grid.Column="0"
                                                     Grid.ColumnSpan="2"
@@ -335,12 +314,6 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0"
-                                   Style="{DynamicResource MaterialDesignButtonTextBlock}"
-                                   Text="{Binding SelectedScene.Title}"
-                                   TextAlignment="Center"
-                                   MinHeight="28"/>
-
 
                             <controls:SceneImageView DataContext="{Binding SelectedSceneViewModel}"
                                                  Grid.Row="1" 
@@ -509,11 +482,6 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0"
-                                       Style="{DynamicResource MaterialDesignButtonTextBlock}"
-                                       Text="{Binding SelectedHotSpot.Text}"
-                                       TextAlignment="Center"
-                                       MinHeight="28"/>
                             <ScrollViewer 
                             Grid.Row="1"
                             Padding="5"

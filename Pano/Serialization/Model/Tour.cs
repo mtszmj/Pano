@@ -21,6 +21,9 @@ namespace Pano.Serialization.Model
         {
             get
             {
+                return _DefaultScene;
+                ////////////////////////////////////////
+
                 if (_DefaultScene == null)
                 {
                     _DefaultScene = new DefaultSceneDto { FirstSceneDtoRef = FirstSceneDto };
@@ -44,7 +47,7 @@ namespace Pano.Serialization.Model
         /// </summary>
         public SortedDictionary<string, SceneDto> Scenes { get; } = new SortedDictionary<string, SceneDto>();
 
-        private SceneDto FirstSceneDto => Scenes?.FirstOrDefault().Value;
+        private SceneDto FirstSceneDto => Default?.FirstSceneDtoRef; // ?? Scenes?.FirstOrDefault().Value;
 
         public void AddScene(SceneDto scene)
         {
