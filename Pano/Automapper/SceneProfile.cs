@@ -19,6 +19,7 @@ namespace Pano.Automapper
 
             CreateMap<Equirectangular, EquirectangularDto>()
                 .IncludeBase<Scene, SceneDto>()
+                .ForMember(dto => dto.Panorama, opt => opt.MapFrom(x => $"{x.Id}.jpg"))
                 ;
 
             CreateMap<DefaultSceneConfig, DefaultSceneDto>()

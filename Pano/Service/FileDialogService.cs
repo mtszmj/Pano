@@ -4,8 +4,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Win32;
+using System.Windows.Forms;
 using Pano.Helpers;
+using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
+using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 
 namespace Pano.Service
 {
@@ -44,6 +46,16 @@ namespace Pano.Service
 
             if (dialog.ShowDialog() == true)
                 return new Option<string>(dialog.FileName);
+
+            return Option<string>.None;
+        }
+
+        public Option<string> SaveDirectoryDialog()
+        {
+            var dialog = new FolderBrowserDialog();
+            
+            if(dialog.ShowDialog() == DialogResult.OK)
+                return new Option<string>(dialog.SelectedPath);
 
             return Option<string>.None;
         }

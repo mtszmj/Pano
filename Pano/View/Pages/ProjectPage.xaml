@@ -212,7 +212,11 @@
                                                                          Width="30"
                                                                          Height="30"
                                                                          Cursor="Hand"
+                                                                         Foreground="LightGray"
                                                 >
+                                                    <materialDesign:PackIcon.ToolTip>
+                                                        <TextBlock TextWrapping="Wrap">Ustaw scenę jako startową</TextBlock>
+                                                    </materialDesign:PackIcon.ToolTip>
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                                                             <command:EventToCommand  
@@ -235,7 +239,11 @@
                                                     Foreground="{StaticResource PrimaryHueMidBrush}"
                                                     Cursor="Hand"
                                                     Visibility="{Binding IsDefaultScene, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                                    />
+                                                    >
+                                                    <materialDesign:PackIcon.ToolTip>
+                                                        <TextBlock TextWrapping="Wrap">Scena startowa</TextBlock>
+                                                    </materialDesign:PackIcon.ToolTip>
+                                                </materialDesign:PackIcon>
                                                 <Label
                                                     Grid.Column="0"
                                                     Grid.ColumnSpan="2"

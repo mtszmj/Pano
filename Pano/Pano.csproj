@@ -128,7 +128,9 @@
     <Compile Include="Helpers\Converters\NullToEnabledConverter.cs" />
     <Compile Include="Helpers\Converters\SceneTitleConverter.cs" />
     <Compile Include="Helpers\Option.cs" />
+    <Compile Include="IO\IImageStorage.cs" />
     <Compile Include="IO\IJObjectParser.cs" />
+    <Compile Include="IO\ImageStorage.cs" />
     <Compile Include="IO\JObjectParser.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

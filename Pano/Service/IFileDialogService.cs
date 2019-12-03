@@ -13,5 +13,6 @@ namespace Pano.Service
         void AddFilter(string name, string extension);
         Option<string> OpenFileDialog();
         Option<string> SaveFileDialog();
+        Option<string> SaveDirectoryDialog();
     }
 }

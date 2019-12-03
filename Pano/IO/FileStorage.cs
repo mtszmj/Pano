@@ -29,7 +29,7 @@ namespace Pano.IO
             {
                 throw new InvalidOperationException($"{nameof(Path)} is not initialized.");
             }
-            else if (File.Exists(Path))
+            if (File.Exists(Path))
             {
                 throw new InvalidOperationException($"Inorrect value of {nameof(Path)} - file does not exist.");
             }

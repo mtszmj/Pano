@@ -136,6 +136,7 @@ namespace Pano.ViewModel
             builder.RegisterType<SerializationMapper>().As<ISerializationMapper>();
             builder.Register<ISerializer>(x => JsonSerializer.Factory.DefaultInstance());
             builder.RegisterType<FileStorage>().As<IStorage>();
+            builder.RegisterType<ImageStorage>().As<IImageStorage>();
 
 
             // View Models

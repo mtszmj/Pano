@@ -30,7 +30,7 @@ namespace Pano.ViewModel.Pages
     {
         private readonly string[] AllowedExtensions = new[] { ".jpg", ".png" };
         private readonly IDialogService _dialogService;
-        private readonly ISelectorDialogService<Model.Db.Scenes.Scene> _selectorDialogService;
+        private readonly ISelectorDialogService<Scene> _selectorDialogService;
         private readonly IFileDialogService _fileDialogService;
         private readonly INavigationService _navigationService;
         private readonly IProjectsService _projectsService;
@@ -38,11 +38,12 @@ namespace Pano.ViewModel.Pages
         private readonly IHotSpotFactory _hotSpotFactory;
         private readonly ISerializationMapper _mapper;
         private readonly IStorage _storage;
+        private readonly IImageStorage _imageStorage;
         private readonly IBusyIndicatorService _busyIndicatorService;
         private ProjectViewModel _project;
-        private Model.Db.Scenes.Scene _selectedScene;
+        private Scene _selectedScene;
         private SceneImageViewModel _selectedSceneImageViewModel;
-        private Model.Db.HotSpots.HotSpot _selectedHotSpot;
+        private HotSpot _selectedHotSpot;
         private bool _isRequiredFileIncludedInDragDrop;
         private bool _isBusy;
         private string _isBusyText;
@@ -50,7 +51,7 @@ namespace Pano.ViewModel.Pages
         private string _hasFinishedText;
 
         public ProjectPageViewModel(IDialogService dialogService,
-                                    ISelectorDialogService<Model.Db.Scenes.Scene> selectorDialogService,
+                                    ISelectorDialogService<Scene> selectorDialogService,
                                     IFileDialogService fileDialogService,
                                     INavigationService navigationService,
                                     IProjectsService projectsService,
@@ -58,7 +59,8 @@ namespace Pano.ViewModel.Pages
                                     IHotSpotFactory hotSpotFactory,
                                     ISerializationMapper mapper,
                                     IStorage storage,
-                                    Func<string,IBusyIndicatorService> busyIndicatorService)
+                                    IImageStorage imageStorage,
+                                    Func<string, IBusyIndicatorService> busyIndicatorService)
         {
             _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
             _selectorDialogService = selectorDialogService ?? throw new ArgumentNullException(nameof(selectorDialogService));
@@ -69,6 +71,7 @@ namespace Pano.ViewModel.Pages
             _hotSpotFactory = hotSpotFactory ?? throw new ArgumentNullException(nameof(hotSpotFactory));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _storage = storage ?? throw new ArgumentNullException(nameof(storage));
+            _imageStorage = imageStorage ?? throw new ArgumentNullException(nameof(imageStorage));
             _busyIndicatorService = busyIndicatorService("ProjectPageViewBusy");
 
             SaveCommand = new RelayCommand(SaveProject);
@@ -250,21 +253,30 @@ namespace Pano.ViewModel.Pages
             _busyIndicatorService.SetSnackbar($"Projekt zapisany ({result} zmian)");
         }
 
-        private void ExportProject()
+        private async void ExportProject()
         {
             _fileDialogService.ClearFilters();
             _fileDialogService.AddFilter("Json", "json");
             _fileDialogService.AddFilter("Txt", "txt");
             _fileDialogService.AddFilter("Wszystkie pliki", "*");
-            var path = _fileDialogService.SaveFileDialog();
+            var path = _fileDialogService.SaveDirectoryDialog();
 
             if (path)
             {
-                SaveProject();
+                _busyIndicatorService.SetBusy("Eksportuję...");
+                await Task.Run(() =>
+                    {
 
-                var tour = _mapper.Map<TourForDb, Tour>(Project.Model.Tour);
-                _storage.Path = path.Value;
-                _storage.Save(tour);
+                        SaveProject();
+
+                        var tour = _mapper.Map<TourForDb, Tour>(Project.Model.Tour);
+                        _storage.Path = $"{path.Value}\\pano.json";
+                        _storage.Save(tour);
+                        _imageStorage.Save(path.Value, Project.Model.Tour.Scenes.Select(x => x.Image));
+                    }
+                );
+                _busyIndicatorService.ResetBusy();
+                _busyIndicatorService.SetSnackbar("Eksport zakończony.");
             }
 
         }

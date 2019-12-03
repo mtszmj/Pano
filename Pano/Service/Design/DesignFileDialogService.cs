@@ -28,5 +28,10 @@ namespace Pano.Service.Design
         {
             throw new NotImplementedException();
         }
+
+        public Option<string> SaveDirectoryDialog()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
