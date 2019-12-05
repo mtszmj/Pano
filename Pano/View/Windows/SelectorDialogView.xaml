@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="{Binding Label}" Height="250" Width="400"
         d:DataContext="{Binding SelectorDialogService, Source={StaticResource Locator}}">
-    <Grid>
+    <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -20,13 +20,17 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Content="{Binding Description}"/>
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Text="{Binding Description}" TextWrapping="Wrap" Padding="5"
+                   Style="{StaticResource MaterialDesignBody1TextBlock}"
+                   HorizontalAlignment="Center"/>
 
-        <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" 
+        <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" 
                  ItemsSource="{Binding ListToSelectFrom}" 
                  SelectedItem="{Binding Selected}"
-                 Margin="5">
-        </ListBox>
+                 Margin="5"
+                 BorderBrush="Gray"
+                 BorderThickness="1"
+                 />
 
         <Button Grid.Row="2" Grid.Column="0" 
                 Content="{Binding Buttons[0]}" 

@@ -46,7 +46,7 @@ namespace Pano.ViewModel.Pages
             );
         }
 
-        public ICommand BackCommand;
+        public ICommand BackCommand { get; set; }
 
 
     }

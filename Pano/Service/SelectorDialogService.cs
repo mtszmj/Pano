@@ -32,7 +32,8 @@ namespace Pano.Service
         public void ShowDialog(IList<string> buttons,
             IEnumerable<TSelected> listToSelectFrom,
             Action<TSelected, int?> selectionByButtonIndex,
-            string label)
+            string label,
+            string description)
         {
             if (buttons != null)
                 Buttons = buttons;
@@ -43,6 +44,7 @@ namespace Pano.Service
             Command = new RelayCommand<string>(CommandToInvoke);
 
             Label = label;
+            Description = description;
 
             if (!((Activator.CreateInstance(Window)) is Window window))
                 throw new InvalidOperationException();

@@ -35,45 +35,6 @@
         </StackPanel>
         <control:ProjectsListView Grid.Row="1" Grid.Column="0" Margin="5"/>
         <control:ProjectOpenDetailsView Grid.Row="1" Grid.Column="1" Margin="5" VerticalAlignment="Stretch"/>
-        <!--<Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2">
-            <materialDesign:Snackbar
-                Message="{Binding HasFinishedText}"
-                IsActive="{Binding HasFinished}"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Bottom"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                Margin="50 0"
-            />
-        </Border>
-        <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" 
-                Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"
-                Background="#88000000"
-                >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Row="1" Grid.Column="1">
-                <TextBlock 
-                Style="{StaticResource MaterialDesignTitleTextBlock}" 
-                Text="Ładuję..."
-                Foreground="White"
-                />
-                <ProgressBar
-                Style="{StaticResource MaterialDesignCircularProgressBar}"
-                Value="0"
-                IsIndeterminate="True" 
-                Margin="10"
-                />
-            </StackPanel>
-        </Grid>-->
         <control:BusyView x:Name="OpenProjectsViewBusy" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
     </Grid>
 </Page>

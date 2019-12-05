@@ -174,8 +174,8 @@ namespace Pano.ViewModel.Pages
             }
         }
 
-        public bool IsSceneHotSpot => (SelectedHotSpot is Model.Db.HotSpots.SceneHotSpot);
-        public Model.Db.HotSpots.SceneHotSpot SceneHotSpot => SelectedHotSpot as Model.Db.HotSpots.SceneHotSpot;
+        public bool IsSceneHotSpot => (SelectedHotSpot is SceneHotSpot);
+        public SceneHotSpot SceneHotSpot => SelectedHotSpot as SceneHotSpot;
         public string HotSpotTargetSceneTitle => this.SceneHotSpot?.TargetScene?.Title;
 
         public bool IsRequiredFileIncludedInDragDrop
@@ -360,7 +360,8 @@ namespace Pano.ViewModel.Pages
                 buttons,
                 _project.Model.Tour.Scenes.Except(new[] { SelectedScene }),
                 SelectIndex,
-                SelectedHotSpot.Text
+                SelectedHotSpot.Text,
+                "Wybierz docelową scenę:"
                 );
         }
 
@@ -371,7 +372,9 @@ namespace Pano.ViewModel.Pages
                 buttons,
                 _project.Model.Tour.Scenes.Except(new[] { SelectedScene }),
                 SelectIndex,
-                SelectedHotSpot.Text
+                SelectedHotSpot.Text,
+                "Wybierz docelową scenę:"
+
             );
         }
 
@@ -414,38 +417,42 @@ namespace Pano.ViewModel.Pages
         {
             var paths = (string[])args.Data.GetData(DataFormats.FileDrop);
 
-            if (paths != null)
+            if (paths == null)
             {
-                _busyIndicatorService.SetBusy("Ładuję zdjęcia");
                 IsRequiredFileIncludedInDragDrop = false;
-                var files = EnumerateFilesWithCorrectExtension(paths);
-
-                var result = await Task.Run(() =>
-                {
-                    var scenes = new List<Scene>();
-                    if (files.Any())
-                    {
-                        foreach (var file in files)
-                        {
-                            var name = Path.GetFileNameWithoutExtension(file);
-                            var scene = _sceneFactory.NewEquirectangularScene(name);
-                            scenes.Add(scene);
-                            scene.SetImage(file);
-                        }
-                    }
-
-                    return scenes;
-                });
-                foreach (var scene in result)
-                {
-                    _project.Model.Tour.AddScene(scene);
-                }
-                SelectedScene = result.Last();
-                _busyIndicatorService.ResetBusy();
-                _busyIndicatorService.SetSnackbar($"Załadowano: {result.Count} zdjęć.");
+                return;
             }
 
+            _busyIndicatorService.SetBusy("Ładuję zdjęcia");
             IsRequiredFileIncludedInDragDrop = false;
+            var files = EnumerateFilesWithCorrectExtension(paths);
+
+            var scenesFromFiles = await Task.Run(() =>
+            {
+                var scenes = new List<Scene>();
+                foreach (var file in files)
+                {
+                    var name = Path.GetFileNameWithoutExtension(file);
+                    var scene = _sceneFactory.NewEquirectangularScene(name);
+                    scenes.Add(scene);
+                    scene.SetImage(file);
+                }
+                return scenes;
+            });
+
+            foreach (var scene in scenesFromFiles)
+            {
+                _project.Model.Tour.AddScene(scene);
+            }
+
+            SelectedScene = scenesFromFiles.FirstOrDefault();
+            if (Project.Model.Tour.Default.FirstScene == null)
+            {
+                Project.Model.Tour.Default.FirstScene = SelectedScene;
+            }
+
+            _busyIndicatorService.ResetBusy();
+            _busyIndicatorService.SetSnackbar($"Załadowano: {scenesFromFiles.Count} zdjęć.");
         }
 
         private void HandleDragLeave(DragEventArgs args)
