@@ -40,6 +40,8 @@
                 </Button>
                 <TextBlock Text="Projekt:" Style="{StaticResource MaterialDesignTitleTextBlock}" Margin="3 10"/>
                 <controls:ProjectEditDetailsView DataContext="{Binding Project}" MinWidth="300"/>
+                <TextBlock Text="Ustawienia domyślne:" Style="{StaticResource MaterialDesignTitleTextBlock}" Margin="3 20 3 10"/>
+                <controls:DefaultSceneConfigView DataContext="{Binding Project.Model.Tour.Default}" MinWidth="300"/>
 
             </StackPanel>
         </materialDesign:DrawerHost.LeftDrawerContent>
@@ -534,12 +536,21 @@
 
 
                                     <StackPanel Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2"
-
                                             Visibility="{Binding IsSceneHotSpot, Converter={StaticResource BooleanToVisibilityConverter}}">
                                         <GroupBox Header="Docelowa scena" Margin="10">
                                             <StackPanel Orientation="Horizontal">
-                                                <Button Content="Ustaw scenę" Margin="5 0" Command="{Binding SelectTargetSceneCommand}"/>
-                                                <Label Content="{Binding HotSpotTargetSceneTitle}"/>
+                                                <Button
+                                                    Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
+                                                    Command="{Binding SelectTargetSceneCommand}"
+                                                    VerticalAlignment="Bottom"
+                                                    HorizontalAlignment="Right"
+                                                    Margin="10">
+                                                    <materialDesign:PackIcon
+                                                        Kind="ImageArea"
+                                                        Height="22"
+                                                        Width="22" />
+                                                </Button>
+                                                <TextBlock Text="{Binding HotSpotTargetSceneTitle}" VerticalAlignment="Center"/>
                                             </StackPanel>
                                         </GroupBox>
                                     </StackPanel>

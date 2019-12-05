@@ -255,19 +255,20 @@
     <Compile Include="ViewModel\Controls\SceneImageViewModel.cs" />
     <Compile Include="ViewModel\Pages\InitPageViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\Controls\NavigationViewModel.cs" />
     <Compile Include="ViewModel\Pages\NewProjectPageViewModel.cs" />
     <Compile Include="ViewModel\Pages\OpenProjectsPageViewModel.cs" />
     <Compile Include="ViewModel\Controls\ProjectDetailsViewModel.cs" />
     <Compile Include="ViewModel\Controls\ProjectOpenDetailsViewModel.cs" />
     <Compile Include="ViewModel\Controls\ProjectsListViewModel.cs" />
-    <Compile Include="ViewModel\Controls\ProjectSummaryViewModel.cs" />
     <Compile Include="ViewModel\Pages\ProjectPageViewModel.cs" />
     <Compile Include="ViewModel\ProjectViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBaseExtended.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\Controls\BusyView.xaml.cs">
       <DependentUpon>BusyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\DefaultSceneConfigView.xaml.cs">
+      <DependentUpon>DefaultSceneConfigView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\ProjectEditDetailsView.xaml.cs">
       <DependentUpon>ProjectEditDetailsView.xaml</DependentUpon>
@@ -284,9 +285,6 @@
     <Compile Include="View\Pages\InitPage.xaml.cs">
       <DependentUpon>InitPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Controls\NavigationView.xaml.cs">
-      <DependentUpon>NavigationView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Pages\NewProjectPage.xaml.cs">
       <DependentUpon>NewProjectPage.xaml</DependentUpon>
     </Compile>
@@ -296,17 +294,11 @@
     <Compile Include="View\Pages\ProjectPage.xaml.cs">
       <DependentUpon>ProjectPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ProjectMainPage.xaml.cs">
-      <DependentUpon>ProjectMainPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Controls\ProjectsListView.xaml.cs">
       <DependentUpon>ProjectsListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Pages\OpenProjectsPage.xaml.cs">
       <DependentUpon>OpenProjectsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Controls\ProjectSummaryView.xaml.cs">
-      <DependentUpon>ProjectSummaryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\SelectorDialogView.xaml.cs">
       <DependentUpon>SelectorDialogView.xaml</DependentUpon>
@@ -332,6 +324,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Controls\DefaultSceneConfigView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Controls\ProjectEditDetailsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -352,10 +348,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Controls\NavigationView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\Pages\NewProjectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -368,19 +360,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ProjectMainPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\Controls\ProjectsListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Pages\OpenProjectsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Controls\ProjectSummaryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using GalaSoft.MvvmLight;
+using Pano.Model.Db.Scenes;
 
 namespace Pano.Model.Db.Helpers
 {
@@ -27,7 +28,7 @@ namespace Pano.Model.Db.Helpers
         }
 
         public int? SceneId { get; set; }
-        public Model.Db.Scenes.Scene Scene { get; set; }
+        public Scene Scene { get; set; }
 
         public BitmapImage BitmapImage => ByteArrayToBitmapImage(Data);
         public System.Drawing.Image DrawingImage => ByteArrayToImage(Data);

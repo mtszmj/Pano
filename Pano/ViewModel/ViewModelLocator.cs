@@ -26,6 +26,7 @@ using Pano.DB;
 using Pano.Factories.Db;
 using Pano.IO;
 using Pano.Model;
+using Pano.Model.Db.Scenes;
 using Pano.Repository;
 using Pano.Service;
 using Pano.Service.Design;
@@ -140,10 +141,9 @@ namespace Pano.ViewModel
 
 
             // View Models
-            builder.RegisterType<NavigationViewModel>().SingleInstance();
             builder.RegisterType<MainViewModel>().SingleInstance();
             builder.RegisterType<InitPageViewModel>();
-            builder.RegisterType<ProjectsListViewModel>().SingleInstance();
+            builder.RegisterType<ProjectsListViewModel>();
             builder.RegisterType<ProjectDetailsViewModel>();
             builder.RegisterType<NewProjectPageViewModel>();
             builder.RegisterType<OpenProjectsPageViewModel>();
@@ -168,7 +168,6 @@ namespace Pano.ViewModel
         public OpenProjectsPageViewModel OpenProjectsPage => _container.Resolve<OpenProjectsPageViewModel>();
 
         // Controls
-        public NavigationViewModel Navigation => _container.Resolve<NavigationViewModel>();
         public ProjectsListViewModel ProjectsList => _container.Resolve<ProjectsListViewModel>();
         public ProjectDetailsViewModel ProjectDetails => _container.Resolve<ProjectDetailsViewModel>();
         public ProjectOpenDetailsViewModel ProjectOpenDetails => _container.Resolve<ProjectOpenDetailsViewModel>();
@@ -178,6 +177,7 @@ namespace Pano.ViewModel
 
         // Design time data
         public ProjectViewModel ProjectTestObject => _container.Resolve<IIndex<string, ProjectViewModel>>()[ProjectViewModelTestObjectKey];
+        public DefaultSceneConfig DefaultSceneConfig => new DefaultSceneConfig();
         public ISelectorDialogService<Model.Db.Scenes.Scene> SelectorDialogService => 
             _container.Resolve<ISelectorDialogService<Model.Db.Scenes.Scene>>();
 

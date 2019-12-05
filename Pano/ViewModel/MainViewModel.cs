@@ -18,20 +18,12 @@ namespace Pano.ViewModel
     public class MainViewModel : ViewModelBaseExtended
     {
         private readonly INavigationService _navigationService;
-        private readonly IProjectsService _projectsService;
-        private readonly IDialogService _dialogService;
 
-        public MainViewModel(INavigationService navigationService, 
-            IProjectsService projectsService, 
-            IDialogService dialogService)
+        public MainViewModel(INavigationService navigationService 
+            )
         {
             _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
-            _projectsService = projectsService ?? throw new ArgumentNullException(nameof(projectsService));
-            _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
-
             Title = IsInDesignMode ? "Pano (Design Mode)" : "Pano";
-
-            SaveCommand = new RelayCommand(SaveProject);
 
             RegisterForMessages();
         }
@@ -61,8 +53,6 @@ namespace Pano.ViewModel
             }
         }
 
-        public RelayCommand SaveCommand { get; set; }
-
         public Visibility NavigationVisibility => NavigationOn ? Visibility.Visible : Visibility.Collapsed;
 
         public void RegisterForMessages()
@@ -82,13 +72,6 @@ namespace Pano.ViewModel
             var msg = new PropertyChangedMessage<string>(null, newValue, nameof(CurrentPage));
 
             MessengerInstance.Send(msg, ViewModelLocator.CurrentPageToken);
-        }
-
-        private void SaveProject()
-        {
-            Console.WriteLine("TEST");
-            _projectsService.SaveAll();
-            Task.Run(() => _dialogService.ShowMessageBox("Zapisano", "Zapis"));
         }
     }
 }
