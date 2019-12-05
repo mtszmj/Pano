@@ -62,8 +62,11 @@ namespace Pano.Model
             set => Set(ref _tour, value);
         }
 
-        public void SetDefaultProject(Scene scene)
+        public void SetSceneAsFirstScene(Scene scene)
         {
+            if (!Tour.Scenes.Contains(scene))
+                return;
+
             var previous = Tour.Default.FirstScene;
             Tour.Default.FirstScene = scene ?? throw new ArgumentNullException(nameof(scene));
             scene.RaisePropertyChanged(nameof(Scene.IsDefaultScene));

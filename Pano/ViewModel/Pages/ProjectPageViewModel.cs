@@ -89,13 +89,7 @@ namespace Pano.ViewModel.Pages
             HandleDropCommand = new RelayCommand<DragEventArgs>(HandleDrop);
             HandleDragLeaveCommand = new RelayCommand<DragEventArgs>(HandleDragLeave);
             HandleDragOverCommand = new RelayCommand<DragEventArgs>(HandleDragOver);
-
-            SetDefaultProjectCommand = new RelayCommand<object>(obj =>
-            {
-                var scene = obj as Scene;
-                Project.Model.SetDefaultProject(scene);
-            });
-
+            SetSceneAsFirstSceneCommand = new RelayCommand<Scene>(s => Project.Model.SetSceneAsFirstScene(s));
 
             Messenger.Default.Register<PropertyChangedMessage<HotSpot>>(
                 this,
@@ -151,7 +145,6 @@ namespace Pano.ViewModel.Pages
                 RaisePropertyChanged();
 
                 SelectedSceneViewModel = new SceneImageViewModel(_selectedScene);
-                //RaisePropertyChanged(nameof(SelectedSceneViewModel));
             }
         }
 
@@ -215,34 +208,25 @@ namespace Pano.ViewModel.Pages
             set => Set(ref _hasFinishedText, value);
         }
 
-        public RelayCommand SaveCommand { get; set; }
-        public RelayCommand ExportCommand { get; set; }
-        public RelayCommand BackCommand { get; set; }
-        public RelayCommand AddSceneCommand { get; set; }
-        public RelayCommand DeleteSceneCommand { get; set; }
-        public RelayCommand AddHotSpotCommand { get; set; }
-        public RelayCommand DeleteHotSpotCommand { get; set; }
-        public RelayCommand ChangeImageCommand { get; set; }
-        public RelayCommand RotateClockwiseCommand { get; set; }
-        public RelayCommand RotateCounterclockwiseCommand { get; set; }
-        public RelayCommand SelectTargetSceneCommand { get; private set; }
-        public RelayCommand<DragEventArgs> HandleDragEnterCommand { get; private set; }
-        public RelayCommand<DragEventArgs> HandleDropCommand { get; private set; }
-        public RelayCommand<DragEventArgs> HandleDragLeaveCommand { get; private set; }
-        public RelayCommand<DragEventArgs> HandleDragOverCommand { get; private set; }
-        public RelayCommand<object> SetDefaultProjectCommand { get; private set; }
+        public RelayCommand SaveCommand { get; }
+        public RelayCommand ExportCommand { get; }
+        public RelayCommand BackCommand { get; }
+        public RelayCommand AddSceneCommand { get; }
+        public RelayCommand DeleteSceneCommand { get; }
+        public RelayCommand AddHotSpotCommand { get; }
+        public RelayCommand DeleteHotSpotCommand { get; }
+        public RelayCommand ChangeImageCommand { get; }
+        public RelayCommand RotateClockwiseCommand { get; }
+        public RelayCommand RotateCounterclockwiseCommand { get; }
+        public RelayCommand SelectTargetSceneCommand { get; }
+        public RelayCommand<DragEventArgs> HandleDragEnterCommand { get; }
+        public RelayCommand<DragEventArgs> HandleDropCommand { get; }
+        public RelayCommand<DragEventArgs> HandleDragLeaveCommand { get; }
+        public RelayCommand<DragEventArgs> HandleDragOverCommand { get; }
+        public RelayCommand<Scene> SetSceneAsFirstSceneCommand { get; }
 
         public override void InitializeView()
         {
-            MessengerInstance.Send(
-                new PropertyChangedMessage<bool>(
-                    this,
-                    false,
-                    true,
-                    ViewModelLocator.NavigationVisibleToken
-                ),
-                ViewModelLocator.NavigationVisibleToken
-            );
         }
 
         private async void SaveProject()

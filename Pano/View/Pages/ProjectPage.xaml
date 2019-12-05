@@ -221,7 +221,7 @@
                                                         <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                                                             <command:EventToCommand  
                                                                 Command="{Binding RelativeSource={RelativeSource AncestorType=Page, Mode=FindAncestor}, 
-                                                                            Path=DataContext.SetDefaultProjectCommand, Mode=OneWay }"
+                                                                            Path=DataContext.SetSceneAsFirstSceneCommand, Mode=OneWay }"
                                                                 CommandParameter="{Binding}"
                                                             />
                                                         </i:EventTrigger>
