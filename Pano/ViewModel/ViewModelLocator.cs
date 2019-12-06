@@ -149,7 +149,7 @@ namespace Pano.ViewModel
             builder.RegisterType<OpenProjectsPageViewModel>();
             builder.RegisterType<ProjectOpenDetailsViewModel>();
             builder.RegisterType<ProjectNewViewModel>();
-            builder.RegisterType<ProjectPageViewModel>();
+            builder.RegisterType<ProjectPageViewModel>().OnRelease(instance => instance.Cleanup()).InstancePerDependency();
             builder.RegisterType<BusyViewModel>().InstancePerDependency();
 
             _container = builder.Build();

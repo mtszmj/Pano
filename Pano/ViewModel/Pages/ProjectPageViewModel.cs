@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using Autofac;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
@@ -39,6 +40,7 @@ namespace Pano.ViewModel.Pages
         private readonly ISerializationMapper _mapper;
         private readonly IStorage _storage;
         private readonly IImageStorage _imageStorage;
+        private readonly ILifetimeScope _lifetimeScope;
         private readonly IBusyIndicatorService _busyIndicatorService;
         private ProjectViewModel _project;
         private Scene _selectedScene;
@@ -60,7 +62,8 @@ namespace Pano.ViewModel.Pages
                                     ISerializationMapper mapper,
                                     IStorage storage,
                                     IImageStorage imageStorage,
-                                    Func<string, IBusyIndicatorService> busyIndicatorService)
+                                    Func<string, IBusyIndicatorService> busyIndicatorService,
+                                    ILifetimeScope lifetimeScope)
         {
             _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
             _selectorDialogService = selectorDialogService ?? throw new ArgumentNullException(nameof(selectorDialogService));
@@ -72,23 +75,24 @@ namespace Pano.ViewModel.Pages
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _storage = storage ?? throw new ArgumentNullException(nameof(storage));
             _imageStorage = imageStorage ?? throw new ArgumentNullException(nameof(imageStorage));
+            _lifetimeScope = lifetimeScope ?? throw new ArgumentNullException(nameof(lifetimeScope));
             _busyIndicatorService = busyIndicatorService("ProjectPageViewBusy");
 
-            SaveCommand = new RelayCommand(SaveProject);
-            ExportCommand = new RelayCommand(ExportProject, () => Project?.Model?.Tour != null);
-            BackCommand = new RelayCommand(GoBack);
-            AddSceneCommand = new RelayCommand(AddScene);
-            DeleteSceneCommand = new RelayCommand(DeleteScene, () => SelectedScene != null);
-            AddHotSpotCommand = new RelayCommand(AddHotSpot, () => SelectedScene != null);
-            DeleteHotSpotCommand = new RelayCommand(DeleteHotSpot, () => SelectedHotSpot != null);
-            ChangeImageCommand = new RelayCommand(ChangeImage);
-            RotateClockwiseCommand = new RelayCommand(RotateClockwise, SelectedScene?.Image != null);
-            RotateCounterclockwiseCommand = new RelayCommand(RotateCounterclockwise, SelectedScene?.Image != null);
-            SelectTargetSceneCommand = new RelayCommand(SelectTargetScene, IsSceneHotSpot);
-            HandleDragEnterCommand = new RelayCommand<DragEventArgs>(HandleDragEnter);
-            HandleDropCommand = new RelayCommand<DragEventArgs>(HandleDrop);
-            HandleDragLeaveCommand = new RelayCommand<DragEventArgs>(HandleDragLeave);
-            HandleDragOverCommand = new RelayCommand<DragEventArgs>(HandleDragOver);
+            SaveCommand = new RelayCommand(() => SaveProject());
+            ExportCommand = new RelayCommand(() => ExportProject(), () => Project?.Model?.Tour != null);
+            BackCommand = new RelayCommand(() => GoBack());
+            AddSceneCommand = new RelayCommand(() => AddScene());
+            DeleteSceneCommand = new RelayCommand(() => DeleteScene(), () => SelectedScene != null);
+            AddHotSpotCommand = new RelayCommand(() => AddHotSpot(), () => SelectedScene != null);
+            DeleteHotSpotCommand = new RelayCommand(() => DeleteHotSpot(), () => SelectedHotSpot != null);
+            ChangeImageCommand = new RelayCommand(() => ChangeImage());
+            RotateClockwiseCommand = new RelayCommand(() => RotateClockwise(), SelectedScene?.Image != null);
+            RotateCounterclockwiseCommand = new RelayCommand(() => RotateCounterclockwise(), SelectedScene?.Image != null);
+            SelectTargetSceneCommand = new RelayCommand(() => SelectTargetScene(), IsSceneHotSpot);
+            HandleDragEnterCommand = new RelayCommand<DragEventArgs>(e => HandleDragEnter(e));
+            HandleDropCommand = new RelayCommand<DragEventArgs>(e => HandleDrop(e));
+            HandleDragLeaveCommand = new RelayCommand<DragEventArgs>(e => HandleDragLeave(e));
+            HandleDragOverCommand = new RelayCommand<DragEventArgs>(e => HandleDragOver(e));
             SetSceneAsFirstSceneCommand = new RelayCommand<Scene>(s => Project.Model.SetSceneAsFirstScene(s));
 
             Messenger.Default.Register<PropertyChangedMessage<HotSpot>>(
@@ -269,6 +273,23 @@ namespace Pano.ViewModel.Pages
         {
             Cleanup();
             _navigationService.NavigateTo(ViewModelLocator.InitPageKey);
+
+            //SaveCommand = null;
+            //ExportCommand = null;
+            //BackCommand = null;
+            //AddSceneCommand = null;
+            //DeleteSceneCommand = null;
+            //AddHotSpotCommand = null;
+            //DeleteHotSpotCommand = null;
+            //ChangeImageCommand = null;
+            //RotateClockwiseCommand = null;
+            //RotateCounterclockwiseCommand = null;
+            //SelectTargetSceneCommand = null;
+            //HandleDragEnterCommand = null;
+            //HandleDropCommand = null;
+            //HandleDragLeaveCommand = null;
+            //HandleDragOverCommand = null;
+            //SetSceneAsFirstSceneCommand = null;
         }
 
         private void AddScene()

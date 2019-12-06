@@ -13,7 +13,7 @@
       d:DesignHeight="450" d:DesignWidth="1000"
       d:DesignStyle="{StaticResource DesignTimeBackgroundStyle}"
       DataContext="{Binding ProjectPage, Source={StaticResource Locator}}"
-      Title="ProjectPage" Loaded="Page_Loaded"
+      Title="ProjectPage" Loaded="Page_Loaded" Unloaded="ProjectPage_OnUnloaded"
       >
     <Page.Resources>
         <converters:EnumToStringConverter x:Key="EnumToStringConverter" />

@@ -44,10 +44,10 @@ namespace Pano.View.Pages
             vm?.InitializeView();
         }
 
-        private void RatingBar_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<int> e)
+        private void ProjectPage_OnUnloaded(object sender, RoutedEventArgs e)
         {
-            var obj = sender;
-            var test = e;
+            vm.Cleanup();
+            vm = null;
         }
     }
 }

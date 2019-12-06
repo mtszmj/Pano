@@ -22,6 +22,8 @@ namespace Pano.Model.Db.Helpers
             set
             {
                 Set(ref _data, value);
+                _bitmapImage = null;
+                _bitmapImage = ByteArrayToBitmapImage(_data);
                 RaisePropertyChanged(nameof(BitmapImage));
                 RaisePropertyChanged(nameof(DrawingImage));
             }
@@ -30,35 +32,54 @@ namespace Pano.Model.Db.Helpers
         public int? SceneId { get; set; }
         public Scene Scene { get; set; }
 
-        public BitmapImage BitmapImage => ByteArrayToBitmapImage(Data);
-        public System.Drawing.Image DrawingImage => ByteArrayToImage(Data);
+        private BitmapImage _bitmapImage;
+        public BitmapImage BitmapImage
+        {
+            get
+            {
+                if (_bitmapImage == null)
+                    _bitmapImage = ByteArrayToBitmapImage(Data);
+                return _bitmapImage;
+            }
+        }
+
+        private System.Drawing.Image _drawingImage;
+        public System.Drawing.Image DrawingImage
+        {
+            get
+            {
+                if (_drawingImage == null)
+                    _drawingImage = ByteArrayToImage(Data);
+                return _drawingImage;
+            }
+        }
 
         public void RotateImageClockwise()
         {
-            var img = DrawingImage;
-
-            if (img == null)
+            if (DrawingImage == null)
                 return;
 
-            img.RotateFlip(RotateFlipType.Rotate90FlipNone);
-            Data = ImageToByteArray(img);
+            DrawingImage.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            _data = null;
+            Data = ImageToByteArray(_drawingImage);
         }
 
         public void RotateImageCounterclockwise()
         {
-            var img = DrawingImage;
-
-            if (img == null)
+            if (DrawingImage== null)
                 return;
 
-            img.RotateFlip(RotateFlipType.Rotate270FlipNone);
-            Data = ImageToByteArray(img);
+            DrawingImage.RotateFlip(RotateFlipType.Rotate270FlipNone);
+            _data = null;
+            Data = ImageToByteArray(_drawingImage);
         }
 
         public void SetImage(string pathToImage)
         {
-            var img = System.Drawing.Image.FromFile(pathToImage);
-            Data = ImageToByteArray(img);
+            _drawingImage = null;
+            _drawingImage = System.Drawing.Image.FromFile(pathToImage);
+            _data = null;
+            Data = ImageToByteArray(_drawingImage);
         }
 
         protected byte[] ImageToByteArray(System.Drawing.Image image)
@@ -95,6 +116,7 @@ namespace Pano.Model.Db.Helpers
                 img.CacheOption = BitmapCacheOption.OnLoad;
                 img.StreamSource = stream;
                 img.EndInit();
+                img.Freeze();
                 return img;
             }
         }
