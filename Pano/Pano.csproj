@@ -211,6 +211,10 @@
     <Compile Include="Migrations\201912081204105_IgnoreDataColumnInImageTable.designer.cs">
       <DependentUpon>201912081204105_IgnoreDataColumnInImageTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912081505549_CascadeDeleteOfImage.cs" />
+    <Compile Include="Migrations\201912081505549_CascadeDeleteOfImage.designer.cs">
+      <DependentUpon>201912081505549_CascadeDeleteOfImage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Db\Helpers\DictionaryEntry.cs" />
     <Compile Include="Model\Db\Helpers\Image.cs" />
@@ -469,6 +473,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912081204105_IgnoreDataColumnInImageTable.resx">
       <DependentUpon>201912081204105_IgnoreDataColumnInImageTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912081505549_CascadeDeleteOfImage.resx">
+      <DependentUpon>201912081505549_CascadeDeleteOfImage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

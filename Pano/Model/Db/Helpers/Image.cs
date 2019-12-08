@@ -21,35 +21,28 @@ namespace Pano.Model.Db.Helpers
         private byte[] _thumbnail;
         private BitmapImage _bitmapImage;
         private RotateFlipType _rotation = RotateFlipType.RotateNoneFlipNone;
-        private ImageData _imageData;
 
 
         public int ImageId { get; set; }
 
-        public int? ImageDataId { get; set; }
-
-        public ImageData ImageData
-        {
-            get => _imageData;
-            set => _imageData = value;
-        }
+        public ImageData ImageData { get; set; }
 
         /// <summary>
         /// Main picture data stored in DB
         /// </summary>
         public byte[] Data
         {
-            get => _imageData?.Data;
+            get => ImageData?.Data;
             set
             {
                 //Set(ref _data, value);
                 //_bitmapImage = null;
                 //_bitmapImage = ByteArrayToBitmapImage(_data);
-                if(_imageData == null)
-                    _imageData = new ImageData() {ImageDataId = ImageId};
+                if(ImageData == null)
+                    ImageData = new ImageData() {ImageDataId = ImageId};
 
-                _imageData.Data = value;
-                _imageData.Image = this;
+                ImageData.Data = value;
+                ImageData.Image = this;
 
                 RaisePropertyChanged(nameof(Data));
                 //RaisePropertyChanged(nameof(BitmapImage));

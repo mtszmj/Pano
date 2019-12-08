@@ -11,7 +11,6 @@ namespace Pano.Model.Db.Helpers
         public int ImageDataId { get; set; }
         public byte[] Data { get; set; }
         
-        public int ImageId { get; set; }
         public Image Image { get; set; }
     }
 }

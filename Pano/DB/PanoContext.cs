@@ -83,7 +83,7 @@ namespace Pano.DB
                 .HasMany(s => s.Images)
                 .WithOptional(i => i.Scene)
                 .HasForeignKey(i => i.SceneId)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Image>()
                 .HasOptional(i => i.ImageData)
