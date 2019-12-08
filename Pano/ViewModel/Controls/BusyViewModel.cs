@@ -48,7 +48,7 @@ namespace Pano.ViewModel.Controls
             set => Set(ref _hasSnackbarText, value);
         }
 
-        public int SnackbarTime { get; set; } = 2000;
+        public int SnackbarTime { get; set; } = 1200;
 
         public string BusyToken => $"{_name}:busy";
         public string SnackbarToken => $"{_name}:snackbar";

@@ -99,7 +99,7 @@ namespace Pano.DB
             modelBuilder.Entity<Image>()
                 .Ignore(x => x.Data)
                 .Ignore(x => x.BitmapImage)
-                .Ignore(x => x.DrawingImage);
+                ;
 
             modelBuilder.Properties<DateTime>()
                 .Configure(p => p.HasColumnType("datetime2"));

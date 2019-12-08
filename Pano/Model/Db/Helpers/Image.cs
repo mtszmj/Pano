@@ -12,12 +12,15 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using GalaSoft.MvvmLight;
+using Pano.Extensions;
 using Pano.Model.Db.Scenes;
 
 namespace Pano.Model.Db.Helpers
 {
     public class Image : ObservableObject
     {
+        public const int ThumbnailWidth = 600;
+
         private byte[] _thumbnail;
         private BitmapImage _bitmapImage;
         private RotateFlipType _rotation = RotateFlipType.RotateNoneFlipNone;
@@ -59,11 +62,14 @@ namespace Pano.Model.Db.Helpers
             set
             {
                 Set(ref _thumbnail, value);
-                _bitmapImage = ByteArrayToBitmapImage(_thumbnail);
+                _bitmapImage = _thumbnail?.ToBitmapImage();
                 RaisePropertyChanged(nameof(BitmapImage));
             }
         }
 
+        /// <summary>
+        /// Rotation of image
+        /// </summary>
         public RotateFlipType Rotation
         {
             get => _rotation;
@@ -74,17 +80,24 @@ namespace Pano.Model.Db.Helpers
                 if (Thumbnail == null)
                     return;
 
-                using (System.Drawing.Image drawingImage = ByteArrayToDrawingImage(Thumbnail))
+                using (System.Drawing.Image drawingImage = Thumbnail.ToDrawingImage())
                 {
                     drawingImage.RotateFlip(_rotation);
-                    _bitmapImage = DrawingImageToBitmapImage(drawingImage);
+                    _bitmapImage = drawingImage?.ToBitmapImage();
                 }
                 RaisePropertyChanged(nameof(BitmapImage));
             }
         }
 
 
+        /// <summary>
+        /// Navigation key
+        /// </summary>
         public int? SceneId { get; set; }
+
+        /// <summary>
+        /// Navigation variable
+        /// </summary>
         public Scene Scene { get; set; }
 
 
@@ -96,25 +109,34 @@ namespace Pano.Model.Db.Helpers
             get
             {
                 if (_bitmapImage == null)
-                    _bitmapImage = ByteArrayToBitmapImage(Thumbnail);
+                    _bitmapImage = Thumbnail?.ToBitmapImage();
                 return _bitmapImage;
             }
         }
 
-        //private System.Drawing.Image _drawingImage;
         /// <summary>
-        /// Drawing image used to maintain picture mainpulation
+        /// Set image from path to image file
         /// </summary>
-        public System.Drawing.Image DrawingImage => null;
-        //{
-        //    get
-        //    {
-        //        if (_drawingImage == null)
-        //            _drawingImage = ByteArrayToDrawingImage(Thumbnail);
-        //        return _drawingImage;
-        //    }
-        //}
+        /// <param name="pathToImage"></param>
+        public void SetImage(string pathToImage)
+        {
+            using (System.Drawing.Image drawingImage = System.Drawing.Image.FromFile(pathToImage))
+            {
+                Data = drawingImage.ToByteArray();
+                Thumbnail = (CreateThumbnail(drawingImage)).ToByteArray();
+                Rotation = RotateFlipType.RotateNoneFlipNone;
+            }
+        }
 
+        private System.Drawing.Image CreateThumbnail(System.Drawing.Image image)
+        {
+            var height = (int)(image.Height * (ThumbnailWidth / (double)image.Width));
+            return image.GetThumbnailImage(ThumbnailWidth, height, null, IntPtr.Zero);
+        }
+
+        /// <summary>
+        /// Rotate image clockwise by 90 degrees
+        /// </summary>
         public void RotateImageClockwise()
         {
             switch (Rotation)
@@ -136,6 +158,9 @@ namespace Pano.Model.Db.Helpers
             }
         }
 
+        /// <summary>
+        /// Rotate image counter clockwise by 90 degrees
+        /// </summary>
         public void RotateImageCounterclockwise()
         {
             switch (Rotation)
@@ -155,77 +180,6 @@ namespace Pano.Model.Db.Helpers
                 default:
                     throw new InvalidEnumArgumentException(nameof(Rotation), (int)Rotation, typeof(RotateFlipType));
             }
-        }
-
-        public void SetImage(string pathToImage)
-        {
-            using (System.Drawing.Image drawingImage = System.Drawing.Image.FromFile(pathToImage))
-            {
-                Data = DrawingImageToByteArray(drawingImage);
-                Thumbnail = DrawingImageToByteArray(GetThumbnail(drawingImage));
-                Rotation = RotateFlipType.RotateNoneFlipNone;
-            }
-        }
-
-        private System.Drawing.Image GetThumbnail(System.Drawing.Image image)
-        {
-            var defaultWidth = 600;
-            var height = (int)(image.Height * (defaultWidth / (double)image.Width));
-            return image.GetThumbnailImage(defaultWidth, height, null, IntPtr.Zero);
-        }
-
-        protected byte[] DrawingImageToByteArray(System.Drawing.Image image)
-        {
-            using (var stream = new MemoryStream())
-            {
-                image.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-                return stream.ToArray();
-            }
-        }
-
-        protected System.Drawing.Image ByteArrayToDrawingImage(byte[] byteArray)
-        {
-            if (byteArray == null || byteArray.Length == 0)
-                return null;
-
-            using (var stream = new MemoryStream(byteArray))
-            {
-                System.Drawing.Image img = System.Drawing.Image.FromStream(stream);
-                return img;
-            }
-        }
-
-        protected BitmapImage ByteArrayToBitmapImage(byte[] byteArray)
-        {
-            if (byteArray == null || byteArray.Length == 0)
-                return null;
-
-            using (var stream = new MemoryStream(byteArray))
-            {
-                return GetBitmapImageFromStream(stream);
-            }
-        }
-
-        protected BitmapImage DrawingImageToBitmapImage(System.Drawing.Image image)
-        {
-            using (var stream = new MemoryStream())
-            {
-                image.Save(stream, ImageFormat.Png);
-                return GetBitmapImageFromStream(stream);
-            }
-        }
-
-        protected BitmapImage GetBitmapImageFromStream(Stream stream)
-        {
-            stream.Position = 0;
-            var bitmapImage = new BitmapImage();
-            bitmapImage.BeginInit();
-            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-            bitmapImage.StreamSource = stream;
-            bitmapImage.EndInit();
-            bitmapImage.Freeze();
-
-            return bitmapImage;
         }
     }
 }

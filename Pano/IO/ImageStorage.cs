@@ -9,7 +9,7 @@ namespace Pano.IO
 {
     public class ImageStorage : IImageStorage
     {
-        public void Save(string path, IEnumerable<Image> images, ImageFormat format = null)
+        public void Save(string path, IEnumerable<ImageData> images, ImageFormat format = null)
         {
             string dir;
             if(File.Exists(path))
@@ -20,11 +20,11 @@ namespace Pano.IO
 
             format = format ?? ImageFormat.Jpeg;
 
-            foreach (var image in images)
+            foreach (var imageData in images)
             {
                 var ext = FileExtensionFromEncoder(format);
-                var imgPath = Path.Combine(dir, image.Scene.Id) + ext;
-                using (var img = image.DrawingImage)
+                var imgPath = Path.Combine(dir, imageData.Image.Scene.Id) + ext;
+                using (var img = imageData.DrawingImage)
                 {
                     img.Save(imgPath, format);
                 }

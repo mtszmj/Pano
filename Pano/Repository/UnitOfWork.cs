@@ -30,7 +30,7 @@ namespace Pano.Repository
         public IDefaultSceneConfigRepository DefaultSceneConfigs { get; }
         public int Complete()
         {
-            ImageDatas.SaveChanges();
+            ImageDatas.CheckChanges();
             return _context.SaveChanges();
         }
 

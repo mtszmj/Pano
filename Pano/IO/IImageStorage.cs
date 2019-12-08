@@ -10,6 +10,6 @@ namespace Pano.IO
 {
     public interface IImageStorage
     {
-        void Save(string path, IEnumerable<Image> images, ImageFormat format = null);
+        void Save(string path, IEnumerable<ImageData> images, ImageFormat format = null);
     }
 }

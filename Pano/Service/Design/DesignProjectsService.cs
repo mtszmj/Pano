@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Pano.Model;
+using Pano.Model.Db.Helpers;
 using HotSpot = Pano.Model.Db.HotSpots.HotSpot;
 using Scene = Pano.Model.Db.Scenes.Scene;
 
@@ -84,6 +85,11 @@ namespace Pano.Service.Design
         }
 
         public void RemoveHotSpot(HotSpot spot)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<ImageData> GetImageDatas(Project project)
         {
             throw new NotImplementedException();
         }

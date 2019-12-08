@@ -113,6 +113,7 @@
     <Compile Include="DB\PanoDbInitializerDropCreateDatabaseIfModelChanges.cs" />
     <Compile Include="DB\PanoDbInitializerDropCreateDatabaseAlways.cs" />
     <Compile Include="DB\PanoDbInitializerSeed.cs" />
+    <Compile Include="Extensions\ImageExtensions.cs" />
     <Compile Include="Factories\Db\HotSpotFactory.cs" />
     <Compile Include="Factories\Db\IHotSpotFactory.cs" />
     <Compile Include="Factories\Db\IProjectFactory.cs" />

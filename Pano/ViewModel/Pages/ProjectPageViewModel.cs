@@ -233,15 +233,16 @@ namespace Pano.ViewModel.Pages
         {
         }
 
-        private async void SaveProject()
+        private async Task SaveProject()
         {
             _busyIndicatorService.SetBusy("Trwa zapis...");
             var result = await Task.Run(async () => _projectsService.Save(this.Project.Model));
+            RaisePropertyChanged("");
             _busyIndicatorService.ResetBusy();
             _busyIndicatorService.SetSnackbar($"Projekt zapisany ({result} zmian)");
         }
 
-        private async void ExportProject()
+        private async Task ExportProject()
         {
             _fileDialogService.ClearFilters();
             _fileDialogService.AddFilter("Json", "json");
@@ -251,16 +252,16 @@ namespace Pano.ViewModel.Pages
 
             if (path)
             {
+                await SaveProject();
                 _busyIndicatorService.SetBusy("Eksportuję...");
                 await Task.Run(() =>
                     {
-
-                        SaveProject();
-
                         var tour = _mapper.Map<TourForDb, Tour>(Project.Model.Tour);
                         _storage.Path = $"{path.Value}\\pano.json";
                         _storage.Save(tour);
-                        _imageStorage.Save(path.Value, Project.Model.Tour.Scenes.Select(x => x.Image));
+
+                        var imageDatas = _projectsService.GetImageDatas(Project.Model);
+                        _imageStorage.Save(path.Value, imageDatas);
                     }
                 );
                 _busyIndicatorService.ResetBusy();
@@ -273,23 +274,6 @@ namespace Pano.ViewModel.Pages
         {
             Cleanup();
             _navigationService.NavigateTo(ViewModelLocator.InitPageKey);
-
-            //SaveCommand = null;
-            //ExportCommand = null;
-            //BackCommand = null;
-            //AddSceneCommand = null;
-            //DeleteSceneCommand = null;
-            //AddHotSpotCommand = null;
-            //DeleteHotSpotCommand = null;
-            //ChangeImageCommand = null;
-            //RotateClockwiseCommand = null;
-            //RotateCounterclockwiseCommand = null;
-            //SelectTargetSceneCommand = null;
-            //HandleDragEnterCommand = null;
-            //HandleDropCommand = null;
-            //HandleDragLeaveCommand = null;
-            //HandleDragOverCommand = null;
-            //SetSceneAsFirstSceneCommand = null;
         }
 
         private void AddScene()
