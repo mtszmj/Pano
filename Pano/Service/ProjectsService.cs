@@ -44,6 +44,9 @@ namespace Pano.Service
             //return Task.Run(() => _repo.SaveProject(project)).Result;
             project.DateOfLastModification = DateTime.Now;
             _unitOfWork.Projects.AddOrUpdate(project);
+            
+            //foreach(var entity in project.Tour.Scenes.SelectMany(s => s.Images).Select(i => i.ImageData).Where(i => i != null))
+            //    _unitOfWork.ImageDatas.AddOrUpdate(entity);
 
             return _unitOfWork.Complete();
         }

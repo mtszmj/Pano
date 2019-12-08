@@ -199,9 +199,22 @@
     <Compile Include="Migrations\201912021944484_AddReferenceToSceneInDefaultSceneConfig.designer.cs">
       <DependentUpon>201912021944484_AddReferenceToSceneInDefaultSceneConfig.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912081131578_ImageThumbnailAndRotationAdded.cs" />
+    <Compile Include="Migrations\201912081131578_ImageThumbnailAndRotationAdded.designer.cs">
+      <DependentUpon>201912081131578_ImageThumbnailAndRotationAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912081153028_AddImageDataTable.cs" />
+    <Compile Include="Migrations\201912081153028_AddImageDataTable.designer.cs">
+      <DependentUpon>201912081153028_AddImageDataTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912081204105_IgnoreDataColumnInImageTable.cs" />
+    <Compile Include="Migrations\201912081204105_IgnoreDataColumnInImageTable.designer.cs">
+      <DependentUpon>201912081204105_IgnoreDataColumnInImageTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Db\Helpers\DictionaryEntry.cs" />
     <Compile Include="Model\Db\Helpers\Image.cs" />
+    <Compile Include="Model\Db\Helpers\ImageData.cs" />
     <Compile Include="Model\Db\Helpers\StringDictionaryEntry.cs" />
     <Compile Include="Model\Db\HotSpots\HotSpot.cs" />
     <Compile Include="Model\Db\HotSpots\IHotSpot.cs" />
@@ -210,6 +223,8 @@
     <Compile Include="Model\Db\Scenes\Equirectangular.cs" />
     <Compile Include="Model\Db\Scenes\IScene.cs" />
     <Compile Include="Model\Db\Scenes\Scene.cs" />
+    <Compile Include="Repository\IImageDataRepository.cs" />
+    <Compile Include="Repository\ImageDataRepository.cs" />
     <Compile Include="Serialization\Model\HotSpots\IHotSpotDto.cs" />
     <Compile Include="Model\Project.cs" />
     <Compile Include="Serialization\Model\Scenes\ISceneDto.cs" />
@@ -445,6 +460,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912021944484_AddReferenceToSceneInDefaultSceneConfig.resx">
       <DependentUpon>201912021944484_AddReferenceToSceneInDefaultSceneConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912081131578_ImageThumbnailAndRotationAdded.resx">
+      <DependentUpon>201912081131578_ImageThumbnailAndRotationAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912081153028_AddImageDataTable.resx">
+      <DependentUpon>201912081153028_AddImageDataTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912081204105_IgnoreDataColumnInImageTable.resx">
+      <DependentUpon>201912081204105_IgnoreDataColumnInImageTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

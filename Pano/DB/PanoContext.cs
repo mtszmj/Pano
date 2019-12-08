@@ -39,6 +39,7 @@ namespace Pano.DB
         public DbSet<Model.Db.HotSpots.HotSpot> HotSpots { get; set; }
         public DbSet<StringDictionaryEntry> StringDictionaryEntries { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<ImageData> ImageDatas { get; set; }
 
         private void SetInitializers()
         {
@@ -84,6 +85,11 @@ namespace Pano.DB
                 .HasForeignKey(i => i.SceneId)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Image>()
+                .HasOptional(i => i.ImageData)
+                .WithRequired(d => d.Image)
+                .WillCascadeOnDelete(true);
+
             modelBuilder.Entity<SceneHotSpot>()
                 .HasOptional(h => h.TargetScene)
                 .WithMany()
@@ -91,6 +97,7 @@ namespace Pano.DB
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Image>()
+                .Ignore(x => x.Data)
                 .Ignore(x => x.BitmapImage)
                 .Ignore(x => x.DrawingImage);
 

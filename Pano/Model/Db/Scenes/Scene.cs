@@ -281,7 +281,7 @@ namespace Pano.Model.Db.Scenes
         public ObservableCollection<Image> Images { get; set; }= new ObservableCollection<Image>();
 
         public virtual bool IsDefaultScene => Tour.Default.FirstScene == this;
-        public abstract BitmapImage BitmapImage { get; }
+        public abstract BitmapSource BitmapImage { get; }
         public abstract void SetImage(string pathToImage);
 
         //public void AddSceneHotSpot(IScene scene, int pitch = 0, int yaw = 0, int pitchBack = 0, int yawBack = 0)

@@ -24,7 +24,11 @@ namespace Pano.IO
             {
                 var ext = FileExtensionFromEncoder(format);
                 var imgPath = Path.Combine(dir, image.Scene.Id) + ext;
-                image.DrawingImage.Save(imgPath, format);
+                using (var img = image.DrawingImage)
+                {
+                    img.Save(imgPath, format);
+                }
+                
             }
         }
 

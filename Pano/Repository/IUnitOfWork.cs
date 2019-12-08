@@ -12,6 +12,7 @@ namespace Pano.Repository
         IProjectRepository Projects { get; }
         ISceneRepository Scenes { get; }
         IImageRepository Images { get; }
+        IImageDataRepository ImageDatas { get; }
         IDefaultSceneConfigRepository DefaultSceneConfigs { get; }
 
         int Complete();

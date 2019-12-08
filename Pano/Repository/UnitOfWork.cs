@@ -18,6 +18,7 @@ namespace Pano.Repository
             Projects = new ProjectRepository(context);
             Scenes = new SceneRepository(context);
             Images = new ImageRepository(context);
+            ImageDatas = new ImageDataRepository(context);
             DefaultSceneConfigs = new DefaultSceneConfigRepository(context);
         }
 
@@ -25,9 +26,11 @@ namespace Pano.Repository
         public IProjectRepository Projects { get; }
         public ISceneRepository Scenes { get; }
         public IImageRepository Images { get; }
+        public IImageDataRepository ImageDatas { get; }
         public IDefaultSceneConfigRepository DefaultSceneConfigs { get; }
         public int Complete()
         {
+            ImageDatas.SaveChanges();
             return _context.SaveChanges();
         }
 
