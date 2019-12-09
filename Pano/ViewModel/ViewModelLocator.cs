@@ -139,7 +139,6 @@ namespace Pano.ViewModel
             builder.RegisterType<FileStorage>().As<IStorage>();
             builder.RegisterType<ImageStorage>().As<IImageStorage>();
 
-
             // View Models
             builder.RegisterType<MainViewModel>().SingleInstance();
             builder.RegisterType<InitPageViewModel>();
@@ -165,6 +164,7 @@ namespace Pano.ViewModel
         // Pages
         public InitPageViewModel InitPage => _container.Resolve<InitPageViewModel>();
         public NewProjectPageViewModel NewProjectPage => _container.Resolve<NewProjectPageViewModel>();
+        public ProjectPageViewModel ProjectPage => _container.Resolve<ProjectPageViewModel>();
         public OpenProjectsPageViewModel OpenProjectsPage => _container.Resolve<OpenProjectsPageViewModel>();
 
         // Controls
@@ -172,14 +172,13 @@ namespace Pano.ViewModel
         public ProjectDetailsViewModel ProjectDetails => _container.Resolve<ProjectDetailsViewModel>();
         public ProjectOpenDetailsViewModel ProjectOpenDetails => _container.Resolve<ProjectOpenDetailsViewModel>();
         public ProjectNewViewModel ProjectNew => _container.Resolve<ProjectNewViewModel>();
-        public ProjectPageViewModel ProjectPage => _container.Resolve<ProjectPageViewModel>();
         public BusyViewModel Busy => _container.Resolve<BusyViewModel>();
 
         // Design time data
         public ProjectViewModel ProjectTestObject => _container.Resolve<IIndex<string, ProjectViewModel>>()[ProjectViewModelTestObjectKey];
         public DefaultSceneConfig DefaultSceneConfig => new DefaultSceneConfig();
-        public ISelectorDialogService<Model.Db.Scenes.Scene> SelectorDialogService => 
-            _container.Resolve<ISelectorDialogService<Model.Db.Scenes.Scene>>();
+        public ISelectorDialogService<Scene> SelectorDialogService => 
+            _container.Resolve<ISelectorDialogService<Scene>>();
 
         public static void Cleanup()
         {

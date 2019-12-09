@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,27 +21,30 @@ namespace Pano.ViewModel
         {
             Model = model;
 
-            Model.PropertyChanged += (s, e) =>
-            {
-                if (e.PropertyName == nameof(Project.DateOfLastModification))
-                {
-                    RaisePropertyChanged(nameof(ModifiedToday));
-                }
-            };
+            Model.PropertyChanged += OnProjectOnPropertyChanged;
+        }
 
-            Model.PropertyChanged += (s, e) =>
+        private void OnProjectOnPropertyChanged(object s, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Project.DateOfLastModification))
             {
-                if (e.PropertyName == nameof(Project.Name))
-                {
-                    MessengerInstance.Send(new object(), ViewModelLocator.CommandRequeryToken);
-                }
-            };
+                RaisePropertyChanged(nameof(ModifiedToday));
+            }
+
+            if (e.PropertyName == nameof(Project.Name))
+            {
+                MessengerInstance.Send(new object(), ViewModelLocator.CommandRequeryToken);
+            }
         }
 
         public Project Model { get; }
         public Visibility ModifiedToday => Model.DateOfLastModification > DateTime.Today ? Visibility.Visible : Visibility.Collapsed;
 
-
+        public override void Cleanup()
+        {
+            base.Cleanup();
+            Model.PropertyChanged -= OnProjectOnPropertyChanged;
+        }
 
         public static class Factory
         {

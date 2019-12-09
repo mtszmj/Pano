@@ -30,7 +30,6 @@ namespace Pano.ViewModel.Pages
     public class ProjectPageViewModel : ViewModelBaseExtended
     {
         private readonly string[] AllowedExtensions = new[] { ".jpg", ".png" };
-        private readonly IDialogService _dialogService;
         private readonly ISelectorDialogService<Scene> _selectorDialogService;
         private readonly IFileDialogService _fileDialogService;
         private readonly INavigationService _navigationService;
@@ -52,8 +51,7 @@ namespace Pano.ViewModel.Pages
         private bool _hasFinished;
         private string _hasFinishedText;
 
-        public ProjectPageViewModel(IDialogService dialogService,
-                                    ISelectorDialogService<Scene> selectorDialogService,
+        public ProjectPageViewModel(ISelectorDialogService<Scene> selectorDialogService,
                                     IFileDialogService fileDialogService,
                                     INavigationService navigationService,
                                     IProjectsService projectsService,
@@ -65,7 +63,6 @@ namespace Pano.ViewModel.Pages
                                     Func<string, IBusyIndicatorService> busyIndicatorService,
                                     ILifetimeScope lifetimeScope)
         {
-            _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
             _selectorDialogService = selectorDialogService ?? throw new ArgumentNullException(nameof(selectorDialogService));
             _fileDialogService = fileDialogService ?? throw new ArgumentNullException(nameof(fileDialogService));
             _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
@@ -167,7 +164,6 @@ namespace Pano.ViewModel.Pages
             get => _selectedHotSpot;
             set
             {
-
                 var msg = new PropertyChangedMessage<HotSpot>(this, _selectedHotSpot, value, nameof(SelectedHotSpot));
                 MessengerInstance.Send(msg, ViewModelLocator.SelectedHotSpotChangedFromListToken);
 
@@ -267,7 +263,6 @@ namespace Pano.ViewModel.Pages
                 _busyIndicatorService.ResetBusy();
                 _busyIndicatorService.SetSnackbar("Eksport zakończony.");
             }
-
         }
 
         private void GoBack()
@@ -379,13 +374,12 @@ namespace Pano.ViewModel.Pages
                 SelectIndex,
                 SelectedHotSpot.Text,
                 "Wybierz docelową scenę:"
-
             );
         }
 
-        private void SelectIndex(Model.Db.Scenes.Scene scene, int? buttonIndex)
+        private void SelectIndex(Scene scene, int? buttonIndex)
         {
-            if (!(SelectedHotSpot is Model.Db.HotSpots.SceneHotSpot spot))
+            if (!(SelectedHotSpot is SceneHotSpot spot))
                 return;
 
             if (buttonIndex == 2 && scene != null)

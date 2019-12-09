@@ -25,7 +25,6 @@ namespace Pano.Model.Db.Helpers
         private BitmapImage _bitmapImage;
         private RotateFlipType _rotation = RotateFlipType.RotateNoneFlipNone;
 
-
         public int ImageId { get; set; }
 
         public ImageData ImageData { get; set; }
@@ -38,9 +37,6 @@ namespace Pano.Model.Db.Helpers
             get => ImageData?.Data;
             set
             {
-                //Set(ref _data, value);
-                //_bitmapImage = null;
-                //_bitmapImage = ByteArrayToBitmapImage(_data);
                 if(ImageData == null)
                     ImageData = new ImageData() {ImageDataId = ImageId};
 
@@ -48,8 +44,6 @@ namespace Pano.Model.Db.Helpers
                 ImageData.Image = this;
 
                 RaisePropertyChanged(nameof(Data));
-                //RaisePropertyChanged(nameof(BitmapImage));
-                //RaisePropertyChanged(nameof(DrawingImage));
             }
         }
 
@@ -89,7 +83,6 @@ namespace Pano.Model.Db.Helpers
             }
         }
 
-
         /// <summary>
         /// Navigation key
         /// </summary>
@@ -99,7 +92,6 @@ namespace Pano.Model.Db.Helpers
         /// Navigation variable
         /// </summary>
         public Scene Scene { get; set; }
-
 
         /// <summary>
         /// Bitmap to show in WPF controls
