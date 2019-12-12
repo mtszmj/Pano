@@ -61,7 +61,7 @@ namespace Pano.IntegrationTests.Automapper
                 Assert.That(dto.Title, Is.EqualTo(defaultScene.Title));
                 Assert.That(dto.HotSpotDebug, Is.EqualTo(defaultScene.HotSpotDebug));
                 Assert.That(dto.Id, Is.EqualTo(defaultScene.Id.ToString()));
-                Assert.That(dto.FirstScene, Is.EqualTo(scene.Id));
+                Assert.That(dto.FirstScene, Is.EqualTo(null));
             });
         }
 

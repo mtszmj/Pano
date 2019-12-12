@@ -77,7 +77,7 @@ namespace Pano.ViewModel.Pages
 
             SaveCommand = new RelayCommand(() => SaveProject());
             ExportCommand = new RelayCommand(() => ExportProject(), () => Project?.Model?.Tour != null);
-            BackCommand = new RelayCommand(() => GoBack());
+            BackCommand = new RelayCommand(GoBack);
             AddSceneCommand = new RelayCommand(() => AddScene());
             DeleteSceneCommand = new RelayCommand(() => DeleteScene(), () => SelectedScene != null);
             AddHotSpotCommand = new RelayCommand(() => AddHotSpot(), () => SelectedScene != null);

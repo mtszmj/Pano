@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Pano.Model.Db.Helpers.DictionaryEntry&lt;TKey, TValue&gt;">
+    <Position X="14" Y="1.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Model\Db\Helpers\DictionaryEntry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pano.Model.Db.Helpers.Image">
+    <Position X="5.25" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAIKIBQkAAAiIEAAAAAABEAAAAAAAIAAAA=</HashCode>
+      <FileName>Model\Db\Helpers\Image.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Scene" />
+      <Property Name="ImageData" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Pano.Model.Db.Helpers.ImageData">
+    <Position X="2.25" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAEAAAA=</HashCode>
+      <FileName>Model\Db\Helpers\ImageData.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Image" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Pano.Model.Db.Helpers.StringDictionaryEntry">
+    <Position X="14.25" Y="3.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Db\Helpers\StringDictionaryEntry.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Scene" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Pano.Model.Db.HotSpots.HotSpot">
+    <Position X="11" Y="1.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAACAEAgAAAAAAAAAAAAAAICQBACIAAAjA=</HashCode>
+      <FileName>Model\Db\HotSpots\HotSpot.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Scene" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Pano.Model.Db.HotSpots.SceneHotSpot">
+    <Position X="11" Y="6.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAACAAgAAAACBAAAAAAAAAAQAAAAAAAiA=</HashCode>
+      <FileName>Model\Db\HotSpots\SceneHotSpot.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pano.Model.Db.Scenes.DefaultSceneConfig">
+    <Position X="2.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AADiAEAAAAAAAECAAAAAAgAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Db\Scenes\DefaultSceneConfig.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Tour" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Pano.Model.Db.Scenes.Equirectangular">
+    <Position X="8" Y="14" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AABAIAAAAAAEgAAAhAAAAgEACAAAABAAAQAAAAAAAAA=</HashCode>
+      <FileName>Model\Db\Scenes\Equirectangular.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pano.Model.Db.Scenes.Scene">
+    <Position X="8" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>BBDiIAQAAIAgDFmFgAEFAiECAEAAEBDAIVZEoBAQCiA=</HashCode>
+      <FileName>Model\Db\Scenes\Scene.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Image" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="HotSpots" />
+      <Property Name="Strings" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Pano.Model.Project">
+    <Position X="5.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAgIAAAAgAhAAAEAAAAAQYABAAABAAAAAAIAAAAgAA=</HashCode>
+      <FileName>Model\Project.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Tour" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Pano.Model.TourForDb">
+    <Position X="5.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAEEgAgAAAKAACAAAQAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Model\TourForDb.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Project" />
+      <Property Name="Default" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Scenes" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Interface Name="Pano.Model.Db.HotSpots.IHotSpot" Collapsed="true">
+    <Position X="17.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAEAAAAAAAAAAAAAAAAACQBACAAAAAA=</HashCode>
+      <FileName>Model\Db\HotSpots\IHotSpot.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Pano.Model.Db.IScene" Collapsed="true">
+    <Position X="19.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BBDAAAQAAAAgDFmBgAEFACACAEAAEACAIVZAIBAQCAA=</HashCode>
+      <FileName>Model\Db\Scenes\IScene.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="PanoramaType" Collapsed="true">
+    <Position X="19.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAEAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Model\Enums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="HotSpotType" Collapsed="true">
+    <Position X="17.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAEAAABA=</HashCode>
+      <FileName>Model\Enums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

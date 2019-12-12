@@ -81,7 +81,9 @@ namespace Pano.UnitTests.IO
                 .Returns(PanoramaType.Unknown);
             mock.Setup(x => x.TryParse<string>(It.IsAny<JObject>(), It.IsAny<string>()))
                 .Returns("");
-            mock.Setup(x => x.CreateAndPopulateObject<DefaultSceneDto>(It.IsAny<JsonReader>(), It.IsAny<Newtonsoft.Json.JsonSerializer>()))
+            mock.Setup(x => x.CreateAndPopulateObject<DefaultSceneDto>(
+                    It.IsAny<JsonReader>(), 
+                    It.IsAny<Newtonsoft.Json.JsonSerializer>()))
                 .Returns(new DefaultSceneDto());
 
             var converter = new SceneJsonConverter(mock.Object);

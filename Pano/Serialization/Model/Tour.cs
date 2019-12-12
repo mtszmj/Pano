@@ -19,25 +19,7 @@ namespace Pano.Serialization.Model
         /// </summary>
         public DefaultSceneDto Default
         {
-            get
-            {
-                return _DefaultScene;
-                ////////////////////////////////////////
-
-                if (_DefaultScene == null)
-                {
-                    _DefaultScene = new DefaultSceneDto { FirstSceneDtoRef = FirstSceneDto };
-                    return _DefaultScene;
-                }
-
-                if (_DefaultScene.FirstSceneDtoRef == null || !Scenes.ContainsValue(_DefaultScene.FirstSceneDtoRef))
-                {
-                    _DefaultScene.FirstSceneDtoRef = FirstSceneDto;
-                    return _DefaultScene;
-                }
-
-                return _DefaultScene;
-            }
+            get => _DefaultScene;
             set => _DefaultScene = value;
         }
 

@@ -23,9 +23,6 @@ namespace Pano.Automapper
                 ;
 
             CreateMap<DefaultSceneConfig, DefaultSceneDto>()
-                //.ForMember(
-                //    dst => dst.FirstSceneDtoRef,
-                //    opt => opt.MapFrom(src => src.FirstScene))
                 .AfterMap((defaultConfig, dto, context) =>
                 {
                     dto.FirstSceneDtoRef = context.Mapper.Map<SceneDto>(defaultConfig.FirstScene);
