@@ -119,7 +119,6 @@
                 </Grid>
             </materialDesign:ColorZone>
 
-
             <Border Grid.Row="1" BorderThickness="0" BorderBrush="Gray">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -187,7 +186,7 @@
                                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                         <Setter Property="Padding" Value="0"/>
                                         <Setter Property="Margin" Value="0"/>
-                                        
+
                                     </Style>
                                 </ListView.ItemContainerStyle>
                                 <ListView.ItemTemplate>

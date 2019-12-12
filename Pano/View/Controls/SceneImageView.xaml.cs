@@ -64,11 +64,11 @@ namespace Pano.View.Controls
                 var posX = (int) position.X;
                 var posY = (int) position.Y;
 
-                if(posX > vm.MinX && posX < vm.MaxX)
-                    SelectedCircle.X = (int)position.X;
+                if (posX > vm.MinX && posX < vm.MaxX)
+                    SelectedCircle.X = (int) position.X;
 
-                if(posY > vm.MinY && posY < vm.MaxY)
-                    SelectedCircle.Y = (int)position.Y;
+                if (posY > vm.MinY && posY < vm.MaxY)
+                    SelectedCircle.Y = (int) position.Y;
             }
         }
 
