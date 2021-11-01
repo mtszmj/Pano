@@ -16,4 +16,4 @@ Project for creating specific json files for a website
 ![](/Pano/Readme/pano12.png?raw=true "")
 
 Example of panorama:
-http://www.annakowalcze.pl/spacer.htm?config=/projects/020/pano2.json
+https://www.aniamaj.pl/spacer.htm?config=/projects/022/pano.json
